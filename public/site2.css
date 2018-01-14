@@ -1,0 +1,126 @@
+table {
+    align-self: center
+}
+td.qr {
+    border: 1px solid rgb(201, 201, 201);
+    width: 20%;
+    height: 50%;
+    align-content: center;
+    background-color: white;
+}
+img.qr {
+    display: block;
+    margin: auto;
+}
+div.purpleHorizon {
+    background-color: var(--white-text);
+    text-align: center;
+    width: 76%;
+    margin-left:  12%;
+    margin-right: 12%;
+}
+.divTable.purpleHorizon .divTableCell, .divTable.purpleHorizon .divTableHead {
+    border: 10px solid #555555;
+    padding: 5px 2px;
+}
+.divTable.purpleHorizon .divTableBody .divTableCell {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--main-text);
+}
+.divTable.purpleHorizon .divTableHeading {
+    background: var(--main-bg-color);
+}
+.divTable.purpleHorizon .divTableHeading .divTableHead {
+    font-size: 19px;
+    font-weight: bold;
+    text-align: center;
+}
+h1#title {
+    font-size: 3.5em;
+    background-color: var(--main-bg-color);
+    display: inline-block;
+    color: #29272e;
+    line-height: 1.25em;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    padding: 0 10px;
+    z-index: 2;
+    font-family: 'Open Sans', 'Arial Narrow Bold', sans-serif
+}
+h1#title::after {
+    background-color: rgb(143, 9, 9);
+    content: '';
+    height: 2px;
+    left: 0;
+    margin-top: 40px;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+}
+#corner {
+    width: 18%;
+}
+#corner img {
+    align-content: center;
+    top: 50%;
+    left: 50%;
+    margin: 0px 0px;
+    max-width: 100%;
+    max-height: 100%;
+}
+#footer {
+    clear:both;
+	float:left;
+    width:100%;
+    color: var(--white-text);
+    border-top:1px solid #000;
+    background-color: rgb(6, 23, 99);
+    text-align: center;
+    padding: 23px 0px; 
+    position: absolute;
+    bottom: 0;
+}
+#footer .links a {
+    display: inline-block;
+    background: rgb(36,53,129);
+    color: var(--white-text);
+    padding: 2px 8px;
+    border-radius: 5px;
+}
+#footer .links a:hover {
+    background: rgb(52,68,144);
+}
+.divTable { display: table; }
+.divTableRow { display: table-row; }
+.divTableHeading { display: table-header-group;}
+.divTableCell, .divTableHead { display: table-cell;}
+.divTableHeading { display: table-header-group;}
+.divTableFoot { display: table-footer-group;}
+.divTableBody { display: table-row-group;}
+div.linkSideBar {
+    padding-left: 1%;
+    padding-right: 1%;
+    min-width: 18%;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: medium;
+    align-content: center;
+    margin: 0;
+	padding: 0;
+	border: 0;			/* This removes the border around the viewport in old versions of IE */
+	width: 100%;
+} 
+html {
+    --main-bg-color: whitesmoke;
+    --white-text: whitesmoke;
+    --main-text: rgb(8, 8, 8);
+    background-color: #29272e;
+    padding: 0px;
+    margin: 0px;
+}
+* {
+    box-sizing: border-box;
+}

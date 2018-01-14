@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Paths.fs" />
+    <Compile Include="ViewEngine.fs" />
+    <Compile Include="site\CommonHtml.fs" />
+    <Compile Include="site\Index.fs" />
+    <Compile Include="site\QRGenerator.fs" />
+    <Compile Include="site\Resume.fs" />
+    <Compile Include="site\LicenseGenerator.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="fsharp.control.reactive" Version="3.5.0" />
+    <PackageReference Include="fsharpx.collections" Version="1.17.0" />
+    <PackageReference Include="fsharpx.extras" Version="2.2.1" />
+    <PackageReference Include="newtonsoft.json" Version="10.0.3" />
+    <PackageReference Include="qrcoder" Version="1.3.2" />
+    <PackageReference Include="suave" Version="2.2.1" />
+  </ItemGroup>
+
+</Project>

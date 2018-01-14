@@ -1,0 +1,125 @@
+table {
+    align-self: center
+}
+td.qr {
+    border: 1px solid rgb(201, 201, 201);
+    width: 20%;
+    height: 50%;
+    align-content: center;
+    background-color: white;
+}
+img.qr {
+    display: block;
+    margin: auto;
+}
+div.purpleHorizon {
+    background-color: #555555;
+    text-align: center;
+    width: 76%;
+    margin-left:  12%;
+    margin-right: 12%;
+}
+.divTable.purpleHorizon .divTableCell, .divTable.purpleHorizon .divTableHead {
+    border: 10px solid #555555;
+    padding: 5px 2px;
+}
+.divTable.purpleHorizon .divTableBody .divTableCell {
+    font-size: 13px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+.divTable.purpleHorizon .divTableHeading {
+    background: var(--main-bg-color);
+}
+.divTable.purpleHorizon .divTableHeading .divTableHead {
+    font-size: 19px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+}
+h1#title {
+    font-size: 3.5em;
+    background-color: var(--main-bg-color);
+    display: inline-block;
+    color: #29272e;
+    line-height: 1.25em;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    padding: 0 10px;
+    z-index: 2;
+    font-family: 'Open Sans', 'Arial Narrow Bold', sans-serif
+}
+h1#title::after {
+    background-color: rgb(143, 9, 9);
+    content: '';
+    height: 2px;
+    left: 0;
+    margin-top: 40px;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+}
+#corner {
+    width: 18%;
+}
+#corner img {
+    align-content: center;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+.purpleHorizon .tableFootStyle {
+    font-size: 13px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #CE3CFF;
+    background: -moz-linear-gradient(top, #da6dff 0%, #d34fff 66%, #CE3CFF 100%);
+    background: -webkit-linear-gradient(top, #da6dff 0%, #d34fff 66%, #CE3CFF 100%);
+    background: linear-gradient(to bottom, #da6dff 0%, #d34fff 66%, #CE3CFF 100%);
+    border-top: 5px solid var(--main-bg-color);
+}
+.purpleHorizon .tableFootStyle {
+    font-size: 13px;
+}
+.purpleHorizon .tableFootStyle .links {
+    text-align: center;
+}
+.purpleHorizon .tableFootStyle .links a{
+    display: inline-block;
+    background: var(--main-bg-color);
+    color: #FFFFFF;
+    padding: 2px 8px;
+    border-radius: 5px;
+}
+.purpleHorizon.outerTableFooter {
+    border-top: none;
+}
+.purpleHorizon.outerTableFooter .tableFootStyle {
+    padding: 11px 0px; 
+}
+.divTable { display: table; }
+.divTableRow { display: table-row; }
+.divTableHeading { display: table-header-group;}
+.divTableCell, .divTableHead { display: table-cell;}
+.divTableHeading { display: table-header-group;}
+.divTableFoot { display: table-footer-group;}
+.divTableBody { display: table-row-group;}
+div.linkSideBar {
+    padding-left: 1%;
+    padding-right: 1%;
+    min-width: 18%;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: medium;
+    align-content: center;
+} 
+html {
+    --main-bg-color: rgb(240, 238, 236);
+    background-color: #29272e;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+}
