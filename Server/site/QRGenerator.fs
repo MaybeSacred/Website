@@ -13,13 +13,13 @@ let encode size str =
     code.GetGraphic(size)
         
 let rand () = 
-    let b = Array.zeroCreate<byte> 50
+    let b = Array.zeroCreate<byte> 55
     cryptRandom.GetBytes b
     UTF8Encoding.UTF8.GetString b 
     |> String.substring' 0 40
 
 let base64Qr () = "data:image/gif;base64," + (rand () |> encode 3)
-
+let s x:seq<'a> = x
 let page () = 
     template "QR Code Generator" [
         table [] [

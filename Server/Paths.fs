@@ -4,4 +4,7 @@
     let index = "/index"
     let resume = "/resume"
     let about = "/about"
+    let experimental = "/experimental"
     let ``license-generator`` = "/license-generator"
+    let ``dev-random`` = "/dev/random"
+    let ``Jonny's Sober Rants`` = "/rants"

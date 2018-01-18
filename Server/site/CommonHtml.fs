@@ -1,19 +1,28 @@
 ﻿module CommonHtml
 open Suave.FunctionalViewEngine
+open MoreLinq
 
-let cssLink s = link [attr "rel" "stylesheet"; attr "type" "text/css"; attr "href" s] 
 let id' = attr "id"
 let class' = attr "class"
+let href = attr "href"
+let src = attr "src"
+let cssLink s = link [attr "rel" "stylesheet"; attr "type" "text/css"; href s] 
+let anchor' text title url = a [href url; attr "title" title] [RawText text]
+let anchor text url = anchor' text text url
 let programmingLinks = [
     """learnyouahaskell.com""", "Learn You a Haskell for Great Good!"
     """fsharpforfunandprofit.com""", "F# for Fun and Profit!"
     """http://sijinjoseph.com/programmer-competency-matrix/""", "Programmer Competency Matrix"
     """http://www.ycombinator.com/""", "Y Combinator"
+    """https://gusty.github.io/FSharpPlus/abstractions.html""", "Common Functional Abstractions"
+    """https://drboolean.gitbooks.io/mostly-adequate-guide/""", "A Mostly-Adequate Guide to Functional Programming"
 ]
 let funLinks = [
     """http://www.juliawertz.com/""", "Julia Wertz"
-    """""", "XKCD"
-    """""", "Saturday Morning Breakfast Cereal"
+    """https://xkcd.com/""", "XKCD"
+    """https://smbc-comics.com/""", "Saturday Morning Breakfast Cereal"
+    """http://www.last-halloween.com/""", "The Last Halloween"
+    """http://www.dumbingofage.com/""", "Dumbing of Age"
 ]
 let mainLinks = [
     Paths.home, "Home"
@@ -25,46 +34,54 @@ let mainLinks = [
 
 let renderLinks links = [ for url,link in links do yield a [attr "href" url; attr "title" link] [RawText link; br []] ]
 
-let linkBar = 
+let linkBar () = 
     seq {
         yield h3 [] [RawText "Navigation"] 
         yield! renderLinks mainLinks 
         yield h3 [] [RawText "Programming Links"]
-        yield! renderLinks programmingLinks 
+        yield! MoreEnumerable.RandomSubset(programmingLinks, 5) |>  renderLinks 
         yield h3 [] [RawText "Fun Links"]
-        yield! renderLinks funLinks
+        yield! MoreEnumerable.RandomSubset(funLinks, 5) |> renderLinks
     } |> List.ofSeq
     |> div [class' "linkSideBar"]
 
-let template title' content =
+let template title' content = 
     html [] [
         head [] [
             title [] [rawText title']
+            meta [attr "charset" "utf-8"]
+            meta [attr "name" "viewport"; attr "content" "width=device-width, initial-scale=1, shrink-to-fit=no"]
             cssLink """https://fonts.googleapis.com/css?family=Open+Sans"""
-            cssLink "output.css"
+            cssLink "bootstrap.min.css"
         ]
         body [] [
-            div [class' "divTable purpleHorizon"] [
-                div [class' "divTableHeading"] [
-                    div [class' "divTableRow"] [
-                        div [class' "divTableHead"; id' "corner"] [img [attr "src" "corner256.png"]]
-                        div [class' "divTableHead"] [h1 [id' "title"] [rawText title']]
-                    ]
+            div [class' "container-fluid"] [
+                div [class' "row justify-content-center"] [
+                    div [class' "col align-self-center"; id' "corner"] [img [src "corner128.png"]]
+                    div [class' "col-8 align-self-center"] [h1 [id' "title"] [rawText title']]
+                    div [class' "col"] [h1 [id' "title"] [rawText title']]
                 ]
-                div [class' "divTableBody"] [
-                    div [class' "divTableRow"] [
-                        div [class' "divTableCell"] [linkBar]
-                        div [class' "divTableCell"] content
-                    ]
+                div [class' "row justify-content-center"] [
+                    div [class' "col"] [linkBar ()]
+                    div [class' "col-8"] content
+                    div [class' "col"] [rawText "Quotes Quotes Quotes"]
                 ]
             ]
-            div [id' "footer"] [
-                div [class' "links"] [
-                    RawText "Built with "
-                    a [attr "href" "http://fsharp.org"; attr "title" "Main site for F#"] [RawText "F#"]
-                    RawText " and "
-                    a [attr "href" "http://suave.io"; attr "title" "A simple self-hosting webserver for F#"] [RawText "Suave.IO"]
-                ]
+            footer [class' "footer"] [
+                    div [class' "links"] [
+                        RawText "Built with "
+                        anchor' "F#" "Main site for F#" "http://fsharp.org"  
+                        RawText ", "
+                        anchor' "Suave.IO" "A simple self-hosting webserver for F#" "http://suave.io"  
+                        RawText ", and a little love"
+                    ]
+                    div [class' "themes"] [
+                        button [] [RawText "Change theme"]
+                    ]
+                
             ]
+            script [src """https://code.jquery.com/jquery-3.2.1.slim.min.js"""; attr "crossorigin" "anonymous"] []
+            script [src """https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"""; attr "crossorigin" "anonymous"] []
+            script [src """https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"""; attr "crossorigin" "anonymous"] []
         ]
     ]
