@@ -16,6 +16,7 @@ let programmingLinks = [
     """http://www.ycombinator.com/""", "Y Combinator"
     """https://gusty.github.io/FSharpPlus/abstractions.html""", "Common Functional Abstractions"
     """https://drboolean.gitbooks.io/mostly-adequate-guide/""", "A Mostly-Adequate Guide to Functional Programming"
+    """https://www.random.org/""", "RANDOM.ORG"
 ]
 let funLinks = [
     """http://www.juliawertz.com/""", "Julia Wertz"
@@ -44,7 +45,12 @@ let linkBar () =
         yield! MoreEnumerable.RandomSubset(funLinks, 5) |> renderLinks
     } |> List.ofSeq
     |> div [class' "linkSideBar"]
-
+// TODO: allow full-text search, maybe by generating all the pages and pushing them in a Lucene database or sqlite db
+// full-text should include only certain relevant portions of pages - <p> and <title> and whatnot
+// add clustering to allow for generation of tags
+// Articles should include timestamp, probably need an Article datatype, with a function to produce a page
+// add 'crappy API'
+// create navbar - this should include main links like About, Hire Me, etc, Search, Logo, and main blog title
 let template title' content = 
     html [] [
         head [] [

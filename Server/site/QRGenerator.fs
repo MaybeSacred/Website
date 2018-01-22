@@ -19,7 +19,7 @@ let rand () =
     |> String.substring' 0 40
 
 let base64Qr () = "data:image/gif;base64," + (rand () |> encode 3)
-let s x:seq<'a> = x
+
 let page () = 
     template "QR Code Generator" [
         table [] [
