@@ -13,6 +13,7 @@
     <Compile Include="site\QRGenerator.fs" />
     <Compile Include="site\Resume.fs" />
     <Compile Include="site\LicenseGenerator.fs" />
+    <Compile Include="site\AllLinks.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

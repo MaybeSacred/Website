@@ -1,5 +1,5 @@
 ﻿module Paths 
-    let home = "/home"
+    let home = "/"
     let ``qr-generator`` = "/qr-generator"
     let index = "/index"
     let resume = "/resume"
@@ -8,3 +8,5 @@
     let ``license-generator`` = "/license-generator"
     let ``dev-random`` = "/dev/random"
     let ``Jonny's Sober Rants`` = "/rants"
+    let ``all-programming-links`` = "/all-programming-links"
+    let ``all-fun-links`` = "/all-fun-links"

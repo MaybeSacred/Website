@@ -10,8 +10,8 @@ let cssLink s = link [attr "rel" "stylesheet"; attr "type" "text/css"; href s]
 let anchor' text title url = a [href url; attr "title" title] [RawText text]
 let anchor text url = anchor' text text url
 let programmingLinks = [
-    """learnyouahaskell.com""", "Learn You a Haskell for Great Good!"
-    """fsharpforfunandprofit.com""", "F# for Fun and Profit!"
+    """www.learnyouahaskell.com""", "Learn You a Haskell for Great Good!"
+    """https://fsharpforfunandprofit.com""", "F# for Fun and Profit!"
     """http://sijinjoseph.com/programmer-competency-matrix/""", "Programmer Competency Matrix"
     """http://www.ycombinator.com/""", "Y Combinator"
     """https://gusty.github.io/FSharpPlus/abstractions.html""", "Common Functional Abstractions"
@@ -33,7 +33,7 @@ let mainLinks = [
     Paths.about, "About"
 ]
 
-let renderLinks links = [ for url,link in links do yield a [attr "href" url; attr "title" link] [RawText link; br []] ]
+let renderLinks links = [ for url,link in links do yield! [a [attr "href" url; attr "title" link] [RawText link]; br [] ]]
 
 let linkBar () = 
     seq {

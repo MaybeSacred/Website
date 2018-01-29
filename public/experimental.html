@@ -4,84 +4,99 @@
 <head>
   <title>Simple Fable App</title>
   <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans">
   <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="site.css">
   <link rel="shortcut icon" href="fable.ico" />
 </head>
 
 <body>
-  <div class="container-fluid">
-    <div class="row justify-content-center bg-primary">
-      <div class="col align-self-center" id="corner">
-        <img class="rounded img-fluid" src="corner128.png">
-      </div>
-      <div class="col-8 align-self-center">
-        <h1 class="display-2 text-light text-center">Main Page</h1>
-      </div>
-      <div class="col">
-        <h1 id="title">Main Page</h1>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col bg-light">
-        <div class="linkSideBar">
-          <h3>Site</h3>
-          <a href="/home" title="Home">Home
-            <br>
+  <header class="navbar navbar-expand-md navbar-dark bg-primary justify-content-between">
+      <span class="pb-0"><span class="navbar-brand">Jon's Site</span></span>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="/">Home
+            <span class="sr-only">(current)</span>
           </a>
-          <a href="/resume" title="Resume">Resume
-            <br>
-          </a>
-          <a href="/qr-generator" title="QR Generator">QR Generator
-            <br>
-          </a>
-          <a href="/license-generator" title=".NET License Generator">.NET License Generator
-            <br>
-          </a>
-          <a href="/about" title="About">About
-            <br>
-          </a>
-          <h3>Programming</h3>
-          <a href="https://gusty.github.io/FSharpPlus/abstractions.html" title="Common Functional Abstractions">Common Functional Abstractions
-            <br>
-          </a>
-          <a href="https://drboolean.gitbooks.io/mostly-adequate-guide/" title="A Mostly-Adequate Guide to Functional Programming">A Mostly-Adequate Guide to Functional Programming
-            <br>
-          </a>
-          <a href="learnyouahaskell.com" title="Learn You a Haskell for Great Good!">Learn You a Haskell for Great Good!
-            <br>
-          </a>
-          <a href="fsharpforfunandprofit.com" title="F# for Fun and Profit!">F# for Fun and Profit!
-            <br>
-          </a>
-          <a href="http://sijinjoseph.com/programmer-competency-matrix/" title="Programmer Competency Matrix">Programmer Competency Matrix
-            <br>
-          </a>
-          <h3>For Fun</h3>
-          <a href="http://www.juliawertz.com/" title="Julia Wertz">Julia Wertz
-            <br>
-          </a>
-          <a href="https://xkcd.com/" title="XKCD">XKCD
-            <br>
-          </a>
-          <a href="http://www.last-halloween.com/" title="The Last Halloween">The Last Halloween
-            <br>
-          </a>
-          <a href="https://smbc-comics.com/" title="Saturday Morning Breakfast Cereal">Saturday Morning Breakfast Cereal
-            <br>
-          </a>
-          <a href="http://www.dumbingofage.com/" title="Dumbing of Age">Dumbing of Age
-            <br>
-          </a>
+          <a class="nav-item nav-link" href="/resume">Resume</a>
+          <a class="nav-item nav-link" href="/about">About</a>
         </div>
       </div>
-      <div class="col-8">Welcome to Jon Tyson's awesome website!</div>
-      <div class="col bg-light">Quotes Quotes Quotes</div>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  </header>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-sm-3 col-xl-2 bg-light">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item px-2">
+            <h4 class="text-primary">Site</h4>
+            <a href="/" title="Home">Home</a>
+            <br>
+            <a href="/resume" title="Resume">Resume</a>
+            <br>
+            <a href="/qr-generator" title="QR Generator">QR Generator</a>
+            <br>
+            <a href="/license-generator" title=".NET License Generator">.NET License Generator</a>
+            <br>
+            <a href="/about" title="About">About</a>
+            <br>
+          </li>
+          <li class="list-group-item px-2">
+            <h4 class="text-primary">Programming</h4>
+            <a href="https://gusty.github.io/FSharpPlus/abstractions.html" title="Common Functional Abstractions">Common Functional Abstractions</a>
+            <br>
+            <a href="https://drboolean.gitbooks.io/mostly-adequate-guide/" title="A Mostly-Adequate Guide to Functional Programming">A Mostly-Adequate Guide to Functional Programming</a>
+            <br>
+            <a href="learnyouahaskell.com" title="Learn You a Haskell for Great Good!">Learn You a Haskell for Great Good!</a>
+            <br>
+            <a href="fsharpforfunandprofit.com" title="F# for Fun and Profit!">F# for Fun and Profit!</a>
+            <br>
+            <a href="http://sijinjoseph.com/programmer-competency-matrix/" title="Programmer Competency Matrix">Programmer Competency Matrix</a>
+            <br>
+            <a href="/all-programming-links" title="All Programming Links">More...</a>
+            <br>
+          </li>
+          <li class="list-group-item px-2">
+            <h4 class="text-primary">For Fun</h4>
+            <a href="http://www.juliawertz.com/" title="Julia Wertz">Julia Wertz</a>
+            <br>
+            <a href="https://xkcd.com/" title="XKCD">XKCD</a>
+            <br>
+            <a href="http://www.last-halloween.com/" title="The Last Halloween">The Last Halloween</a>
+            <br>
+            <a href="https://smbc-comics.com/" title="Saturday Morning Breakfast Cereal">Saturday Morning Breakfast Cereal</a>
+            <br>
+            <a href="http://www.dumbingofage.com/" title="Dumbing of Age">Dumbing of Age</a>
+            <br>
+            <a href="/all-fun-links" title="All Fun Links">More...</a>
+            <br>
+          </li>
+        </ul>
+      </div>
+      <div class="col-12 col-sm-6 col-xl-8">
+        <h3>
+          Welcome to Jon Tyson's awesome website!
+        </h3>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et molestias, placeat autem fugit laboriosam suscipit eius labore rerum eum adipisci voluptatibus accusantium alias similique omnis ad voluptas provident, delectus neque!
+        </p>
+        <br />
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia iste odit illo doloribus fugiat vero praesentium explicabo et? Et, sunt fugit esse eos tempore eius obcaecati odio ipsam? Nemo, perspiciatis.
+        </p>
+      </div>
+      <div class="col-12 col-sm-3 col-xl-2 bg-light">Quotes Quotes Quotes</div>
     </div>
   </div>
-  <footer class="footer mx-auto">
+  <footer class="footer">
     <div class="container-fluid">
       <div class="row justify-content-center bg-secondary">
         <div class="col"></div>
@@ -94,9 +109,9 @@
       </div>
     </div>
   </footer>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" attr crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" attr crossorigin="anonymous" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" attr crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
