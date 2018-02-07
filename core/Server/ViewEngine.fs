@@ -122,6 +122,7 @@ let time       = tag "time"
 let u          = tag "u"
 let var        = tag "var"
 let wbr        = voidTag "wbr"
+let blockquote = tag "blockquote"
 
 /// Image and multimedia
 let area       = voidTag "area"

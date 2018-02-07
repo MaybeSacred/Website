@@ -12,32 +12,34 @@
 </head>
 
 <body>
-  <header class="navbar navbar-expand-md navbar-dark bg-primary justify-content-between">
-      <span class="pb-0"><span class="navbar-brand">Jon's Site</span></span>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-item nav-link" href="/">Home
-            <span class="sr-only">(current)</span>
-          </a>
-          <a class="nav-item nav-link" href="/resume">Resume</a>
-          <a class="nav-item nav-link" href="/about">About</a>
-        </div>
+  <header class="navbar navbar-expand-md navbar-dark bg-primary justify-content-between py-2">
+    <span class="pb-0">
+      <span class="navbar-brand">Jon's Site</span>
+    </span>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="/">Home
+          <span class="sr-only">(current)</span>
+        </a>
+        <a class="nav-item nav-link" href="/resume">Resume</a>
+        <a class="nav-item nav-link" href="/about">About</a>
       </div>
-      <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-      </form>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    </div>
+    <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
   </header>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 col-sm-3 col-xl-2 bg-light">
+      <div class="col-12 col-sm-3 col-xl-2  py-1 bg-light">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item px-2">
-            <h4 class="text-primary">Site</h4>
+          <li class="list-group-item px-1">
+            <h4 class="text-dark">Site</h4>
             <a href="/" title="Home">Home</a>
             <br>
             <a href="/resume" title="Resume">Resume</a>
@@ -49,8 +51,8 @@
             <a href="/about" title="About">About</a>
             <br>
           </li>
-          <li class="list-group-item px-2">
-            <h4 class="text-primary">Programming</h4>
+          <li class="list-group-item px-1">
+            <h4 class="text-dark">Programming</h4>
             <a href="https://gusty.github.io/FSharpPlus/abstractions.html" title="Common Functional Abstractions">Common Functional Abstractions</a>
             <br>
             <a href="https://drboolean.gitbooks.io/mostly-adequate-guide/" title="A Mostly-Adequate Guide to Functional Programming">A Mostly-Adequate Guide to Functional Programming</a>
@@ -64,8 +66,8 @@
             <a href="/all-programming-links" title="All Programming Links">More...</a>
             <br>
           </li>
-          <li class="list-group-item px-2">
-            <h4 class="text-primary">For Fun</h4>
+          <li class="list-group-item px-1">
+            <h4 class="text-dark">For Fun</h4>
             <a href="http://www.juliawertz.com/" title="Julia Wertz">Julia Wertz</a>
             <br>
             <a href="https://xkcd.com/" title="XKCD">XKCD</a>
@@ -81,19 +83,26 @@
           </li>
         </ul>
       </div>
-      <div class="col-12 col-sm-6 col-xl-8">
+      <div class="col-12 col-sm-6 col-xl-8 py-3">
         <h3>
           Welcome to Jon Tyson's awesome website!
         </h3>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et molestias, placeat autem fugit laboriosam suscipit eius labore rerum eum adipisci voluptatibus accusantium alias similique omnis ad voluptas provident, delectus neque!
+        <p class="text-primary">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et molestias, placeat autem fugit laboriosam suscipit eius labore
+          rerum eum adipisci voluptatibus accusantium alias similique omnis ad voluptas provident, delectus neque!
         </p>
         <br />
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia iste odit illo doloribus fugiat vero praesentium explicabo et? Et, sunt fugit esse eos tempore eius obcaecati odio ipsam? Nemo, perspiciatis.
+        <p class="text-primary">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia iste odit illo doloribus fugiat vero praesentium explicabo
+          et? Et, sunt fugit esse eos tempore eius obcaecati odio ipsam? Nemo, perspiciatis.
         </p>
       </div>
-      <div class="col-12 col-sm-3 col-xl-2 bg-light">Quotes Quotes Quotes</div>
+      <div class="col-12 col-sm-3 col-xl-2 py-3 bg-light">
+        <blockquote class="blockquote text-center">
+          <p>Quotes Quotes Quotes</p>
+          <footer class="blockquote-footer">By Quotes</footer>
+        </blockquote>
+      </div>
     </div>
   </div>
   <footer class="footer">

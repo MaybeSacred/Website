@@ -1,7 +1,7 @@
 ﻿module Paths 
     let home = "/"
     let ``qr-generator`` = "/qr-generator"
-    let index = "/index"
+    let sitemap = "/sitemap"
     let resume = "/resume"
     let about = "/about"
     let experimental = "/experimental"

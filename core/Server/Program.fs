@@ -35,7 +35,7 @@ let main argv =
         choose 
             [ GET >=> choose [
                 path Paths.home >=> request (fun _ -> Index.page () |> renderOK)
-                path Paths.index >=> request (fun _ -> Index.page () |> renderOK)
+                path Paths.sitemap >=> request (fun _ -> AllLinks.sitemap () |> renderOK)
                 path Paths.``qr-generator`` >=> request (fun _ -> QRGenerator.page () |> renderOK)
                 path Paths.resume >=> request (fun _ -> Resume.page () |> renderOK)
                 path Paths.``Jonny's Sober Rants`` >=> request (fun _ -> Resume.page () |> renderOK)
@@ -61,7 +61,7 @@ let main argv =
     let conf = { defaultConfig with 
                     cancellationToken = cts.Token; 
                     bindings = [HttpBinding.create HTTP IPAddress.Loopback 8081us]
-                    homeFolder = Some <| Path.GetFullPath( Path.Combine( __SOURCE_DIRECTORY__, """..\public""" ) ); }
+                    homeFolder = Some <| Path.GetFullPath( Path.Combine( __SOURCE_DIRECTORY__, """..\..\public""" ) ); }
     let listening, server = startWebServerAsync conf app
     Async.Start (server, cts.Token)
     // just use concurrent queue, with blocking for backpressure 
