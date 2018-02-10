@@ -30,9 +30,9 @@ let funLinks = [
 ]
 let mainLinks = [
     Paths.home, "Home"
-    Paths.resume, "Resume"
     Paths.``qr-generator``, "QR Generator"
     Paths.``license-generator``, ".NET License Generator"
+    Paths.articles, "Articles"
     Paths.about, "About"
 ]
 let quotes = [
@@ -78,8 +78,8 @@ let template title'' content =
                             rawText "Home"                            
                             span [ class' "sr-only"; ] [rawText "(current)"]
                         ]
-                        a [ class' "nav-item nav-link";  href Paths.resume; ] [rawText "Hire Me!"]
                         a [ class' "nav-item nav-link";  href Paths.about; ] [rawText "About"]
+                        a [ class' "nav-item nav-link";  href Paths.sitemap; ] [rawText "Site Map"]
                     ]
                 ]
                 form [ class' "form-inline"; ] [

@@ -3,8 +3,9 @@ open CommonHtml
 open Suave.FunctionalViewEngine
 
 let page () =
-    template "Main Page" [
-        rawText "Welcome to Jon Tyson's awesome website!"
+    template "Home" [
+        rawText "Welcome to my totes awesomesauce website!"
+        rawText "Have a look around"
     ]
 
 let ``dev\random`` () = 
