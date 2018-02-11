@@ -63,6 +63,7 @@ let template title'' content =
             title [] [rawText title'']
             meta [ attr "http-equiv" "Content-Type";  attr "content" "text/html; charset=utf-8"; ]
             meta [ attr "name" "viewport";  attr "content" "width=device-width, initial-scale=1, shrink-to-fit=no"; ]
+            ``base`` [href Paths.``base``] []
             cssLink "bootstrap.min.css"
             cssLink "site.css"
             link [ attr "rel" "shortcut icon";  href "fable.ico"; ]

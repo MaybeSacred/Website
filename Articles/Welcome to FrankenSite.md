@@ -45,3 +45,5 @@ Hire Me! = Resume
 Adventures in the Land of Polyglottony - a series of articles with implementations of web servers in different languages - the servers can also dish up something that is algorithmically interesting, like AI algorithms
 a whole series, have testing and set-up scripts as well - include anthropomorphisms for each language as an introduction - Cobol, a dinosaur's dinosaur
 curated links instead
+
+an article about the seeming immune response developers seem to have to SQL within their codebases. How SQL, a declarative DSL, is replaced all too quickly with imperative bug-ridden solutions. The many instances where devs spent considerable time implementing different ways to not have to write small amounts of SQL. Entity framework, 

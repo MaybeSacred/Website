@@ -27,7 +27,11 @@ let greetings q =
 
 let returnJson o = JsonConvert.SerializeObject o |> UTF8Encoding.UTF8.GetBytes |> ok >=> setMimeType "application/json; charset=utf-8"
 let renderOK = renderHtmlDocument >> OK
-let articles = dict ["inaugaral", Articles.inaugaral]
+let articles = 
+    dict [
+        "inaugaral", Articles.inaugaral
+        "", Articles.main
+]
 
 [<EntryPoint>]
 let main argv = 
@@ -35,6 +39,7 @@ let main argv =
     let app = 
         choose 
             [ GET >=> choose [
+                path Paths.``base`` >=> request (fun _ -> Index.page () |> renderOK)
                 path Paths.home >=> request (fun _ -> Index.page () |> renderOK)
                 path Paths.sitemap >=> request (fun _ -> AllLinks.sitemap () |> renderOK)
                 path Paths.``qr-generator`` >=> request (fun _ -> QRGenerator.page () |> renderOK)
@@ -50,9 +55,9 @@ let main argv =
                 pathScan "/articles/%s" (fun x -> 
                     match articles.ContainsKey x with
                     | true -> articles.[x] () |> renderOK
-                    | _ -> RequestErrors.NOT_FOUND "Article not found"
+                    | _ -> (fun _ -> Async.returnM None)
                 )
-                path Paths.articles >=> request (fun _ -> About.about () |> renderOK)
+                path Paths.articles >=> request (fun _ -> Articles.main () |> renderOK)
                 pathRegex "(.*)\.(css|png)" >=> Files.browseHome
               ]
               POST >=> choose [

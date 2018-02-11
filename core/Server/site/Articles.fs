@@ -3,14 +3,15 @@ open CommonHtml
 open Suave.FunctionalViewEngine
 
 let main () =
-    template "Articles" [
+    template "All Articles" [
+        h2 [class' "text-center"] [rawText "All Articles"]
         div [] [
             rawText "This will contain links to all articles"
         ]
     ]
 
 let inaugaral () = 
-    template "Article introductory" [
+    template "Article Introductory" [
         div [] [
             rawText "This is the first article"
         ]
