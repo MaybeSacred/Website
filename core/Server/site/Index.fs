@@ -10,6 +10,9 @@ let page () =
 
 let ``dev\random`` () = 
     template """\dev\random\""" [
-        img [attr "src" @"https://imgs.xkcd.com/comics/random_number.png"]
-        a [attr "href" """https://xkcd.com/221/"""] [rawText "Source"]
+        div [class' "align-middle"] [
+            a [attr "href" """https://xkcd.com/221/"""] [
+                img [attr "src" @"https://imgs.xkcd.com/comics/random_number.png"]
+            ]
+        ]
     ]

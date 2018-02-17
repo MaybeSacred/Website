@@ -47,3 +47,5 @@ a whole series, have testing and set-up scripts as well - include anthropomorphi
 curated links instead
 
 an article about the seeming immune response developers seem to have to SQL within their codebases. How SQL, a declarative DSL, is replaced all too quickly with imperative bug-ridden solutions. The many instances where devs spent considerable time implementing different ways to not have to write small amounts of SQL. Entity framework, 
+
+shameless plugs for different good NuGet packages
