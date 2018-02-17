@@ -63,8 +63,8 @@ let main argv =
     let cliArgs = parser.Parse(argv, ignoreMissing=true, ignoreUnrecognized=true)
     let conf = { defaultConfig with 
                     cancellationToken = cts.Token; 
-                    bindings = [cliArgs.GetResult(<@ Port @>, 8081us) |> HttpBinding.create HTTP IPAddress.Loopback ]
-                    homeFolder = Some <| Path.GetFullPath( Path.Combine( __SOURCE_DIRECTORY__, """..\..\public""" ) ); }
+                    bindings = [cliArgs.GetResult(<@ Port @>, 8081us) |> HttpBinding.create HTTP IPAddress.Loopback]
+                    homeFolder = Some <| Path.GetFullPath( Path.Combine( __SOURCE_DIRECTORY__, "..", "..", "public" ) ); }
     let listening, server = startWebServerAsync conf app
     Async.Start (server, cts.Token)
     // just use concurrent queue, with blocking for backpressure 
