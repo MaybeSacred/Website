@@ -4,8 +4,8 @@ open Suave.FunctionalViewEngine
 
 let page () =
     template "Home" [
-        rawText "Welcome to my totes awesomesauce website!"
-        rawText "Have a look around"
+        paragraph "Welcome to my totes awesomesauce website!"
+        paragraph "Have a look around!"
     ]
 
 let ``dev\random`` () = 

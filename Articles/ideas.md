@@ -1,3 +1,5 @@
+write a short article about dotnet Core and dotnet script - https://github.com/filipw/dotnet-script
+
 Remember, anything that may be difficult in one language can always be turned into a webservice call into another one
 
 Article server as well - we can build these using HTML instead - or React

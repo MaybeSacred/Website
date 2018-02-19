@@ -10,7 +10,7 @@ let title' = attr "title"
 let cssLink s = link [attr "rel" "stylesheet"; attr "type" "text/css"; href s] 
 let anchor' text title url = a [href url; title' title] [RawText text]
 let anchor text url = anchor' text text url
-let paragraph s = p [] [rawText s]
+let paragraph = rawText >> List.singleton >> p []
 let programmingLinks = [
     """www.learnyouahaskell.com""", "Learn You a Haskell for Great Good!"
     """https://fsharpforfunandprofit.com""", "F# for Fun and Profit!"

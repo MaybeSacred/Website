@@ -20,6 +20,10 @@ let about () =
             anchor "NextGen Healthcare" """https://www.nextgen.com/"""
             rawText """, a health care IT company. In my free time, I'm usually programming for fun, reading books, or watching Netflix"""
         ]
+        p [] [
+            rawText "Favorite bash Command: "
+            code [] [rawText "dd if=/dev/random of=/dev/sda"]
+        ]
         br []
         h3 [] [rawText "About this Site"]
         p [] [
