@@ -8,7 +8,7 @@ open FSharpx
 
 let encode size str = 
     use gen = new QRCodeGenerator()
-    let dat = gen.CreateQrCode(str, QRCodeGenerator.ECCLevel.Q)
+    use dat = gen.CreateQrCode(str, QRCodeGenerator.ECCLevel.Q, forceUtf8=true)
     use code = new Base64QRCode(dat)
     code.GetGraphic(size)
         
@@ -22,8 +22,9 @@ let base64Qr () = "data:image/gif;base64," + (rand () |> encode 3)
 
 let page () = 
     template "QR Code Generator" [
-        table [] [
-            tr [] [ for _ in 0 .. 4 do yield td [class' "qr"] [img [class' "qr"; attr "src" <| base64Qr ()]] ]
-            tr [] [ for _ in 0 .. 4 do yield td [class' "qr"] [img [class' "qr"; attr "src" <| base64Qr ()]] ]
+        div [class' "container mx-auto"] [
+            div [class' "row"] [ 
+                for _ in 0 .. 11 do yield div [class' "col-12 col-md-6 col-lg-4 col-xl-2"] [img [class' "align-middle mx-auto d-block"; src <| base64Qr ()]] 
+            ]
         ]
     ]
