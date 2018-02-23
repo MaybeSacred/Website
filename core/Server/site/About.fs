@@ -2,13 +2,17 @@
 open CommonHtml
 open Suave.FunctionalViewEngine
 open System
+open Types
 
 let yearsOld (bDate:DateTime) = 
     let today = DateTime.Today
     let age = today.Year - bDate.Year
     if bDate > today.AddYears -age then age - 1 else age
-let about () =
-    template "About" [
+let about = {
+    Title = "About" 
+    Modified = DateTime.Now
+    Content = Nodes (fun () ->
+    [
         h2 [class' "text-center"] [rawText "Welcome to my Personal Site"]
         br []
         h3 [] [rawText "About Me"]
@@ -34,4 +38,4 @@ let about () =
             be built out over time with different technologies and documented through a series of haaaunted articles """
             anchor "starting here" """"""
         ]
-    ]
+    ])}

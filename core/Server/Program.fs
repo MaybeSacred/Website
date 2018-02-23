@@ -14,10 +14,11 @@ open System.Net
 open Argu
 open NLog
 open NLog.FSharp
+open CommonHtml
 
 let log = new Logger()
 let returnJson o = JsonConvert.SerializeObject o |> UTF8Encoding.UTF8.GetBytes |> ok >=> setMimeType "application/json; charset=utf-8"
-let renderOK = renderHtmlDocument >> OK
+let renderTemplateOK = template >> renderHtmlDocument >> OK
 let mainPages = [
     Paths.``base``, Index.page
     Paths.home, Index.page
@@ -55,11 +56,11 @@ let main argv =
             [ GET >=> choose (seq {
                 yield pathScan "/articles/%s" (fun x -> 
                     match Articles.articles.ContainsKey x with
-                    | true -> Articles.articles.[x] () |> renderOK
+                    | true -> Articles.articles.[x] |> renderTemplateOK
                     | _ -> (fun _ -> async { return None })
                 )
-                for p, func in mainPages do
-                    yield path p >=> logHit p >=> request (ignore >> func >> renderOK)
+                for p, page in mainPages do
+                    yield path p >=> logHit p >=> request (fun _ -> renderTemplateOK page)
                 yield path Paths.experimental >=> logHit Paths.experimental >=> Files.browseFileHome "experimental.html"
                 yield pathRegex "(.*)\.(css|png)" >=> Files.browseHome
             } |> List.ofSeq)

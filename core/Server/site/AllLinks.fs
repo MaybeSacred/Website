@@ -1,27 +1,32 @@
 ﻿module AllLinks
 open CommonHtml
 open Suave.FunctionalViewEngine
+open Types
+open System
 
-let ``all-programming-links`` () =
-    seq {
+let ``all-programming-links`` = {
+    Title = "All Programming Links"
+    Modified = DateTime.Now
+    Content = Nodes (fun () -> List.ofSeq <| seq {
         yield p [] [rawText "This is a set of useful, interesting, cultivated links related to programming. Topics include programming language design, functional programming, and software development"]
         yield! renderLinks programmingLinks 
+    })
     }
-    |> List.ofSeq
-    |> template "All Programming Links"
 
-let ``all-fun-links`` () =
-    seq {
-        yield p [] [rawText "All the weird little corners of the internet"]
-        yield! renderLinks funLinks 
-    }
-    |> List.ofSeq
-    |> template "All Fun Links"
+let ``all-fun-links`` = {
+    Title = "All Fun Links"
+    Modified = DateTime.Now
+    Content = Nodes (fun () ->
+        List.ofSeq <| seq {
+            yield p [] [rawText "All the weird little corners of the internet"]
+            yield! renderLinks funLinks 
+    } )}
 
-let sitemap () =
-    seq {
-        yield p [] [rawText "All portions of my website"]
-        yield! renderLinks mainLinks 
-    }
-    |> List.ofSeq
-    |> template "Site Map"
+let sitemap = {
+    Title = "Site Map"
+    Modified = DateTime.Now
+    Content = Nodes (fun () ->
+        List.ofSeq <| seq {
+            yield p [] [rawText "All portions of my website"]
+            yield! renderLinks mainLinks 
+    })}

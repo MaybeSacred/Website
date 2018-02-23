@@ -12,6 +12,7 @@
   <ItemGroup>
     <Compile Include="Paths.fs" />
     <Compile Include="ViewEngine.fs" />
+	<Compile Include="site\Page.fs" />
     <Compile Include="site\CommonHtml.fs" />
     <Compile Include="site\Index.fs" />
     <Compile Include="site\QRGenerator.fs" />

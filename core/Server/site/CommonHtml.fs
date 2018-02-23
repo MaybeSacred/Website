@@ -1,7 +1,7 @@
 ﻿module CommonHtml
 open Suave.FunctionalViewEngine
 open MoreLinq
-
+open Types
 let id' = attr "id"
 let class' = attr "class"
 let href = attr "href"
@@ -11,6 +11,9 @@ let cssLink s = link [attr "rel" "stylesheet"; attr "type" "text/css"; href s]
 let anchor' text title url = a [href url; title' title] [RawText text]
 let anchor text url = anchor' text text url
 let paragraph = rawText >> List.singleton >> p []
+
+let domainName = "tysonontech.sytes.net"
+
 let programmingLinks = [
     """www.learnyouahaskell.com""", "Learn You a Haskell for Great Good!"
     """https://fsharpforfunandprofit.com""", "F# for Fun and Profit"
@@ -59,7 +62,7 @@ let linkBar () =
         funLinks.RandomSubset 5 |> li "Fun Links" Paths.``all-fun-links`` 
     ]
 
-let template title'' content =
+let template { Title = title''; Content = content } =
     html [] [
         head [] [
             title [] [rawText title'']
@@ -98,7 +101,11 @@ let template title'' content =
                     div [ class' "col-12 col-sm-3 col-xl-2 py-1 bg-light"; ] [
                         ul [ class' "list-group list-group-flush"; ] [linkBar ()]
                     ]
-                    div [ class' "col-12 col-sm-6 col-xl-8 py-3"; ] content
+                    div [ class' "col-12 col-sm-6 col-xl-8 py-3"; ] (
+                        match content with
+                        | Text s -> [rawText s]
+                        | Nodes s -> s ()
+                    )
                     div [ class' "col-12 col-sm-3 col-xl-2 py-3 bg-light"; ] [
                         blockquote [ class' "blockquote text-center"; ] [
                             p [] [rawText "Quotes Quotes Quotes"]
