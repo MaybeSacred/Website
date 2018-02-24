@@ -7,6 +7,7 @@ let class' = attr "class"
 let href = attr "href"
 let src = attr "src"
 let title' = attr "title"
+let br' = br []
 let cssLink s = link [attr "rel" "stylesheet"; attr "type" "text/css"; href s] 
 let anchor' text title url = a [href url; title' title] [RawText text]
 let anchor text url = anchor' text text url
@@ -46,7 +47,7 @@ let quotes = [
     "It's 2AM! Turn off the %*&#%@ jazz!","Downstairs Neighbor"
     "Cowabunga!","Bart Simpson"
 ]
-let renderLinks links = [for url,link in links do yield! [a [href url; title' link] [RawText link]; br [] ]]
+let renderLinks links = [for url,link in links do yield! [a [href url; title' link] [RawText link]; br' ]]
 
 let linkBar () = 
     let li header fullLink links =
