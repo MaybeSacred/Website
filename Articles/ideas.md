@@ -21,8 +21,10 @@ create a css to .net string generator/binder, for Bootstrap classes
 
 article about why purity is such an important concept
 
-compare programming languages and embracing language diversity, especially smaller "bets", to stocks and investing. how it's good to have diversity 
+compare programming languages and embracing language diversity, especially smaller "bets", to stocks and investing. how it's good to have diversity. How more "esoteric" languages pay bigger dividends when it comes to learning
 
 state and whitelisting and blacklisting - a comparison of how state is treated between functional and imperative/oop languages/paradigmes
-in FL mutable state is effectively whitelisted - here is the enumerated set of values that we will changing at this particular scope/abstraction level. no more, possibly less
+in FL mutable state is effectively whitelisted - here is the set of values that we **may** change at this particular scope/abstraction level. no more, possibly less
 with IL mutable state must be blacklisted - practically everything is mutable, and within a particular scope, most data ABOVE that scope is also accessible and mutable - especially global variables. non-state data must be explicitly blacklisted by creating immutable objects instead - this is not the default
+
+begin creating Haskell web service - just have it serve canned data for now, go ahead and template out code-base
