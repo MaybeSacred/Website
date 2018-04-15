@@ -1,3 +1,6 @@
+### Holistic impressions
+
+Teaching Yesod can be tough, especially when also attempting to explain/teach Haskell. Developers need to see the boilerplate from templating, at least at first. Make it a minimum verifiable example, and build from this 
 
 ### Unclear on why the Stack template is created and scaffolded, then the documentation immediately ignores this
 

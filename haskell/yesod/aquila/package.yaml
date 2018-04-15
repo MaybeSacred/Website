@@ -9,6 +9,10 @@ dependencies:
 
 # version 1.0 had a bug in reexporting Handler, causing trouble
 - classy-prelude-yesod >=0.10.2 && <1.0 || >=1.1
+- optparse-applicative >=0.14
+- typed-process >=0.2.1
+- stm >=2.4.4
+- unliftio >= 0.2.2.0
 
 - http-types
 - blaze-html

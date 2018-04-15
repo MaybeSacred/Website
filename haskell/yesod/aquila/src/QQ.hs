@@ -2,7 +2,9 @@
 {-# LANGUAGE QuasiQuotes       #-}
 {-# LANGUAGE TemplateHaskell   #-}
 {-# LANGUAGE TypeFamilies      #-}
-import           Yesod
+module QQ where
+
+import Yesod
 
 data App = App
 mkYesod "App" [parseRoutes|

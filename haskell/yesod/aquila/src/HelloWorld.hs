@@ -3,7 +3,10 @@
 module HelloWorld where
 
 import Yesod
+import Yesod.Static
+import Yesod.Default.Util
 import Text.Hamlet (HtmlUrl, hamlet)
+import Text.Jasmine (minifym)
 import Text.Lucius (CssUrl, renderCss, Css)
 import Text.Blaze.Html.Renderer.String (renderHtml)
 import Data.Char (toLower)
@@ -20,12 +23,20 @@ data Person = Person {
     name :: String
     ,age :: Int
 }
+
+staticFiles "static"
+
 data App = App
+    { getStatic :: Static
+    }
 
 mkYesod "App" [parseRoutes|
 / HomeR GET
 /myPath MyPathR GET 
 /style.css StyleR GET
+/error ErrorR GET
+/not-found NotFoundR GET
+/static StaticR Static getStatic
 |] 
 
 myLayout :: Widget -> Handler Html
@@ -50,6 +61,26 @@ myLayout widget = do
 
 instance Yesod App where 
     defaultLayout = myLayout
+    errorHandler NotFound = fmap toTypedContent $ defaultLayout $ do
+        setTitle "Request page not located"
+        toWidget [hamlet|
+        <h1>Not Found
+        <p>We apologize for the inconvenience blah blah
+        |]
+    errorHandler o = defaultErrorHandler o
+    
+    -- addStaticContent ext mime content = do
+    --     master <- getYesod
+    --     let staticDir = appStaticDir $ appSettings master
+    --     addStaticContentExternal
+    --         minifym
+    --         genFileName
+    --         staticDir
+    --         (StaticR . flip StaticRoute [])
+    --         ext
+    --         mime
+    --         content
+    --   where genFileName lbs = "autoget-" ++ base64md5 lbs
 
 getStyleR :: Handler Css
 getStyleR = do
@@ -65,8 +96,20 @@ getStyleR = do
         }
     |] undefined
 
-getHomeR :: HandlerT App IO Value
-getHomeR = return $ object ["msg" .= "Hello World"]
+getHomeR :: Handler Html
+getHomeR = defaultLayout
+    [whamlet|
+        <p>
+            <a href=@{ErrorR}>Internal Server error
+            <a href=@{NotFoundR}>Not found
+            <img src=@{StaticR cute_jpg}>
+    |]
+
+getErrorR :: Handler ()
+getErrorR = error "This is an error"
+
+getNotFoundR :: Handler ()
+getNotFoundR = notFound
 
 -- name :: [Char] -> [Char]
 -- name = ("My Name is " ++)
@@ -120,5 +163,9 @@ footer = [whamlet|
     \.
 |] 
 
+--data 
+
 main :: IO ()
-main = warp 3000 App
+main = do
+    static@(Static settings) <- static "static"
+    warp 3000 $ App static
