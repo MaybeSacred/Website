@@ -18,6 +18,8 @@ import Control.Arrow
 import Network.HTTP.Types (renderQueryText)
 import Data.Text.Encoding (decodeUtf8)
 import Blaze.ByteString.Builder (toByteString)
+import Options.Applicative hiding (footer)
+import Data.Semigroup ((<>))
 
 data Person = Person {
     name :: String
@@ -111,9 +113,6 @@ getErrorR = error "This is an error"
 getNotFoundR :: Handler ()
 getNotFoundR = notFound
 
--- name :: [Char] -> [Char]
--- name = ("My Name is " ++)
-
 getMyPathR :: Handler Html
 getMyPathR = defaultLayout $ do
     now <- liftIO getCurrentTime
@@ -148,12 +147,6 @@ getMyPathR = defaultLayout $ do
         <p>You are currently on page #{curPage}.
         ^{footer}
     |] 
-    -- <a href=@?{(SomePage, [("page", pack $ show $ curPage - 1)])}>
-    -- $if lt
-    --     Previous
-    -- $else
-    --     First
-    -- <a href=@?{(SomePage, [("page", pack $ show $ curPage + 1)])}>Next
 
 footer :: Widget
 footer = [whamlet|
@@ -163,9 +156,19 @@ footer = [whamlet|
     \.
 |] 
 
---data 
+args :: Parser Int
+args = option auto
+    (long "port"
+    <> short 'p'
+    <> metavar "PORT"
+    <> help "Port to start the webservice on"
+    <> value 3000 )
 
 main :: IO ()
 main = do
+    port <- execParser opts
     static@(Static settings) <- static "static"
-    warp 3000 $ App static
+    warp port $ App static
+    where opts = info (helper <*> args)
+            ( fullDesc
+              <> progDesc "Runs the links web service")
