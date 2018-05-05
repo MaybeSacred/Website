@@ -33,12 +33,12 @@ data App = App
     }
 
 mkYesod "App" [parseRoutes|
-/ HomeR GET
-/myPath MyPathR GET 
-/style.css StyleR GET
-/error ErrorR GET
-/not-found NotFoundR GET
-/static StaticR Static getStatic
+/aquila/ HomeR GET
+/aquila/myPath MyPathR GET 
+/aquila/style.css StyleR GET
+/aquila/error ErrorR GET
+/aquila/not-found NotFoundR GET
+/aquila/static StaticR Static getStatic
 |] 
 
 myLayout :: Widget -> Handler Html

@@ -19,3 +19,5 @@ cabal.sandbox.config
 *~
 \#*
 aquila.cabal
+*.dyn_hi
+*.dyn_o
