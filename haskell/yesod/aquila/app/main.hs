@@ -1,5 +1,6 @@
 import Prelude     (IO)
-import Application (appMain)
+import qualified HelloWorld as HW (main)
+--import Application (appMain)
 
 main :: IO ()
-main = appMain
+main = HW.main
