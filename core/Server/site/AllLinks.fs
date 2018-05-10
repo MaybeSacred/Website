@@ -6,6 +6,7 @@ open System
 
 let ``all-programming-links`` = {
     Title = "All Programming Links"
+    Created = DateTime.Now
     Modified = DateTime.Now
     Content = Nodes (fun () -> List.ofSeq <| seq {
         yield p [] [rawText "This is a set of useful, interesting, cultivated links related to programming. Topics include programming language design, functional programming, and software development"]
@@ -15,6 +16,7 @@ let ``all-programming-links`` = {
 
 let ``all-fun-links`` = {
     Title = "All Fun Links"
+    Created = DateTime.Now
     Modified = DateTime.Now
     Content = Nodes (fun () ->
         List.ofSeq <| seq {
@@ -24,6 +26,7 @@ let ``all-fun-links`` = {
 
 let sitemap = {
     Title = "Site Map"
+    Created = DateTime.Now
     Modified = DateTime.Now
     Content = Nodes (fun () ->
         List.ofSeq <| seq {

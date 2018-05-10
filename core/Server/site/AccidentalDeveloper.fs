@@ -6,6 +6,7 @@ open System
 
 let ``so you've gotten a job as a developer`` = { 
     Title = "Accidental Developer" 
+    Created = DateTime.Now
     Modified = DateTime.Now
     Content = textify 
         [

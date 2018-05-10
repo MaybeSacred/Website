@@ -6,6 +6,7 @@ open System
 
 let page = {
     Title = "Resume" 
+    Created = DateTime.Now
     Modified = DateTime.Now
     Content = textify
         [

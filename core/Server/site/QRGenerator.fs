@@ -38,6 +38,7 @@ let base64Qr () = "data:image/gif;base64," + (rand () |> encode' 120)
 
 let page = {
     Title = "QR Code Generator" 
+    Created = DateTime.Now
     Modified = DateTime(2018, 2, 22)
     Content = Nodes (fun () ->
         [

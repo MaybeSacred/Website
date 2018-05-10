@@ -6,6 +6,8 @@ type Content = | Text of string | Nodes of (unit -> XmlNode list)
 type Page = { 
     /// Title of the page
     Title: string; 
+    /// Created timestamp
+    Created: DateTime;
     /// Last modified timestamp
     Modified: DateTime; 
     /// Content to be rendered

@@ -6,6 +6,7 @@ open System
 
 let page = {
     Title = "Home"
+    Created = DateTime.Now
     Modified = DateTime(2018,2,22)
     Content = Nodes (fun () ->
     [
@@ -15,6 +16,7 @@ let page = {
 
 let ``dev\random`` = {
     Title = """\dev\random\"""
+    Created = DateTime.Now
     Modified = DateTime(2018,2,22)
     Content =Nodes (fun () ->
     [

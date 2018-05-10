@@ -10,6 +10,7 @@ let yearsOld (bDate:DateTime) =
     if bDate > today.AddYears -age then age - 1 else age
 let about = {
     Title = "About" 
+    Created = DateTime.Now
     Modified = DateTime.Now
     Content = Nodes (fun () ->
     [

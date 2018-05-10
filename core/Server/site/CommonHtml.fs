@@ -25,7 +25,8 @@ let programmingLinks = [
     """https://www.random.org/""", "RANDOM.ORG"
     """https://github.com/papers-we-love/papers-we-love""", "Papers We Love"
     """https://blog.acolyer.org/""", "the morning paper"
-    """http://paulgraham.com/pypar.html""","The Python Paradox"
+    """http://paulgraham.com/pypar.html""", "The Python Paradox"
+    """http://blog.ploeh.dk/""", "ploeh blog"
 ]
 let funLinks = [
     """http://www.juliawertz.com/""", "Julia Wertz"

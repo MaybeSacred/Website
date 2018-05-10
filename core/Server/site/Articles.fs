@@ -5,7 +5,8 @@ open Types
 open System
 
 let ``making-a-qr-code-generator`` = { 
-    Title = "QR Codes for Pokemon" 
+    Title = "QR Codes for Pokémon" 
+    Created = DateTime.Now
     Modified = DateTime.Now
     Content = textify 
         [
@@ -21,11 +22,11 @@ let ``making-a-qr-code-generator`` = {
                     rawText "   The newest generation of Pokémon games, "
                     a [href "https://www.serebii.net/ultrasunultramoon/"] [rawText "Sun and Moon and their Ultra counterparts"]
                     rawText """, have a 
-                    feature where Pokémon not normally found within the game can be caught. This is called Island Scan. 
-                    Interestingly, the game designers decided to add a twist: each activation of Island Scan requires 
-                    scanning QR codes using the Nintendo DS camera. Ugh! The game designers were clever though, the 
-                    games don't count scanning the same QR code multiple times, so you'll need many distinct codes if 
-                    you intend to catch all x something Pokémon available through the Island Scan feature."""
+                    feature where Pokémon not normally found within the game can be caught. This is called Island Scan, and each activation of Island Scan requires 
+                    scanning QR codes using the Nintendo DS camera. The game designers were clever though, the 
+                    game won't count scanning the same QR code multiple times, so you'll need many distinct codes if 
+                    you intend to catch all 40ish Pokémon available through the Island Scan feature. This sounded like a fun little problem to solve and ultimately, 
+                    solving it led to the creation of this site"""
                 ]
                 h4 [] [rawText "What's a poor programmer to do?"]
                 paragraph """Make a randomized QR code generator, of course! TL;DR, That's exactly what I did. """
@@ -39,6 +40,7 @@ let articles =
 
 let main = {
     Title = "All Articles" 
+    Created = DateTime.Now
     Modified = DateTime(2018, 2, 22)
     Content = textify
         [
