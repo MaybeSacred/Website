@@ -16,7 +16,7 @@ let encode' size str =
     let writer = 
         new BarcodeWriterPixelData(
             Format = BarcodeFormat.QR_CODE,
-            Options = new QrCodeEncodingOptions(Height=size, Width=size, Margin=0)
+            Options = new QrCodeEncodingOptions(Height=size, Width=size, Margin=5)
     )
     let data = writer.Write(contents=str)
     use bitmap = new Bitmap(data.Width, data.Height, PixelFormat.Format32bppRgb)
