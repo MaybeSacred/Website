@@ -1,3 +1,8 @@
+add a portfolio rebalancing tool, mostly in typescript
+    stretch goal: server-side optimizer to determine the final number of shares that makes the most use of remaining cash
+
+add a GitHub clone, to show off entire site code
+
 write a short article about dotnet Core and dotnet script - https://github.com/filipw/dotnet-script
 
 Remember, anything that may be difficult in one language can always be turned into a webservice call into another one
