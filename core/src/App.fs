@@ -18,6 +18,6 @@ let init() =
     ctx.fillRect (40., 60., 70., 150.)
     let h3 = Browser.document.createElement_h3() 
     h3.textContent <- "My own freaking header"
-    h3|> Browser.document.body.appendChild |> ignore
+    h3 |> Browser.document.body.appendChild |> ignore
 
 init()
