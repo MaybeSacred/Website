@@ -9,6 +9,9 @@ $localPath = stack path --local-bin
 Copy-Item -Path ./haskell/yesod/aquila/static/ -Destination $aquilaDir -Recurse -Force -Container
 Copy-Item -Path $localPath -Destination $aquilaDir -Force -Recurse -Container
 Copy-Item -Path ./nginx/* -Destination /etc/nginx/sites-available/
+if ($IsLinux) {
+    nginx -s reload
+}
 $dotnet = Start-Process "dotnet" "$outDir/core/Server.dll -- --port 8080" -PassThru
 Set-Location $aquilaDir
 $aquila = Start-Process "aquila" "--port 3000" -PassThru
