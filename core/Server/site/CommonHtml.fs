@@ -42,6 +42,7 @@ let mainLinks = [
     Paths.``license-generator``, ".NET License Generator"
     Paths.articles, "Articles"
     Paths.about, "About"
+    Paths.``portfolio-balancer``, "Portfolio Balancer"
 ]
 let quotes = [
     "Jon Tyson is awesomesauce! You should hire him for any software engineering that is not Java development!","Every Software Engineer Ever"

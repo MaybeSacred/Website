@@ -33,6 +33,7 @@ let mainPages = [
     Paths.``dev-random``, Index.``dev\random``
     Paths.articles, Articles.main
     Paths.articles + "/", Articles.main
+    Paths.``portfolio-balancer``, PortfolioBalancer.``portfolio balancer``
 ]
 type Arguments =
     | Port of UInt16

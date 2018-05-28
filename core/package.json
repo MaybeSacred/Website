@@ -1,22 +1,32 @@
 {
-  "private": true,
+  "name": "core",
+  "version": "1.0.0",
+  "description": "client-side code for Jon's Awesome Website",
+  "main": "webpack.config.js",
   "scripts": {
-    "build": "webpack -p",
-    "start": "webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "magic": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaybeSacred/Website.git"
+  },
+  "author": "Jon Tyson <jtyson79473@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MaybeSacred/Website/issues"
+  },
+  "homepage": "https://github.com/MaybeSacred/Website#readme",
+  "dependencies": {
+    "@types/react": "^16.3.14",
+    "@types/react-dom": "^16.0.5",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "ts-loader": "^4.3.0",
+    "typescript": "^2.8.3",
+    "webpack": "^4.9.1"
   },
   "devDependencies": {
-    "babel-core": "6.26.0",
-    "babel-loader": "7.1.2",
-    "babel-preset-env": "1.6.1",
-    "fable-loader": "1.1.6",
-    "fable-utils": "1.0.6",
-    "webpack": "3.8.1",
-    "webpack-dev-server": "2.9.4"
-  },
-  "dependencies": {
-    "bootstrap": "^4.0.0-beta.3",
-    "jquery": "^3.2.1",
-    "popper.js": "^1.12.9"
+    "webpack-cli": "^2.1.4"
   }
 }
