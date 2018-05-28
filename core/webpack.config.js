@@ -2,7 +2,7 @@ var path = require("path");
 var config = {
   entry: ["./typescript/app.tsx"],
   output: {
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(__dirname, "../public"),
     filename: "bundle.js"
   },
   resolve: {

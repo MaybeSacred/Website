@@ -63,7 +63,7 @@ let main argv =
                 for p, page in mainPages do
                     yield path p >=> logHit p >=> request (fun _ -> renderTemplateOK page)
                 yield path Paths.experimental >=> logHit Paths.experimental >=> Files.browseFileHome "experimental.html"
-                yield pathRegex "(.*)\.(css|png)" >=> Files.browseHome
+                yield pathRegex "(.*)\.(css|png|js)" >=> Files.browseHome
             } |> List.ofSeq)
               POST >=> choose [
                 path "/hello" >=> OK "Hello Post"

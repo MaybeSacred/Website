@@ -55,7 +55,7 @@ let renderLinks links = [for url,link in links do yield! [a [href url; title' li
 let linkBar () = 
     let li header fullLink links =
         seq {
-            yield h4 [ class' "text-dark" ] [rawText header]
+            yield h5 [ class' "text-dark" ] [rawText header]
             yield! renderLinks links 
             yield! renderLinks [fullLink, "More..."] 
         } |> List.ofSeq

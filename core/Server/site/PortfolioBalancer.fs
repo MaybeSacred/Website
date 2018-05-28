@@ -13,5 +13,5 @@ let ``portfolio balancer`` = {
         [
             h2 [class' "text-center"] [rawText "All Articles"]
             div [id' "root"] []
-            script [src "../build/bundle.js"] []
+            script [src "/bundle.js"] []
         ] }
