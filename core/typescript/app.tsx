@@ -8,7 +8,6 @@ class Example extends React.Component {
     state: {_rows: any[]};
     constructor(props, context){
         super(props,context);
-        this.createRows();
         this._columns = [
             { key: 'id', name: 'ID', editable: true },
             { key: 'title', name: 'Title', editable: true },
@@ -21,14 +20,14 @@ class Example extends React.Component {
         return _.times(5, x => ({
             id: x, 
             title: 'Title ' + x, 
-            count: x *100}));
+            count: x * 100}));
     }
     rowGetter (i: number) {
         return this.state._rows[i];
     }
     handleGridRowsUpdated = ({fromRow, toRow, updated}) => {
         let rows = this.state._rows.slice();
-        
+
         this.setState({ rows });
     };
     render() {

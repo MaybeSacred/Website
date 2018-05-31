@@ -28,6 +28,8 @@ let programmingLinks = [
     """http://paulgraham.com/pypar.html""", "The Python Paradox"
     """http://blog.ploeh.dk/""", "ploeh blog"
     """http://quotes.cat-v.org/programming/""", "A Selection of Great Programming Quotes"
+    """https://github.com/dhilipsiva/webapp-checklist""","Web Developer Checklist"
+    """https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/""", "Things You Should Never Do"
 ]
 let funLinks = [
     """http://www.juliawertz.com/""", "Julia Wertz"

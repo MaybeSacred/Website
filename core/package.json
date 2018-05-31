@@ -18,21 +18,22 @@
   },
   "homepage": "https://github.com/MaybeSacred/Website#readme",
   "dependencies": {
+    "immutability-helper": "^2.7.0",
+    "lodash": "^4.17.10",
+    "react": "^16.4.0",
+    "react-data-grid": "^4.0.7",
+    "react-dom": "^16.4.0"
+  },
+  "devDependencies": {
     "@types/immutability-helper": "^2.6.3",
     "@types/lodash": "^4.14.109",
     "@types/react": "^16.3.14",
     "@types/react-data-grid": "^2.0.11",
     "@types/react-dom": "^16.0.5",
-    "immutability-helper": "^2.7.0",
-    "lodash": "^4.17.10",
-    "react": "^16.4.0",
-    "react-data-grid": "^4.0.7",
-    "react-dom": "^16.4.0",
     "ts-loader": "^4.3.0",
     "typescript": "^2.8.3",
-    "webpack": "^4.9.1"
-  },
-  "devDependencies": {
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack": "^4.9.1",
     "webpack-cli": "^2.1.4"
   }
 }
