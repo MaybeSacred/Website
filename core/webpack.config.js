@@ -7,7 +7,6 @@ var config = {
     path: path.resolve(__dirname, "../public"),
     filename: "bundle.js"
   },
-  devtool: "source-map",
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
   },

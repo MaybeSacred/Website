@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "magic": "webpack"
+    "magic": "webpack",
+    "start": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -18,11 +19,13 @@
   },
   "homepage": "https://github.com/MaybeSacred/Website#readme",
   "dependencies": {
+    "fp-ts": "^1.6.1",
     "immutability-helper": "^2.7.0",
     "lodash": "^4.17.10",
     "react": "^16.4.0",
     "react-data-grid": "^4.0.7",
-    "react-dom": "^16.4.0"
+    "react-dom": "^16.4.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "@types/immutability-helper": "^2.6.3",
@@ -30,6 +33,7 @@
     "@types/react": "^16.3.14",
     "@types/react-data-grid": "^2.0.11",
     "@types/react-dom": "^16.0.5",
+    "@types/uuid": "^3.4.3",
     "ts-loader": "^4.3.0",
     "typescript": "^2.8.3",
     "uglifyjs-webpack-plugin": "^1.2.5",
