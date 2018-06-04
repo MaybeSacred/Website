@@ -10,7 +10,7 @@ var config = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
   },
-  mode: "production",
+  mode: "development",
   module: {
     rules: [
       {

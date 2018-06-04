@@ -1,6 +1,18 @@
 import * as React from "react";
 let Logo = "https://logrocket.com/img/logo.png";
-export default class FirstComponent extends React.Component <{}> {
+class User {
+    firstName: string;
+    lastName: string;
+    constructor(firstName:string, lastName:string){
+        this.firstName=firstName;
+        this.lastName=lastName;
+    }
+}
+function formatName(user:User){
+    return `${user.firstName} ${user.lastName}`;
+}
+
+export class FirstComponent extends React.Component <{}> {
     render() {
         return (
             <div>
@@ -8,7 +20,7 @@ export default class FirstComponent extends React.Component <{}> {
                 <div>
                     <img src={Logo}/>
                 </div>
-                <p>I am a component</p>
+                <p>{formatName(new User("Jon","Bronk"))}</p>
             </div>
         );
     }

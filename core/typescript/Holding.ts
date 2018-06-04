@@ -1,7 +1,7 @@
 import * as fp from "fp-ts";
 import * as uuid from "uuid/v4";
 import { Option } from "fp-ts/lib/Option";
-//import { Option } from "Option";
+
 /**
  * A Guid class reminiscent of the .NET Guid class
  */
@@ -34,21 +34,20 @@ export class Asset {
  */
 export class Holding {
     readonly id: Guid;
-    readonly symbol: Asset;
+    readonly asset: Asset;
     readonly currentShares: number;
     readonly desiredPercentage: number;
     readonly description: string;
-    constructor(id: Guid, symbol: Asset, desiredPercentage: number, currentShares: number, description?: string) {
+    constructor(id: Guid, asset: Asset, desiredPercentage: number, currentShares: number, description?: string) {
         this.id = id;
-        this.symbol = symbol;
+        this.asset = asset;
         this.desiredPercentage = desiredPercentage;
         this.currentShares = currentShares;
         this.description = description || "";
-
     }
-    with(id?: Guid, symbol?: Asset, desiredPercentage?: number, shares?: number, description?: string) {
+    with(id?: Guid, asset?: Asset, desiredPercentage?: number, shares?: number, description?: string) {
         return new Holding(id || this.id,
-            symbol || this.symbol,
+            asset || this.asset,
             desiredPercentage || this.desiredPercentage,
             shares || this.currentShares,
             description || this.description);
