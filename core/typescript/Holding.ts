@@ -34,19 +34,22 @@ export class Asset {
  */
 export class Holding {
     readonly id: Guid;
+    readonly portfolio: string;
     readonly asset: Asset;
     readonly currentShares: number;
     readonly desiredPercentage: number;
     readonly description: string;
-    constructor(id: Guid, asset: Asset, desiredPercentage: number, currentShares: number, description?: string) {
+    constructor(id: Guid, portfolio: string, asset: Asset, desiredPercentage: number, currentShares: number, description?: string) {
         this.id = id;
+        this.portfolio = portfolio;
         this.asset = asset;
         this.desiredPercentage = desiredPercentage;
         this.currentShares = currentShares;
         this.description = description || "";
     }
-    with(id?: Guid, asset?: Asset, desiredPercentage?: number, shares?: number, description?: string) {
+    with(id?: Guid, portfolio?: string, asset?: Asset, desiredPercentage?: number, shares?: number, description?: string) {
         return new Holding(id || this.id,
+            portfolio || this.portfolio,
             asset || this.asset,
             desiredPercentage || this.desiredPercentage,
             shares || this.currentShares,
