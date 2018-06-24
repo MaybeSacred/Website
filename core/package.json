@@ -19,17 +19,21 @@
   },
   "homepage": "https://github.com/MaybeSacred/Website#readme",
   "dependencies": {
-    "@types/react-table": "^6.7.11",
     "fp-ts": "^1.6.1",
     "immutability-helper": "^2.7.0",
     "lodash": "^4.17.10",
     "react": "^16.4.0",
     "react-data-grid": "^4.0.7",
     "react-dom": "^16.4.0",
+    "react-redux": "^5.0.7",
     "react-table": "^6.8.6",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
+    "@types/react-redux": "^6.0.2",
+    "@types/react-table": "^6.7.11",
     "@types/immutability-helper": "^2.6.3",
     "@types/lodash": "^4.14.109",
     "@types/react": "^16.3.14",

@@ -7,57 +7,49 @@ import { Holding, Asset, Guid } from "./Holding";
 import { HoldingViewModel } from "./HoldingViewModel";
 import { FirstComponent } from "./FirstComponent";
 import { Example } from "./ReactTable";
+import Counter from "./ReactRedux";
+import { AppState, actionsEnums } from "./ReactRedux";
+import { ColorDisplayerContainer } from './ColorDisplayer';
+import { ColorPickerContainer } from './ColorPicker';
+import { Provider } from "react-redux";
+import reduxThunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from "redux";
 
-// interface Props {}
-// interface State {
-//     rows: Holding[]
-// }
-// class Example extends React.Component<Props,State> {
-//     _columns: any[];
-//     constructor(props, context) {
-//         super(props, context);
-//         this._columns = [
-//             { key: 'symbol', name: 'Symbol', editable: true },
-//             { key: 'currentPrice', name: 'Current Price', editable: true },
-//             { key: 'currentShares', name: 'Current Shares', editable: true },
-//             { key: 'desiredPercentage', name: 'Desired Percentage', editable: true },
-//             { key: 'currentPercentage', name: 'Current Percentage', editable: true },
-//             { key: 'desiredShares', name: 'Desired Shares', editable: true },
-//             { key: 'description', name: 'Description', editable: true }
-//         ];
-//         this.state = { rows: this.createRows() };
-//         this.rowGetter = this.rowGetter.bind(this);
-//     }
-//     createRows() {
-//         return _.times(5, x => new Holding(
-//             Guid.new(),
-//             "Roth",
-//             new Asset(`VOO${x}`, 100 + x),
-//             15,
-//             1));
-//     }
-//     rowGetter(i: number) {
-//         return this.state.rows[i];
-//     }
-//     handleGridRowsUpdated = ({ fromRow, toRow, updated }) => {
-//         let rows = this.state.rows.slice();
-//         for (let i = fromRow; i <= toRow; i++) {
-//             //rows[i] = update(rows[i], { $merge: updated });
-//         }
-//         this.setState({ rows });
-//     };
-//     render() {
-//         return (
-//             <ReactDataGrid
-//                 enableCellSelect={true}
-//                 columns={this._columns}
-//                 rowGetter={this.rowGetter}
-//                 rowsCount={this.state.rows.length}
-//                 minHeight={500}
-//                 onGridRowsUpdated={this.handleGridRowsUpdated}
-//             />
-//         );
-//     }
-// }
+const initialState = new AppState(0, { red: 0, green: 0, blue: 180 });
+function reducer(state = initialState, action) {
+    switch (action.type) {
+        case actionsEnums.incr: {
+            return new AppState(state.count + 1, state.favouriteColour);
+        }
+        case actionsEnums.decr: {
+            return new AppState(state.count - 1, state.favouriteColour);
+        }
+        case actionsEnums.updateUserProfileColour: {
+            return new AppState(state.count, action.newColor);
+        }
+        default: {
+            return state;
+        }
+    }
+}
+const App = () => {
+    return (
+        <div>
+            <Counter />
+            <br />
+            <ColorDisplayerContainer />
+            <br />
+            <ColorPickerContainer />
+        </div>
+    );
+};
+const nonTypedWindow: any = window;
+const composeEnhancers = nonTypedWindow.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducer, composeEnhancers(applyMiddleware(reduxThunk)));
 
-ReactDOM.render(<Example />, document.getElementById("root"));
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>
+    , document.getElementById("root")
+);
