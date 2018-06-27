@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "magic": "webpack",
-    "start": "webpack --watch"
+    "dev": "webpack --watch",
+    "release": "webpack -p"
   },
   "repository": {
     "type": "git",
@@ -23,12 +24,11 @@
     "immutability-helper": "^2.7.0",
     "lodash": "^4.17.10",
     "react": "^16.4.0",
-    "react-data-grid": "^4.0.7",
     "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",
-    "react-table": "^6.8.6",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
+    "tslint": "^5.10.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {

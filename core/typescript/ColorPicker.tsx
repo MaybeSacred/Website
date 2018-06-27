@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { ColorSlider } from './ColorSlider';
-import { Color, AppState, updateUserProfileColour } from './ReactRedux';
+import { Color } from './types';
+import { AppState } from './ReactRedux';
+import { updateUserProfileColour } from './actions';
 interface Props {
 	color: Color;
 	onColorUpdated: (color: Color) => void;
@@ -22,7 +24,7 @@ export const ColorPicker = (props: Props) => {
 	);
 };
 
-const mapStateToProps = (state: AppState) => ({color: state.favouriteColour});
-const mapDispatchToProps = (dispatch) => ({onColorUpdated: (color: Color) => dispatch(updateUserProfileColour(color))});
+const mapStateToProps = (state: AppState) => ({ color: state.favouriteColour });
+const mapDispatchToProps = (dispatch) => ({ onColorUpdated: (color: Color) => dispatch(updateUserProfileColour(color)) });
 
 export const ColorPickerContainer = connect(mapStateToProps, mapDispatchToProps)(ColorPicker);

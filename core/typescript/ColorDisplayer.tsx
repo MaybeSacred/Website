@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Color, AppState } from './ReactRedux';
+import { AppState } from './ReactRedux';
+import { Color } from './types';
 interface Props {
 	color: Color;
 }

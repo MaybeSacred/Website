@@ -1,12 +1,17 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { stat } from "fs";
+import { MemberEntity } from "./member";
+import { actionsEnums, } from './actions';
+import { memberAPI } from './memberAPI';
+import { Color } from './types';
 export class AppState {
     count: number;
     favouriteColour: Color;
-    constructor(count: number, favColor: Color) {
+    members: MemberEntity[];
+    constructor(count: number, favColor: Color, members: MemberEntity[]) {
         this.count = count;
         this.favouriteColour = favColor;
+        this.members = members;
     }
 }
 interface Props {
@@ -17,22 +22,7 @@ interface IProps {
     count: number;
     onChange: (action) => void;
 }
-export const actionsEnums = {
-    incr: 'INCREMENT',
-    decr: 'DECREMENT',
-    updateUserProfileColour: 'UPDATE_USERPROFILE_FAVOURITE_COLOUR'
-}
-export interface Color {
-    red: number;
-    green: number;
-    blue: number;
-}
-export const updateUserProfileColour = (newColor: Color) => {
-    return {
-        type: actionsEnums.updateUserProfileColour,
-        newColor: newColor
-    }
-};
+
 export class Counter extends React.Component<IProps, {}> {
     state = { count: 0 }
     constructor(prop: IProps) {
