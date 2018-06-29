@@ -3,7 +3,7 @@
 	"rules": {
 		"indent": [true, "tabs", 4],
 		"quotemark": [true, "single"],
-		"max-line-length": 130,
+		"max-line-length": [true, 130],
 		"object-literal-sort-keys": false,
 		"member-ordering": false,
 		"no-shadowed-variable": false

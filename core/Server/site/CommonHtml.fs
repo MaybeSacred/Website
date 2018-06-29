@@ -45,6 +45,7 @@ let mainLinks = [
     Paths.articles, "Articles"
     Paths.about, "About"
     Paths.``portfolio-balancer``, "Portfolio Balancer"
+    Paths.``react-playground``, "React Playground"
 ]
 let quotes = [
     "Jon Tyson is awesomesauce! You should hire him for any software engineering that is not Java development!","Every Software Engineer Ever"
@@ -52,7 +53,7 @@ let quotes = [
     "It's 2AM! Turn off the %*&#%@ jazz!","Downstairs Neighbor"
     "Cowabunga!","Bart Simpson"
 ]
-let renderLinks links = [for url,link in links do yield! [a [href url; title' link; class' "ml-2"] [RawText link]; br' ]]
+let renderLinks links = [for url,link in links do yield! [div [class' "ml-2"] [a [href url; title' link; ] [RawText link]; br' ]]]
 
 let linkBar () = 
     let li header fullLink links =

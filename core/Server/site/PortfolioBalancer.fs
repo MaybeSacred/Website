@@ -13,5 +13,16 @@ let ``portfolio balancer`` = {
         [
             h2 [class' "text-center"] [rawText "All Articles"]
             div [id' "root"] []
-            script [src "/bundle.js"] []
+            script [src "/portfolio-balancer.bundle.js"] []
+        ] }
+
+let ``react playground`` = {
+    Title = "React-Redux Playground" 
+    Created = DateTime.Now
+    Modified = DateTime(2018, 6, 28)
+    Content = textify
+        [
+            h2 [class' "text-center"] [rawText "All Articles"]
+            div [id' "root"] []
+            script [src "/app.bundle.js"] []
         ] }

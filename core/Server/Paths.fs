@@ -13,3 +13,4 @@
     let ``all-programming-links`` = "/all-programming-links"
     let ``all-fun-links`` = "/all-fun-links"
     let ``portfolio-balancer`` = "/portfolio-balancer"
+    let ``react-playground`` = "/react-playground"
