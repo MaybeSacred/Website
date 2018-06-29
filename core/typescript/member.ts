@@ -1,10 +1,10 @@
-export interface MemberEntity {
+export interface IMemberEntity {
 	id: number;
 	login: string;
 	avatar_url: string;
 }
 export const createDefaultMemberEntity = () => ({
 	id: -1,
-	login: '',
-	avatar_url: ''
+	login: "",
+	avatar_url: "",
 });

@@ -52,7 +52,7 @@ let quotes = [
     "It's 2AM! Turn off the %*&#%@ jazz!","Downstairs Neighbor"
     "Cowabunga!","Bart Simpson"
 ]
-let renderLinks links = [for url,link in links do yield! [a [href url; title' link] [RawText link]; br' ]]
+let renderLinks links = [for url,link in links do yield! [a [href url; title' link; class' "ml-2"] [RawText link]; br' ]]
 
 let linkBar () = 
     let li header fullLink links =
@@ -125,9 +125,9 @@ let template { Title = title''; Content = content } =
                     div [ class' "row justify-content-center bg-secondary"; ] [
                         div [ class' "col"; ] []
                         div [ class' "col-8 text-center"; ] [
-                            rawText "Built with"
+                            rawText "Built with "
                             a [ href "http://fsharp.org";  title' "Main site for F#"; ] [rawText "F#"]
-                            rawText ","
+                            rawText ", "
                             a [ href "http://suave.io";  title' "A simple self-hosting webserver for F#"; ] [rawText "Suave.IO"]
                             rawText ", and a little love"]
                         div [ class' "col text-center"; ] []

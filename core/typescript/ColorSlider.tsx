@@ -1,17 +1,22 @@
-import * as React from 'react';
-interface Props {
-    value: number;
-    onValueUpdated: (newValue: number) => void;
+import * as React from "react";
+interface IProps {
+	value: number;
+	onValueUpdated: (newValue: number) => void;
 }
 
-export const ColorSlider = (props: Props) => {
-    return (
-        <div>
-            <input type="range"
-            min="0"
-            max="255" value={props.value} 
-            onChange={(event) => props.onValueUpdated(parseInt(event.target.value))} />
-        {props.value}
-        </div>
-    );
+export const ColorSlider = (props: IProps) => {
+	return (
+		<div>
+			<input
+				type="range"
+				min="0"
+				max="255"
+				value={props.value}
+				onChange={(event) =>
+					props.onValueUpdated(parseInt(event.target.value, 10))
+				}
+			/>
+			{props.value}
+		</div>
+	);
 };
