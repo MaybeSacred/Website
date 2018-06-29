@@ -1,12 +1,12 @@
-import { IMemberEntity } from "./member";
-import { memberAPI } from "./memberAPI";
-import { Color } from "./types";
+import { IMemberEntity } from './member';
+import { memberAPI } from './memberAPI';
+import { Color } from './types';
 export const actionsEnums = {
-	incr: "INCREMENT",
-	decr: "DECREMENT",
-	updateUserProfileColour: "UPDATE_USERPROFILE_FAVOURITE_COLOUR",
-	MEMBER_REQUEST: "MEMBER_REQUEST",
-	MEMBER_REQUEST_COMPLETED: "MEMEMBER_REQUEST_COMPLETED",
+	incr: 'INCREMENT',
+	decr: 'DECREMENT',
+	updateUserProfileColour: 'UPDATE_USERPROFILE_FAVOURITE_COLOUR',
+	MEMBER_REQUEST: 'MEMBER_REQUEST',
+	MEMBER_REQUEST_COMPLETED: 'MEMEMBER_REQUEST_COMPLETED',
 };
 
 export const updateUserProfileColour = (newColor: Color) => {

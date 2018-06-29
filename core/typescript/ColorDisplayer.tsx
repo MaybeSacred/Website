@@ -1,15 +1,15 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { AppState } from "./ReactRedux";
-import { Color } from "./types";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { AppState } from './ReactRedux';
+import { Color } from './types';
 interface IProps {
 	color: Color;
 }
 
 export const ColorDisplayer = (props: IProps) => {
 	const divStyle = {
-		width: "120px",
-		height: "80px",
+		width: '120px',
+		height: '80px',
 		backgroundColor: `rgb(${props.color.red},${props.color.green},${
 			props.color.blue
 		})`,

@@ -1,9 +1,9 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { actionsEnums } from "./actions";
-import { IMemberEntity } from "./member";
-import { memberAPI } from "./memberAPI";
-import { Color } from "./types";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { actionsEnums } from './actions';
+import { IMemberEntity } from './member';
+import { memberAPI } from './memberAPI';
+import { Color } from './types';
 export class AppState {
 	public count: number;
 	public favouriteColour: Color;

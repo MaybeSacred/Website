@@ -1,10 +1,10 @@
-import { createDefaultMemberEntity, IMemberEntity } from "./member";
+import { createDefaultMemberEntity, IMemberEntity } from './member';
 
 class MemberAPI {
 	// Just return a copy of the mock data
 	public getAllMembers(): Promise<IMemberEntity[]> {
 		const gitHubMembersUrl: string =
-			"https://api.github.com/orgs/lemoncode/members";
+			'https://api.github.com/orgs/lemoncode/members';
 
 		return fetch(gitHubMembersUrl)
 			.then((response) => this.checkStatus(response))
