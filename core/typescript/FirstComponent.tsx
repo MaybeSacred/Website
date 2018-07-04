@@ -1,5 +1,5 @@
-import * as React from "react";
-const Logo = "https://logrocket.com/img/logo.png";
+import * as React from 'react';
+const Logo = 'https://logrocket.com/img/logo.png';
 class User {
 	public firstName: string;
 	public lastName: string;
@@ -20,7 +20,7 @@ export class FirstComponent extends React.Component<{}> {
 				<div>
 					<img src={Logo} />
 				</div>
-				<p>{formatName(new User("Jon", "Bronk"))}</p>
+				<p>{formatName(new User('Jon', 'Bronk'))}</p>
 			</div>
 		);
 	}

@@ -4,7 +4,7 @@ const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 var config = (env, argv) => {
 	return {
 		entry: {
-			app: "./typescript/app.tsx",
+			app: "./typescript/main.tsx",
 			"portfolio-balancer": "./portfolio-balancer/app.tsx"
 		},
 		output: {

@@ -1,4 +1,3 @@
-import { Asset, Guid, Holding } from './Holding';
 export class HoldingViewModel {
 	public symbol: string | null;
 	public currentPrice: number | null;
