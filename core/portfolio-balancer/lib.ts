@@ -21,3 +21,4 @@ export function lookUpAsset(asset: Asset): Option<Asset> {
 	return new fp.option.Some(new Asset(asset.symbol, 100));
 	// return fp.option.none;
 }
+

@@ -1,3 +1,6 @@
+import { Guid } from './lib';
+import { IHolding } from './types';
 export default interface IAppState {
-	count: number;
+	holdingIDs: string[];
+	holdings: IHolding[];
 }
