@@ -1,6 +1,8 @@
 import { Guid } from './lib';
-import { IHolding } from './types';
+import { IAccount, IAsset, IHolding } from './types';
 export default interface IAppState {
-	holdingIDs: string[];
+	accounts: IAccount[];
+	holdingIDs: Guid[];
 	holdings: IHolding[];
+	assets: Map<Guid, IAsset>;
 }

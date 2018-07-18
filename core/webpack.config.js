@@ -1,15 +1,17 @@
 const path = require("path");
 const webpack = require("webpack");
-const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 var config = (env, argv) => {
 	return {
 		entry: {
-			app: "./typescript/main.tsx",
+			//app: "./typescript/main.tsx",
 			"portfolio-balancer": "./portfolio-balancer/app.tsx"
 		},
 		output: {
 			path: path.resolve(__dirname, "../public"),
 			filename: "[name].bundle.js"
+		},
+		optimization:{
+
 		},
 		resolve: {
 			extensions: [".ts", ".tsx", ".js", ".jsx"]
@@ -20,7 +22,7 @@ var config = (env, argv) => {
 				{
 					test: /\.tsx?$/,
 					loader: "ts-loader",
-					exclude: /node_modules/
+					exclude: /(node_modules|typescript)/
 				},
 				{
 					test: /\.css$/,
@@ -34,7 +36,6 @@ var config = (env, argv) => {
 					argv.mode || "development"
 				)
 			}),
-			new UglifyJSPlugin({ sourceMap: true })
 		]
 	};
 };

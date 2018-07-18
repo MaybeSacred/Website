@@ -1,21 +1,39 @@
-import { Guid } from './lib';
-
+import { Guid, Zero } from './lib';
+/** An individual asset such as a stock or bond */
 export interface IAsset {
-	readonly id: string;
+	readonly id: Guid;
 	readonly symbol: string;
 	readonly price: number;
 }
+const DefaultIAsset = {
+	id: Zero,
+	symbol: '',
+	price: 0,
+};
+export { DefaultIAsset };
 /**
- * Represents an equity or other asset holding
+ * Represents an individual equity or other asset holding
  */
 export interface IHolding {
-	readonly id: string;
-	readonly portfolio: string;
-	readonly assetId: AssetId;
+	readonly id: Guid;
+	readonly assetId: Guid;
 	readonly currentShares: number;
 	readonly desiredShares: number;
 	readonly currentPercentage: number;
 	readonly desiredPercentage: number;
 	readonly description: string;
 }
-type AssetId = string;
+/** A portfolio of holdings */
+export interface IPortfolio {
+	readonly id: Guid;
+	readonly name: string;
+	readonly description: string;
+	readonly holdings: Guid[];
+}
+/** Represents a top-level account containing portfolios */
+export interface IAccount {
+	readonly id: Guid;
+	readonly name: string;
+	readonly description: string;
+	readonly portfolios: Guid[];
+}

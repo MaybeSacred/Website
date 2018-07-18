@@ -66,12 +66,12 @@ const store = createStore(
 		applyMiddleware(reduxThunk),
 		window[devToolsExtension] ? window[devToolsExtension]() : (f) => f,
 	),
-);
+); // component={App}>
 const history = syncHistoryWithStore(hashHistory, store);
 ReactDOM.render(
 	<div>
 		<Router history={history}>
-			<Route path='/' component={App}>
+			<Route path='/'>
 				<IndexRoute component={LoginContainer} />
 				<Route path='login' component={LoginContainer} />
 				<Route path='student-list' component={StudentListContainer} />
