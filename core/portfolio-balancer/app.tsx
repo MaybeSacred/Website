@@ -9,7 +9,7 @@ import { actionsEnums } from './actions';
 import HoldingsContainer from './holdingsContainer';
 import IAppState from './IAppState';
 import { initialState } from './SampleData';
-
+// add feature where the more off a current holding is, the stronger its colour is
 function reducer(state = initialState, action) {
 	switch (action.type) {
 		default: {

@@ -8,14 +8,15 @@ interface IProps {
 
 export const HoldingDisplayer = (props: IProps) => {
 	return (
-		<div>
+		<div className='row'>
 			<HeldAssetDisplayer asset={props.asset} />
-			<input value={props.holding.currentShares} />
-			<input value={props.holding.desiredShares} />
-			<input value={props.holding.currentPercentage} />
-			<input value={props.holding.desiredPercentage} />
-			<input value={props.holding.description} />
-			<button>Press Me!</button>
+			<input className='col-1 form-control' value={props.holding.currentShares} />
+			<span className='col'>{props.holding.desiredShares}</span>
+			<input className='col-1 form-control' value={props.holding.desiredPercentage} />
+			<span className='col'>{props.holding.currentPercentage}</span>
+			<input className='col form-control' value={props.holding.description} />
+			<button className='col'>Press Me!</button>
+			<button className='col'>Press Me!</button>
 		</div>
 	);
 };

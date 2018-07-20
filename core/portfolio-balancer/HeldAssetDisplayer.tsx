@@ -7,11 +7,9 @@ interface IProps {
 export const HeldAssetDisplayer = (props: IProps) => {
 	return (
 		<>
-			<span>Asset</span>
-			<span>{props.asset.price}</span>
-			<input value={props.asset.price} />
-			<span>{props.asset.symbol}</span>
-			<input value={props.asset.symbol} />
+			<span className='col'>Asset: </span>
+			<input className='col-1 form-control' value={props.asset.symbol} />
+			<input className='col-1 form-control' value={props.asset.price} />
 		</>
 	);
 };
