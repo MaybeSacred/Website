@@ -32,7 +32,7 @@ const initialState = {
 			portfolios: [id7],
 		},
 	],
-	holdingIds: [id1, id4],
+	holdingIds: [id1, id4, id7],
 	holdings: [
 		{
 			id: id1,

@@ -7,12 +7,10 @@ var config = (env, argv) => {
 			"portfolio-balancer": "./portfolio-balancer/app.tsx"
 		},
 		output: {
-			path: path.resolve(__dirname, "../public"),
+			path: path.resolve(__dirname, "../public/dist"),
 			filename: "[name].bundle.js"
 		},
-		optimization:{
-
-		},
+		optimization: {},
 		resolve: {
 			extensions: [".ts", ".tsx", ".js", ".jsx"]
 		},
@@ -35,7 +33,7 @@ var config = (env, argv) => {
 				"process.env.NODE_ENV": JSON.stringify(
 					argv.mode || "development"
 				)
-			}),
+			})
 		]
 	};
 };
