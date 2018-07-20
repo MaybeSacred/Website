@@ -50,31 +50,33 @@ let customErrorHandler ex msg ctx =
 let logHit msg ctx = 
     log.Trace "%s" msg
     async { return Some ctx }
+
+let app = 
+    choose 
+        [ GET >=> choose (seq {
+            yield pathScan "/articles/%s" (fun x -> 
+                match Articles.articles.ContainsKey x with
+                | true -> Articles.articles.[x] |> renderTemplateOK
+                | _ -> (fun _ -> async { return None })
+            )
+            for p, page in mainPages do
+                yield path p >=> logHit p >=> request (fun _ -> renderTemplateOK page)
+            yield path Paths.experimental >=> logHit Paths.experimental >=> Files.browseFileHome "experimental.html"
+            yield pathRegex "(.*)\.(css|png|js)" >=> Files.browseHome
+        } |> List.ofSeq)
+          POST >=> choose [
+            path "/hello" >=> OK "Hello Post"
+            path "/goodbye" >=> OK "Good bye Post" 
+          ]
+          // TODO: add cutesy 404 page
+          RequestErrors.NOT_FOUND "Oh snap! Looks like that page doesn't exist" >=> (fun req -> async { log.Debug "%A" req; return Some req })
+        ]
+
 [<EntryPoint>]
-let main argv = 
-    let cts = new CancellationTokenSource()
-    let app = 
-        choose 
-            [ GET >=> choose (seq {
-                yield pathScan "/articles/%s" (fun x -> 
-                    match Articles.articles.ContainsKey x with
-                    | true -> Articles.articles.[x] |> renderTemplateOK
-                    | _ -> (fun _ -> async { return None })
-                )
-                for p, page in mainPages do
-                    yield path p >=> logHit p >=> request (fun _ -> renderTemplateOK page)
-                yield path Paths.experimental >=> logHit Paths.experimental >=> Files.browseFileHome "experimental.html"
-                yield pathRegex "(.*)\.(css|png|js)" >=> Files.browseHome
-            } |> List.ofSeq)
-              POST >=> choose [
-                path "/hello" >=> OK "Hello Post"
-                path "/goodbye" >=> OK "Good bye Post" 
-              ]
-              // TODO: add cutesy 404 page
-              RequestErrors.NOT_FOUND "Oh snap! Looks like that page doesn't exist" >=> (fun req -> log.Debug "%A" req; async { return Some req })
-            ]
+let main argv =
     let parser = ArgumentParser.Create<Arguments>(programName="Server.exe")
     let cliArgs = parser.Parse(argv, ignoreMissing=true, ignoreUnrecognized=true)
+    let cts = new CancellationTokenSource()
     let conf = { defaultConfig with 
                     errorHandler = customErrorHandler
                     cancellationToken = cts.Token; 
