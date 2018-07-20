@@ -68,6 +68,7 @@ let app =
             path "/hello" >=> OK "Hello Post"
             path "/goodbye" >=> OK "Good bye Post" 
           ]
+          //Suave.
           // TODO: add cutesy 404 page
           RequestErrors.NOT_FOUND "Oh snap! Looks like that page doesn't exist" >=> (fun req -> async { log.Debug "%A" req; return Some req })
         ]

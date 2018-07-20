@@ -13,7 +13,7 @@ let ``portfolio balancer`` = {
         [
             h2 [class' "text-center"] [rawText "All Articles"]
             div [id' "root"] []
-            script [src "/portfolio-balancer.bundle.js"] []
+            script [src "/dist/portfolio-balancer.bundle.js"] []
         ] }
 
 let ``react playground`` = {
@@ -24,5 +24,5 @@ let ``react playground`` = {
         [
             h2 [class' "text-center"] [rawText "All Articles"]
             div [id' "root"] []
-            script [src "/app.bundle.js"] []
+            script [src "/dist/app.bundle.js"] []
         ] }
