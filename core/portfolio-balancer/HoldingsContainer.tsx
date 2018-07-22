@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { HoldingDisplayer } from './HoldingDisplayer';
+import HoldingDisplayer from './HoldingDisplayer';
 import IAppState from './IAppState';
 import { Guid } from './lib';
 import { DefaultIAsset, IAsset, IHolding } from './types';
 interface IProps {
-	holdings: IHolding[];
+	holdings: Map<Guid, IHolding>;
 	assets: Map<Guid, IAsset>;
 }
 function mapStateToProps(state: IAppState) {
@@ -16,42 +16,36 @@ function mapStateToProps(state: IAppState) {
 	};
 }
 const holdingsContainer = (props: IProps) => {
-	const holdings = props.holdings.map((x) => {
+	const values = [...props.holdings.values()];
+	const totalValue = _.sumBy(
+		values,
+		(x) =>
+			x.currentShares *
+			(props.assets.get(x.assetId) || DefaultIAsset).price,
+	);
+	const holdings = values.map((x) => {
 		return (
 			<HoldingDisplayer
 				key={x.id}
-				holding={x}
-				asset={props.assets.get(x.assetId) || DefaultIAsset}
+				holdingId={x.id}
+				totalValue={totalValue}
 			/>
 		);
 	});
-	const currentPct = new Intl.NumberFormat('en-US', {
+	const desiredPct = _.sumBy(values, (x) => x.desiredPercentage);
+	const computedTotalValue = new Intl.NumberFormat(undefined, {
 		style: 'currency',
 		currency: 'USD',
-	}).format(_.sumBy(props.holdings, (x) => x.currentPercentage));
-	const desiredPct = _.sumBy(props.holdings, (x) => x.desiredPercentage);
-	const computedTotalValue = new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-	}).format(
-		_.sumBy(
-			props.holdings,
-			(x) =>
-				x.currentShares *
-				(props.assets.get(x.assetId) || DefaultIAsset).price,
-		),
-	);
+	}).format(totalValue);
 	return (
-		<div>
+		<div className='container-fluid'>
 			<span>Values</span>
 			{holdings}
 			<div className='row'>
-				<span className='col-1'>Total Current Percentage</span>
-				<div className='col-1'>{currentPct}</div>
-				<span className='col-1'>Total Desired Percentage</span>
-				<div className='col-1'>{desiredPct}</div>
-				<span className='col-1'>Total Value</span>
-				<div className='col-1'>{computedTotalValue}</div>
+				<span className='col'>Total Desired Percentage</span>
+				<div className='col'>{desiredPct}</div>
+				<span className='col'>Total Value</span>
+				<div className='col'>{computedTotalValue}</div>
 			</div>
 		</div>
 	);

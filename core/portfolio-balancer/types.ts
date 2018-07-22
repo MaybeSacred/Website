@@ -18,8 +18,6 @@ export interface IHolding {
 	readonly id: Guid;
 	readonly assetId: Guid;
 	readonly currentShares: number;
-	readonly desiredShares: number;
-	readonly currentPercentage: number;
 	readonly desiredPercentage: number;
 	readonly description: string;
 }
