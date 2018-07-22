@@ -8,6 +8,7 @@ import reduxThunk from 'redux-thunk';
 import { actionsEnums } from './actions';
 import HoldingsContainer from './holdingsContainer';
 import IAppState from './IAppState';
+import PortfolioContainer from './PortfolioContainer';
 import { initialState } from './SampleData';
 // add feature where the more off a current holding is, the stronger its colour is
 function reducer(state = initialState, action) {
@@ -19,7 +20,7 @@ function reducer(state = initialState, action) {
 }
 
 const App = () => {
-	return <HoldingsContainer />;
+	return <PortfolioContainer />;
 };
 const nonTypedWindow: any = window;
 const composeEnhancers =

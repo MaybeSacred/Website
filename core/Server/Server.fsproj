@@ -22,6 +22,7 @@
     <Compile Include="site\AllLinks.fs" />
     <Compile Include="site\PortfolioBalancer.fs" />
     <Compile Include="site\Articles.fs" />
+    <Compile Include="site\Error.fs" />
     <Compile Include="Server.fs" />
   </ItemGroup>
 

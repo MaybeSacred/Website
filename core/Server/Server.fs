@@ -42,8 +42,10 @@ type Arguments =
         member s.Usage =
             match s with
             | Port _ -> "the port to start the server listening on"
+//let showErrorCats code = 
 
 let customErrorHandler ex msg ctx =
+    let s = ctx.response.status.code
     log.ErrorException ex "%s" msg 
     // Change implementation as you wish
     ServerErrors.INTERNAL_ERROR ("Custom error handler: " + msg) ctx

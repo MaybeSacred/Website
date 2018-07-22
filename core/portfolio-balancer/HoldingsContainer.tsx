@@ -6,12 +6,15 @@ import IAppState from './IAppState';
 import { Guid } from './lib';
 import { DefaultIAsset, IAsset, IHolding } from './types';
 interface IProps {
-	holdings: Map<Guid, IHolding>;
+	holdings: IHolding[];
 	assets: Map<Guid, IAsset>;
 }
-function mapStateToProps(state: IAppState) {
+interface IPassableProps {
+	holdingIds: Guid[];
+}
+function mapStateToProps(state: IAppState, ownProps: IPassableProps) {
 	return {
-		holdings: state.holdings,
+		holdings: ownProps.holdingIds.map((x) => state.holdings.get(x)),
 		assets: state.assets,
 	};
 }
@@ -23,12 +26,14 @@ const holdingsContainer = (props: IProps) => {
 			x.currentShares *
 			(props.assets.get(x.assetId) || DefaultIAsset).price,
 	);
+	const totalShares = _.sumBy(values, (x) => x.desiredPercentage);
 	const holdings = values.map((x) => {
 		return (
 			<HoldingDisplayer
 				key={x.id}
 				holdingId={x.id}
 				totalValue={totalValue}
+				totalShares={totalShares}
 			/>
 		);
 	});
@@ -39,7 +44,16 @@ const holdingsContainer = (props: IProps) => {
 	}).format(totalValue);
 	return (
 		<div className='container-fluid'>
-			<span>Values</span>
+			<div className='row'>
+				<span className='col-1'>Ticker</span>
+				<span className='col-1'>Price</span>
+				<span className='col-1'>Current Shares</span>
+				<span className='col'>Final Shares</span>
+				<span className='col-1'>Desired Weight</span>
+				<span className='col'>Current Percentage in Portfolio</span>
+				<span className='col'>Notes</span>
+				<span className='col'>Press</span>
+			</div>
 			{holdings}
 			<div className='row'>
 				<span className='col'>Total Desired Percentage</span>

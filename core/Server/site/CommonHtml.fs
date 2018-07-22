@@ -130,7 +130,8 @@ let template { Title = title''; Content = content } =
                             a [ href "http://fsharp.org";  title' "Main site for F#"; ] [rawText "F#"]
                             rawText ", "
                             a [ href "http://suave.io";  title' "A simple self-hosting webserver for F#"; ] [rawText "Suave.IO"]
-                            rawText ", and a little love"]
+                            rawText ", and a little love"
+                        ]
                         div [ class' "col text-center"; ] []
                     ]
                 ]

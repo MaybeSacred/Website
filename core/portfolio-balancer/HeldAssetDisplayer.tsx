@@ -18,7 +18,6 @@ const mapStateToProps = (state: IAppState, ownProps: IConvertibleProps) => {
 const heldAssetDisplayer = (props: IProps) => {
 	return (
 		<>
-			<span className='col'>Asset: </span>
 			<input className='col-1 form-control' value={props.asset.symbol} />
 			<input className='col-1 form-control' value={props.asset.price} />
 		</>

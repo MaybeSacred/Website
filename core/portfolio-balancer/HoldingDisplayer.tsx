@@ -13,23 +13,25 @@ interface IProps {
 interface IPassableProps {
 	holdingId: Guid;
 	totalValue: number;
+	totalShares: number;
 }
 const mapStateToProps = (state: IAppState, ownProps: IPassableProps) => {
 	const holding = state.holdings.get(ownProps.holdingId);
+	if (holding === undefined) { throw new Error(`${ownProps.holdingId}`); }
 	const asset = state.assets.get(holding.assetId) || DefaultIAsset;
 	const currentPercentage =
 		(100 * holding.currentShares * asset.price) / ownProps.totalValue;
 	const desiredShares =
-		((holding.desiredPercentage / 100) * ownProps.totalValue) / asset.price;
+		((holding.desiredPercentage / ownProps.totalShares) * ownProps.totalValue) / asset.price;
 	return {
 		holding,
 		currentPercentage: currentPercentage.toLocaleString(undefined, {
-			maximumFractionDigits: 1,
 			minimumFractionDigits: 1,
+			maximumFractionDigits: 1,
 		}),
 		desiredShares: desiredShares.toLocaleString(undefined, {
-			maximumFractionDigits: 2,
 			minimumFractionDigits: 0,
+			maximumFractionDigits: 2,
 		}),
 	};
 };
@@ -51,7 +53,6 @@ const HoldingDisplayer = (props: IProps) => {
 				className='col form-control'
 				value={props.holding.description}
 			/>
-			<button className='col'>Press Me!</button>
 			<button className='col'>Press Me!</button>
 		</div>
 	);
