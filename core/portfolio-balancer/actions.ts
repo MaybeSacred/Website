@@ -5,3 +5,4 @@ export const actionsEnums = {
 	MEMBER_REQUEST: 'MEMBER_REQUEST',
 	MEMBER_REQUEST_COMPLETED: 'MEMEMBER_REQUEST_COMPLETED',
 };
+export function updateDesiredPercentage() {}

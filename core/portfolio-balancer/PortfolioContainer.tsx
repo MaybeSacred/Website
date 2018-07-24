@@ -4,18 +4,22 @@ import { connect } from 'react-redux';
 import HoldingDisplayer from './HoldingDisplayer';
 import IAppState from './IAppState';
 import { Guid } from './lib';
-import { DefaultIAsset, IAsset, IHolding } from './types';
+import { IAsset, IHolding, IPortfolio } from './types';
 interface IProps {
+	portfolio: IPortfolio;
 	holdings: IHolding[];
-	assets: Map<Guid, IAsset>;
 }
 interface IPassableProps {
-	holdingIds: Guid[];
+	portfolioId: Guid;
 }
 function mapStateToProps(state: IAppState, ownProps: IPassableProps) {
+	const portfolio = state.portfolios.get(ownProps.portfolioId);
+	if (portfolio === undefined) {
+		throw new Error(`${ownProps.portfolioId} not found in portfolios`);
+	}
 	return {
-		holdings: ownProps.holdingIds.map((x) => state.holdings.get(x)),
-		assets: state.assets,
+		portfolio,
+		holdings: portfolio.holdings.map((x) => state.holdings.get(x)),
 	};
 }
 const portfolioContainer = (props: IProps) => {
@@ -39,6 +43,10 @@ const portfolioContainer = (props: IProps) => {
 	}).format(totalValue);
 	return (
 		<div className='container-fluid my-3'>
+			<div className='row'>
+				<span className='col'>{props.portfolio.name}</span>
+				<span className='col'>{props.portfolio.description}</span>
+			</div>
 			<div className='row'>
 				<span className='col-1'>Ticker</span>
 				<span className='col-1'>Price</span>

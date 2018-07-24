@@ -24,7 +24,7 @@ const accountContainer = (props: IProps) => {
 	// 		(props.assets.get(x.assetId) || DefaultIAsset).price,
 	// );
 	const portfolios = values.map((x) => {
-		return <PortfolioContainer key={x.id} holdingIds={x.holdings} />;
+		return <PortfolioContainer key={x.id} portfolioId={x.id} />;
 	});
 	// const desiredPct = _.sumBy(values, (x) => x.desiredPercentage);
 	// const computedTotalValue = new Intl.NumberFormat(undefined, {

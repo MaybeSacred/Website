@@ -18,7 +18,7 @@ interface IPassableProps {
 const mapStateToProps = (state: IAppState, ownProps: IPassableProps) => {
 	const holding = state.holdings.get(ownProps.holdingId);
 	if (holding === undefined) {
-		throw new Error(`${ownProps.holdingId}`);
+		throw new Error(`${ownProps.holdingId} not found in holdings`);
 	}
 	const currentPercentage =
 		(100 * holding.currentShares * holding.price) / ownProps.totalValue;
