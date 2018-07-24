@@ -16,11 +16,7 @@ const mapStateToProps = (state: IAppState, ownProps: IConvertibleProps) => {
 	};
 };
 const heldAssetDisplayer = (props: IProps) => {
-	return (
-		<>
-			<input className='col-1 form-control' value={props.asset.symbol} />
-			<input className='col-1 form-control' value={props.asset.price} />
-		</>
+	return (<div></div>
 	);
 };
 export default connect(mapStateToProps)(heldAssetDisplayer);

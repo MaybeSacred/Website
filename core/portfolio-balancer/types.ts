@@ -16,7 +16,8 @@ export { DefaultIAsset };
  */
 export interface IHolding {
 	readonly id: Guid;
-	readonly assetId: Guid;
+	readonly symbol: string;
+	readonly price: number;
 	readonly currentShares: number;
 	readonly desiredPercentage: number;
 	readonly description: string;

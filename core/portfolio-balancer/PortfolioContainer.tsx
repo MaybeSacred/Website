@@ -1,40 +1,61 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import HoldingsContainer from './HoldingsContainer';
+import HoldingDisplayer from './HoldingDisplayer';
 import IAppState from './IAppState';
 import { Guid } from './lib';
-import { IPortfolio } from './types';
+import { DefaultIAsset, IAsset, IHolding } from './types';
 interface IProps {
-	portfolios: IPortfolio[];
+	holdings: IHolding[];
+	assets: Map<Guid, IAsset>;
 }
 interface IPassableProps {
-	portfolioIds: Guid[];
+	holdingIds: Guid[];
 }
 function mapStateToProps(state: IAppState, ownProps: IPassableProps) {
 	return {
-		portfolios: ownProps.portfolioIds.map((x) => state.portfolios.get(x)),
+		holdings: ownProps.holdingIds.map((x) => state.holdings.get(x)),
+		assets: state.assets,
 	};
 }
 const portfolioContainer = (props: IProps) => {
-	const values = [...props.portfolios.values()];
-	// const totalValue = _.sumBy(
-	// 	values,
-	// 	(x) =>
-	// 		x.currentShares *
-	// 		(props.assets.get(x.assetId) || DefaultIAsset).price,
-	// );
-	const portfolios = values.map((x) => {
-		return <HoldingsContainer key={x.id} holdingIds={x.holdings} />;
+	const values = [...props.holdings.values()];
+	const totalValue = _.sumBy(values, (x) => x.currentShares * x.price);
+	const totalShares = _.sumBy(values, (x) => x.desiredPercentage);
+	const holdings = values.map((x) => {
+		return (
+			<HoldingDisplayer
+				key={x.id}
+				holdingId={x.id}
+				totalValue={totalValue}
+				totalShares={totalShares}
+			/>
+		);
 	});
-	// const desiredPct = _.sumBy(values, (x) => x.desiredPercentage);
-	// const computedTotalValue = new Intl.NumberFormat(undefined, {
-	// 	style: 'currency',
-	// 	currency: 'USD',
-	// }).format(totalValue);
+	const desiredPct = _.sumBy(values, (x) => x.desiredPercentage);
+	const computedTotalValue = new Intl.NumberFormat(undefined, {
+		style: 'currency',
+		currency: 'USD',
+	}).format(totalValue);
 	return (
-		<div className='container-fluid'>
-			{portfolios}
+		<div className='container-fluid my-3'>
+			<div className='row'>
+				<span className='col-1'>Ticker</span>
+				<span className='col-1'>Price</span>
+				<span className='col-1'>Current Shares</span>
+				<span className='col-1'>Final Shares</span>
+				<span className='col-1'>Desired Weight</span>
+				<span className='col-1'>Current Percentage</span>
+				<span className='col'>Notes</span>
+				<span className='col'>Press</span>
+			</div>
+			{holdings}
+			<div className='row'>
+				<span className='col'>Total Desired Percentage</span>
+				<div className='col'>{desiredPct}</div>
+				<span className='col'>Total Value</span>
+				<div className='col'>{computedTotalValue}</div>
+			</div>
 		</div>
 	);
 };

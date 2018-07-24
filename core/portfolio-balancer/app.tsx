@@ -5,10 +5,9 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
+import AccountContainer from './AccountContainer';
 import { actionsEnums } from './actions';
-import HoldingsContainer from './holdingsContainer';
 import IAppState from './IAppState';
-import PortfolioContainer from './PortfolioContainer';
 import { initialState } from './SampleData';
 // add feature where the more off a current holding is, the stronger its colour is
 function reducer(state = initialState, action) {
@@ -19,9 +18,6 @@ function reducer(state = initialState, action) {
 	}
 }
 
-const App = () => {
-	return <PortfolioContainer />;
-};
 const nonTypedWindow: any = window;
 const composeEnhancers =
 	nonTypedWindow.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -32,7 +28,7 @@ const store = createStore(
 
 ReactDOM.render(
 	<Provider store={store}>
-		<App />
+		<AccountContainer />
 	</Provider>,
 	document.getElementById('root'),
 );

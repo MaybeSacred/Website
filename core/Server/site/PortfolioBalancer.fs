@@ -11,7 +11,7 @@ let ``portfolio balancer`` = {
     Modified = DateTime(2018, 5, 27)
     Content = textify
         [
-            h2 [class' "text-center"] [rawText "All Articles"]
+            h2 [class' "text-center"] [rawText "Financial Portfolio Balancer"]
             div [id' "root"] []
             script [src "/dist/portfolio-balancer.bundle.js"] []
         ] }

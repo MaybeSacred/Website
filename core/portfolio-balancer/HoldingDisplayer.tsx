@@ -17,12 +17,15 @@ interface IPassableProps {
 }
 const mapStateToProps = (state: IAppState, ownProps: IPassableProps) => {
 	const holding = state.holdings.get(ownProps.holdingId);
-	if (holding === undefined) { throw new Error(`${ownProps.holdingId}`); }
-	const asset = state.assets.get(holding.assetId) || DefaultIAsset;
+	if (holding === undefined) {
+		throw new Error(`${ownProps.holdingId}`);
+	}
 	const currentPercentage =
-		(100 * holding.currentShares * asset.price) / ownProps.totalValue;
+		(100 * holding.currentShares * holding.price) / ownProps.totalValue;
 	const desiredShares =
-		((holding.desiredPercentage / ownProps.totalShares) * ownProps.totalValue) / asset.price;
+		((holding.desiredPercentage / ownProps.totalShares) *
+			ownProps.totalValue) /
+		holding.price;
 	return {
 		holding,
 		currentPercentage: currentPercentage.toLocaleString(undefined, {
@@ -37,20 +40,29 @@ const mapStateToProps = (state: IAppState, ownProps: IPassableProps) => {
 };
 const HoldingDisplayer = (props: IProps) => {
 	return (
-		<div className='row'>
-			<HeldAssetDisplayer assetId={props.holding.assetId} />
+		<div className='form-row'>
 			<input
-				className='col-1 form-control'
+				type='text'
+				className='col-1 form-control '
+				value={props.holding.symbol}
+			/>
+			<input
+				type='text'
+				className='col-1 form-control '
+				value={props.holding.price}
+			/>
+			<input
+				className='col-1 form-control '
 				value={props.holding.currentShares}
 			/>
-			<span className='col'>{props.desiredShares}</span>
+			<p className='col-1 align-bottom'>{props.desiredShares}</p>
 			<input
-				className='col-1 form-control'
+				className='col-1 form-control '
 				value={props.holding.desiredPercentage}
 			/>
-			<span className='col'>{props.currentPercentage}</span>
+			<span className='col-1 align-bottom'>{props.currentPercentage}</span>
 			<input
-				className='col form-control'
+				className='col form-control '
 				value={props.holding.description}
 			/>
 			<button className='col'>Press Me!</button>
