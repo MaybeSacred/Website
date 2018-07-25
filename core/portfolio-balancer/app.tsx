@@ -6,17 +6,10 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
 import AccountContainer from './AccountContainer';
-import { actionsEnums } from './actions';
-import IAppState from './IAppState';
+import { reducer } from './Reducer';
 import { initialState } from './SampleData';
+
 // add feature where the more off a current holding is, the stronger its colour is
-function reducer(state = initialState, action) {
-	switch (action.type) {
-		default: {
-			return state;
-		}
-	}
-}
 
 const nonTypedWindow: any = window;
 const composeEnhancers =

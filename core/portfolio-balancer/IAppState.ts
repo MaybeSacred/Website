@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import { Guid } from './lib';
 import { IAccount, IAsset, IHolding, IPortfolio } from './types';
 export default interface IAppState {

@@ -1,5 +1,6 @@
-import { newGuid } from './lib';
-
+import { Map } from 'immutable';
+import { Guid, newGuid } from './lib';
+import { IAsset, IHolding, IPortfolio } from './types';
 const id1 = newGuid();
 const id2 = newGuid();
 const id3 = newGuid();
@@ -17,7 +18,7 @@ const initialState = {
 		portfolios: [id8, id9],
 	},
 	portfolioIds: [id8, id9],
-	portfolios: new Map([
+	portfolios: Map<Guid, IPortfolio>([
 		[
 			id8,
 			{
@@ -38,7 +39,7 @@ const initialState = {
 		],
 	]),
 	holdingIds: [id1, id4, id7],
-	holdings: new Map([
+	holdings: Map<Guid, IHolding>([
 		[
 			id1,
 			{
@@ -73,7 +74,7 @@ const initialState = {
 			},
 		],
 	]),
-	assets: new Map([
+	assets: Map<Guid, IAsset>([
 		[
 			id2,
 			{

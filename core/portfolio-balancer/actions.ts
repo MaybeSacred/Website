@@ -1,8 +1,12 @@
-export const actionsEnums = {
-	incr: 'INCREMENT',
-	decr: 'DECREMENT',
-	updateUserProfileColour: 'UPDATE_USERPROFILE_FAVOURITE_COLOUR',
-	MEMBER_REQUEST: 'MEMBER_REQUEST',
-	MEMBER_REQUEST_COMPLETED: 'MEMEMBER_REQUEST_COMPLETED',
+import { Guid } from './lib';
+export enum ActionType {
+	UpdateDesiredPercentage = 'UpdateDesiredPercentage',
+}
+
+export const updateDesiredPercentage = (id: Guid, newPct: number) => {
+	return {
+		type: ActionType.UpdateDesiredPercentage,
+		id,
+		newPct,
+	};
 };
-export function updateDesiredPercentage() {}

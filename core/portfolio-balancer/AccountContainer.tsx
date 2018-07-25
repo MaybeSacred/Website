@@ -16,21 +16,9 @@ function mapStateToProps(state: IAppState) {
 	};
 }
 const accountContainer = (props: IProps) => {
-	const values = [...props.portfolios.values()];
-	// const totalValue = _.sumBy(
-	// 	values,
-	// 	(x) =>
-	// 		x.currentShares *
-	// 		(props.assets.get(x.assetId) || DefaultIAsset).price,
-	// );
-	const portfolios = values.map((x) => {
+	const portfolios = props.portfolios.map((x) => {
 		return <PortfolioContainer key={x.id} portfolioId={x.id} />;
 	});
-	// const desiredPct = _.sumBy(values, (x) => x.desiredPercentage);
-	// const computedTotalValue = new Intl.NumberFormat(undefined, {
-	// 	style: 'currency',
-	// 	currency: 'USD',
-	// }).format(totalValue);
 	return (
 		<div className='container-fluid'>
 			<div className='row'>
