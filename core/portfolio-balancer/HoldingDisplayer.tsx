@@ -1,16 +1,25 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { updateDesiredPercentage } from './actions';
-import HeldAssetDisplayer from './HeldAssetDisplayer';
+import {
+	updateCurrentShares,
+	updateDescription,
+	updateDesiredPercentage,
+	updatePrice,
+	updateSymbol,
+} from './actions';
 import IAppState from './IAppState';
 import { Guid } from './lib';
-import { DefaultIAsset, IAsset, IHolding } from './types';
+import { IHolding } from './types';
 interface IProps {
 	holding: IHolding;
 	currentPercentage: string;
 	desiredShares: string;
 	onDesiredPercentageUpdated: (id: Guid, newPct: number) => void;
+	onSymbolUpdated: (id: Guid, symbol: string) => void;
+	onPriceUpdated: (id: Guid, price: number) => void;
+	onCurrentSharesUpdated: (id: Guid, currentShares: number) => void;
+	onDescriptionUpdated: (id: Guid, description: string) => void;
 }
 interface IPassableProps {
 	holdingId: Guid;
@@ -20,6 +29,14 @@ interface IPassableProps {
 const mapDispatchToProps = (dispatch) => ({
 	onDesiredPercentageUpdated: (id: Guid, newPct: number) =>
 		dispatch(updateDesiredPercentage(id, newPct)),
+	onSymbolUpdated: (id: Guid, symbol: string) =>
+		dispatch(updateSymbol(id, symbol)),
+	onPriceUpdated: (id: Guid, price: number) =>
+		dispatch(updatePrice(id, price)),
+	onCurrentSharesUpdated: (id: Guid, currentShares: number) =>
+		dispatch(updateCurrentShares(id, currentShares)),
+	onDescriptionUpdated: (id: Guid, description: string) =>
+		dispatch(updateDescription(id, description)),
 });
 const mapStateToProps = (state: IAppState, ownProps: IPassableProps) => {
 	const holding = state.holdings.get(ownProps.holdingId);
@@ -51,15 +68,33 @@ const HoldingDisplayer = (props: IProps) => {
 				type='text'
 				className='col-1 form-control'
 				value={props.holding.symbol}
+				onChange={(event) =>
+					props.onSymbolUpdated(
+						props.holding.id,
+						event.target.value,
+					)
+				}
 			/>
 			<input
 				type='text'
 				className='col-1 form-control'
 				value={props.holding.price}
+				onChange={(event) =>
+					props.onPriceUpdated(
+						props.holding.id,
+						parseFloat(event.target.value),
+					)
+				}
 			/>
 			<input
 				className='col-1 form-control'
 				value={props.holding.currentShares}
+				onChange={(event) =>
+					props.onCurrentSharesUpdated(
+						props.holding.id,
+						parseFloat(event.target.value),
+					)
+				}
 			/>
 			<p className='col-1 align-bottom'>{props.desiredShares}</p>
 			<input
@@ -78,10 +113,19 @@ const HoldingDisplayer = (props: IProps) => {
 			<input
 				className='col form-control'
 				value={props.holding.description}
+				onChange={(event) =>
+					props.onDescriptionUpdated(
+						props.holding.id,
+						event.target.value,
+					)
+				}
 			/>
 			<button className='col'>Press Me!</button>
 		</div>
 	);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HoldingDisplayer);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(HoldingDisplayer);
