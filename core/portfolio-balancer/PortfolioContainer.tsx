@@ -22,25 +22,25 @@ function mapStateToProps(state: IAppState, ownProps: IPassableProps) {
 		holdings: portfolio.holdings.map((x) => state.holdings.get(x)),
 	};
 }
+const formatter = new Intl.NumberFormat(undefined, {
+	style: 'currency',
+	currency: 'USD',
+});
 const portfolioContainer = (props: IProps) => {
 	const values = [...props.holdings.values()];
-	const totalValue = _.sumBy(values, (x) => x.currentShares * x.price);
+	const allocatedValue = _.sumBy(values, (x) => x.currentShares * x.price);
 	const totalShares = _.sumBy(values, (x) => x.desiredPercentage);
 	const holdings = values.map((x) => {
 		return (
 			<HoldingDisplayer
 				key={x.id}
 				holdingId={x.id}
-				totalValue={totalValue}
+				totalValue={props.portfolio.totalValue}
 				totalShares={totalShares}
 			/>
 		);
 	});
 	const desiredPct = _.sumBy(values, (x) => x.desiredPercentage);
-	const computedTotalValue = new Intl.NumberFormat(undefined, {
-		style: 'currency',
-		currency: 'USD',
-	}).format(totalValue);
 	return (
 		<div className='container-fluid my-3'>
 			<div className='row'>
@@ -54,15 +54,17 @@ const portfolioContainer = (props: IProps) => {
 				<span className='col-1'>Final Shares</span>
 				<span className='col-1'>Desired Weight</span>
 				<span className='col-1'>Current Percentage</span>
-				<span className='col'>Notes</span>
-				<span className='col'>Press</span>
+				<span className='col-1'>Notes</span>
+				<span className='col-1'>Press</span>
 			</div>
 			{holdings}
 			<div className='row'>
-				<span className='col'>Total Desired Percentage</span>
+				<span className='col'>Total Weight</span>
 				<div className='col'>{desiredPct}</div>
 				<span className='col'>Total Value</span>
-				<div className='col'>{computedTotalValue}</div>
+				<div className='col'>{formatter.format(allocatedValue)}</div>
+				<span className='col'>Total Value</span>
+				<div className='col'>{formatter.format(props.portfolio.totalValue)}</div>
 			</div>
 		</div>
 	);

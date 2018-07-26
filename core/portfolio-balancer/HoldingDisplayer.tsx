@@ -111,7 +111,7 @@ const HoldingDisplayer = (props: IProps) => {
 				{props.currentPercentage}
 			</span>
 			<input
-				className='col form-control'
+				className='col-1 form-control'
 				value={props.holding.description}
 				onChange={(event) =>
 					props.onDescriptionUpdated(
@@ -120,7 +120,7 @@ const HoldingDisplayer = (props: IProps) => {
 					)
 				}
 			/>
-			<button className='col'>Press Me!</button>
+			<button className='col-1'>Press Me!</button>
 		</div>
 	);
 };

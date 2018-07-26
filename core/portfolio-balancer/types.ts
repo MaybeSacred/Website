@@ -27,6 +27,7 @@ export interface IPortfolio {
 	readonly id: Guid;
 	readonly name: string;
 	readonly description: string;
+	readonly totalValue: number;
 	readonly holdings: Guid[];
 }
 /** Represents a top-level account containing portfolios */
