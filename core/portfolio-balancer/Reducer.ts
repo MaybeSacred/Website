@@ -15,6 +15,15 @@ const updateIHoldingProperty = (state: IAppState, id: Guid, property: any) => {
 
 export const reducer = (state = initialState, action) => {
 	switch (action.type) {
+		case ActionType.UpdatePortfolioTotalValue: {
+			return {
+				...state,
+				portfolios: state.portfolios.set(
+					action.id,
+					Object.assign({}, state.portfolios.get(action.id), {totalValue: action.totalValue}),
+				),
+			};
+		}
 		case ActionType.UpdateSymbol: {
 			return updateIHoldingProperty(state, action.id, {
 				symbol: action.symbol,

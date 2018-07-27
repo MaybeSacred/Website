@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { updatePortfolioTotalValue } from './actions';
 import HoldingDisplayer from './HoldingDisplayer';
 import IAppState from './IAppState';
 import { Guid } from './lib';
@@ -8,6 +9,7 @@ import { IAsset, IHolding, IPortfolio } from './types';
 interface IProps {
 	portfolio: IPortfolio;
 	holdings: IHolding[];
+	onTotalValueUpdated: (id: Guid, totalPortfolioValue: string) => void;
 }
 interface IPassableProps {
 	portfolioId: Guid;
@@ -22,6 +24,11 @@ function mapStateToProps(state: IAppState, ownProps: IPassableProps) {
 		holdings: portfolio.holdings.map((x) => state.holdings.get(x)),
 	};
 }
+
+const mapDispatchToProps = (dispatch) => ({
+	onTotalValueUpdated: (id: Guid, val: string) =>
+		dispatch(updatePortfolioTotalValue(id, val)),
+});
 const formatter = new Intl.NumberFormat(undefined, {
 	style: 'currency',
 	currency: 'USD',
@@ -35,7 +42,8 @@ const portfolioContainer = (props: IProps) => {
 			<HoldingDisplayer
 				key={x.id}
 				holdingId={x.id}
-				totalValue={props.portfolio.totalValue}
+				totalAssetValue={allocatedValue}
+				totalPortfolioValue={props.portfolio.totalValue}
 				totalShares={totalShares}
 			/>
 		);
@@ -53,23 +61,33 @@ const portfolioContainer = (props: IProps) => {
 				<span className='col-1'>Current Shares</span>
 				<span className='col-1'>Final Shares</span>
 				<span className='col-1'>Desired Weight</span>
-				<span className='col-1'>Current Percentage</span>
-				<span className='col-1'>Notes</span>
-				<span className='col-1'>Press</span>
+				<span className='col-1'>Percentage of Assets</span>
+				<span className='col-1'>Percentage of Portfolio</span>
+				<span className='col'>Notes</span>
+				<span className='col'>Press</span>
 			</div>
 			{holdings}
-			<div className='row'>
+			<div className='form-row'>
 				<span className='col'>Total Weight</span>
 				<div className='col'>{desiredPct}</div>
 				<span className='col'>Total Value</span>
 				<div className='col'>{formatter.format(allocatedValue)}</div>
 				<span className='col'>Total Value</span>
-				<div className='col'>{formatter.format(props.portfolio.totalValue)}</div>
+				<input
+					className='col'
+					value={formatter.format(props.portfolio.totalValue)}
+					onChange={(event) =>
+						props.onTotalValueUpdated(
+							props.portfolio.id,
+							event.target.value,
+						)
+					}
+				/>
 			</div>
 		</div>
 	);
 };
 export default connect(
 	mapStateToProps,
-	{},
+	mapDispatchToProps,
 )(portfolioContainer);

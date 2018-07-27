@@ -10,7 +10,8 @@ import { reducer } from './Reducer';
 import { initialState } from './SampleData';
 
 // add feature where the more off a current holding is, the stronger its colour is
-
+// add column for amount to buy or sell to be balanced
+// make total portfolio value updateable
 const nonTypedWindow: any = window;
 const composeEnhancers =
 	nonTypedWindow.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

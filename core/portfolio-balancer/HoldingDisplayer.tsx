@@ -1,57 +1,63 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import {
-	updateCurrentShares,
-	updateDescription,
-	updateDesiredPercentage,
-	updatePrice,
-	updateSymbol,
-} from './actions';
+import * as Actions from './actions';
 import IAppState from './IAppState';
 import { Guid } from './lib';
 import { IHolding } from './types';
+// separate out percentage into one for current weight and one for weight in portfolio
+// add total value of account, maybe some other aggregates like percentage each asset is of total account value
 interface IProps {
 	holding: IHolding;
-	currentPercentage: string;
+	percentOfAssets: string;
+	percentOfPortfolio: string;
 	desiredShares: string;
-	onDesiredPercentageUpdated: (id: Guid, newPct: number) => void;
+	onDesiredPercentageUpdated: (id: Guid, newPct: string) => void;
 	onSymbolUpdated: (id: Guid, symbol: string) => void;
-	onPriceUpdated: (id: Guid, price: number) => void;
-	onCurrentSharesUpdated: (id: Guid, currentShares: number) => void;
+	onPriceUpdated: (id: Guid, price: string) => void;
+	onCurrentSharesUpdated: (id: Guid, currentShares: string) => void;
 	onDescriptionUpdated: (id: Guid, description: string) => void;
 }
 interface IPassableProps {
 	holdingId: Guid;
-	totalValue: number;
+	totalAssetValue: number;
+	totalPortfolioValue: number;
 	totalShares: number;
 }
 const mapDispatchToProps = (dispatch) => ({
-	onDesiredPercentageUpdated: (id: Guid, newPct: number) =>
-		dispatch(updateDesiredPercentage(id, newPct)),
+	onDesiredPercentageUpdated: (id: Guid, newPct: string) =>
+		dispatch(Actions.updateDesiredPercentage(id, newPct)),
 	onSymbolUpdated: (id: Guid, symbol: string) =>
-		dispatch(updateSymbol(id, symbol)),
-	onPriceUpdated: (id: Guid, price: number) =>
-		dispatch(updatePrice(id, price)),
-	onCurrentSharesUpdated: (id: Guid, currentShares: number) =>
-		dispatch(updateCurrentShares(id, currentShares)),
+		dispatch(Actions.updateSymbol(id, symbol)),
+	onPriceUpdated: (id: Guid, price: string) =>
+		dispatch(Actions.updatePrice(id, price)),
+	onCurrentSharesUpdated: (id: Guid, currentShares: string) =>
+		dispatch(Actions.updateCurrentShares(id, currentShares)),
 	onDescriptionUpdated: (id: Guid, description: string) =>
-		dispatch(updateDescription(id, description)),
+		dispatch(Actions.updateDescription(id, description)),
 });
 const mapStateToProps = (state: IAppState, ownProps: IPassableProps) => {
 	const holding = state.holdings.get(ownProps.holdingId);
 	if (holding === undefined) {
 		throw new Error(`${ownProps.holdingId} not found in holdings`);
 	}
-	const currentPercentage =
-		(100 * holding.currentShares * holding.price) / ownProps.totalValue;
+	const percentOfAssets =
+		(100 * holding.currentShares * holding.price) /
+		ownProps.totalAssetValue;
+	const percentOfPortfolio =
+		(100 * holding.currentShares * holding.price) /
+		ownProps.totalPortfolioValue;
 	const desiredShares =
 		((holding.desiredPercentage / ownProps.totalShares) *
-			ownProps.totalValue) /
+			ownProps.totalPortfolioValue) /
 		holding.price;
 	return {
 		holding,
-		currentPercentage: currentPercentage.toLocaleString(undefined, {
+		percentOfAssets: percentOfAssets.toLocaleString(undefined, {
+			minimumFractionDigits: 1,
+			maximumFractionDigits: 1,
+		}),
+		percentOfPortfolio: percentOfPortfolio.toLocaleString(undefined, {
 			minimumFractionDigits: 1,
 			maximumFractionDigits: 1,
 		}),
@@ -69,10 +75,7 @@ const HoldingDisplayer = (props: IProps) => {
 				className='col-1 form-control'
 				value={props.holding.symbol}
 				onChange={(event) =>
-					props.onSymbolUpdated(
-						props.holding.id,
-						event.target.value,
-					)
+					props.onSymbolUpdated(props.holding.id, event.target.value)
 				}
 			/>
 			<input
@@ -82,7 +85,7 @@ const HoldingDisplayer = (props: IProps) => {
 				onChange={(event) =>
 					props.onPriceUpdated(
 						props.holding.id,
-						parseFloat(event.target.value),
+						event.target.value,
 					)
 				}
 			/>
@@ -92,7 +95,7 @@ const HoldingDisplayer = (props: IProps) => {
 				onChange={(event) =>
 					props.onCurrentSharesUpdated(
 						props.holding.id,
-						parseFloat(event.target.value),
+						event.target.value,
 					)
 				}
 			/>
@@ -103,15 +106,16 @@ const HoldingDisplayer = (props: IProps) => {
 				onChange={(event) =>
 					props.onDesiredPercentageUpdated(
 						props.holding.id,
-						parseFloat(event.target.value),
+						event.target.value,
 					)
 				}
 			/>
+			<span className='col-1 align-bottom'>{props.percentOfAssets}</span>
 			<span className='col-1 align-bottom'>
-				{props.currentPercentage}
+				{props.percentOfPortfolio}
 			</span>
 			<input
-				className='col-1 form-control'
+				className='col form-control'
 				value={props.holding.description}
 				onChange={(event) =>
 					props.onDescriptionUpdated(
@@ -120,7 +124,7 @@ const HoldingDisplayer = (props: IProps) => {
 					)
 				}
 			/>
-			<button className='col-1'>Press Me!</button>
+			<button className='col'>Press Me!</button>
 		</div>
 	);
 };
