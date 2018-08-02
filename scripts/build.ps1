@@ -10,7 +10,7 @@ Set-Location ../haskell/yesod/aquila/
 stack build --copy-bins
 $localPath = stack path --local-bin
 Set-Location ../../../
-Copy-Item -Path ./public/ -Destination "$($outDir)/public/" -Force -Recurse -Container
+Copy-Item -Path ./public/ -Destination "$outDir/public/" -Force -Recurse -Container
 Copy-Item -Path ./haskell/yesod/aquila/static/ -Destination $aquilaDir -Recurse -Force -Container
 Copy-Item -Path $localPath -Destination $aquilaDir -Force -Recurse -Container
 Copy-Item -Path ./nginx/ -Destination /etc/nginx/sites-available/ -Force -Recurse -Container
