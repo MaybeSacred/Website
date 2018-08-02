@@ -41,11 +41,11 @@ let funLinks = [
 let mainLinks = [
     Paths.home, "Home"
     Paths.``qr-generator``, "QR Generator"
-    Paths.``license-generator``, ".NET License Generator"
-    Paths.articles, "Articles"
+    //Paths.``license-generator``, ".NET License Generator"
+    //Paths.articles, "Articles"
     Paths.about, "About"
-    Paths.``portfolio-balancer``, "Portfolio Balancer"
-    Paths.``react-playground``, "React Playground"
+    //Paths.``portfolio-balancer``, "Portfolio Balancer"
+    //Paths.``react-playground``, "React Playground"
 ]
 let quotes = [
     "Jon Tyson is awesomesauce! You should hire him for any software engineering that is not Java development!","Every Software Engineer Ever"
