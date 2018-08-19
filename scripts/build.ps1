@@ -1,26 +1,32 @@
-$outDir = "../var/nginx"
+param (
+	$OutDir = "../var/nginx",
+	$IsProd = $false
+)
 # output directory for aquila subsite
-$aquilaDir = "$outDir/aquila"
+$aquilaDir = "$OutDir/aquila"
 
-New-Item -ItemType Directory $aquilaDir -Force
 Set-Location ./core/
-dotnet build ./Server/Server.fsproj -c Release -o "../../../$outDir/core" -f netcoreapp2.0
-npm run magic
+# TODO: have dotnet build normally, copy files manually
+dotnet build ./Server/Server.fsproj -c Release -o "./bin/core" -f netcoreapp2.0
+npm run release
 Set-Location ../haskell/yesod/aquila/
 stack build --copy-bins
 $localPath = stack path --local-bin
 Set-Location ../../../
-Copy-Item -Path ./public/ -Destination "$outDir/public/" -Force -Recurse -Container
-Copy-Item -Path ./haskell/yesod/aquila/static/ -Destination $aquilaDir -Recurse -Force -Container
-Copy-Item -Path $localPath -Destination $aquilaDir -Force -Recurse -Container
-Copy-Item -Path ./nginx/ -Destination /etc/nginx/sites-available/ -Force -Recurse -Container
-# start server programs
-if ($IsLinux) {
-    nginx -s reload
+# copy to destination
+if ($IsProd) {
+	
+	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./core/Server/bin/core/* "$OutDir/core/"
+	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./public/* "$OutDir/public/"
+	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./haskell/yesod/aquila/static/* $aquilaDir
+	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r $localPath/* $aquilaDir
+	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./nginx/* /etc/nginx/sites-available/
 }
-$dotnet = Start-Process "dotnet" "$outDir/core/Server.dll -- --port 8080" -PassThru
-Set-Location $aquilaDir
-$aquila = Start-Process "aquila" "--port 3000" -PassThru
-Start-Sleep -s 1
-if ($dotnet.HasExited -and $dotnet.ExitCode -ne 0) { Write-Verbose "dotnet failed to start and exited with code $($dotnet.ExitCode)" }
-if ($aquila.HasExited -and $aquila.ExitCode -ne 0) { Write-Verbose "aquila failed to start and exited with code $($aquila.ExitCode)" }
+else {
+	Remove-Item -Path "$OutDir/*" -Recurse
+	Copy-Item -Path ./core/Server/bin/core/ -Destination "$OutDir/core/" -Force -Recurse -Container
+	Copy-Item -Path ./public/ -Destination "$OutDir/public/" -Force -Recurse -Container
+	Copy-Item -Path ./haskell/yesod/aquila/static/ -Destination $aquilaDir -Recurse -Force -Container
+	Copy-Item -Path $localPath -Destination $aquilaDir -Force -Recurse -Container
+	Copy-Item -Path ./nginx/ -Destination /etc/nginx/sites-available/ -Force -Recurse -Container
+}

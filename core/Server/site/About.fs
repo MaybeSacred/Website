@@ -43,23 +43,23 @@ let about = {
                 code [] [rawText "dd if=/dev/random of=/dev/sda"]
             ]
             li [] [
-                rawText "Favorite SubReddit: "
+                rawText "Favorite SubReddits: "
                 anchor "r/ProgrammerHumor" """https://www.reddit.com/r/ProgrammerHumor"""
                 rawText " and "
                 anchor "r/aww" """https://www.reddit.com/r/aww/"""
             ]
             li [] [
-                rawText "Favorite animal-themed TV Show: "
+                rawText "Favorite Animal-Themed TV Show: "
                 anchor "Bojack Horseman" """https://www.netflix.com/title/70300800"""
             ]
             li [] [
-                //music
+                // music
             ]
             li [] [
-                //programming lang
+                // programming lang
             ]
             li [] [
-                //brewery- ballast point, include pic
+                // brewery- ballast point, include pic
             ]
         ]
         // r/aww and r/programmerhumour
