@@ -1,8 +1,10 @@
-$dir = "/var/nginx/"
+param (
+	$Server = "ubuntu@ec2-18-222-225-56.us-east-2.compute.amazonaws.com"
+)
 
-
+ssh -i C:\Users\jtyso\Downloads\main.pem $Server
 if ($IsLinux) {
-    nginx -s reload
+    sudo nginx -s reload
 }
 $dotnet = Start-Process "dotnet" "$outDir/core/Server.dll -- --port 8080" -PassThru
 Set-Location $aquilaDir

@@ -15,12 +15,11 @@ $localPath = stack path --local-bin
 Set-Location ../../../
 # copy to destination
 if ($IsProd) {
-	
 	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./core/Server/bin/core/* "$OutDir/core/"
 	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./public/* "$OutDir/public/"
 	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./haskell/yesod/aquila/static/* $aquilaDir
 	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r $localPath/* $aquilaDir
-	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./nginx/* /etc/nginx/sites-available/
+	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./nginx/* "$OutDir../../etc/nginx/sites-available/"
 }
 else {
 	Remove-Item -Path "$OutDir/*" -Recurse
