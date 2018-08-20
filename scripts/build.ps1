@@ -1,8 +1,9 @@
 param (
-	$OutDir = "../var/nginx",
+	$ServerPath = "",
 	$IsProd = $false
 )
 # output directory for aquila subsite
+$OutDir = "$ServerPath/var/nginx"
 $aquilaDir = "$OutDir/aquila"
 
 Set-Location ./core/
@@ -19,7 +20,7 @@ if ($IsProd) {
 	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./public/* "$OutDir/public/"
 	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./haskell/yesod/aquila/static/* $aquilaDir
 	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r $localPath/* $aquilaDir
-	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./nginx/* "$OutDir../../etc/nginx/sites-available/"
+	pscp -i C:\Users\jtyso\Downloads\main.ppk -batch -r ./nginx/* "$ServerPath/etc/nginx/sites-available/"
 }
 else {
 	Remove-Item -Path "$OutDir/*" -Recurse
@@ -27,5 +28,5 @@ else {
 	Copy-Item -Path ./public/ -Destination "$OutDir/public/" -Force -Recurse -Container
 	Copy-Item -Path ./haskell/yesod/aquila/static/ -Destination $aquilaDir -Recurse -Force -Container
 	Copy-Item -Path $localPath -Destination $aquilaDir -Force -Recurse -Container
-	Copy-Item -Path ./nginx/ -Destination /etc/nginx/sites-available/ -Force -Recurse -Container
+	Copy-Item -Path ./nginx/ -Destination "$ServerPath/etc/nginx/sites-available/" -Force -Recurse -Container
 }
