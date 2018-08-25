@@ -18,7 +18,7 @@ let about = {
         br []
         h3 [] [rawText "About Me"]
         p [] [
-            sprintf """Hi! My name is Jon Tyson. I'm %i years young and currently live in 
+            sprintf """Hi, my name is Jon Tyson. I'm %i years young and currently live in 
             Atlanta, Georgia. I have a dog named Bronx and enjoy long walks on the beach, long hikes in 
             the forest, and short download times. I am currently working as a 
             full-stack software engineer at """ (yearsOld <| DateTime(1990,10,26)) |> rawText 
@@ -51,12 +51,10 @@ let about = {
             li [] [
                 rawText "Favorite Animal-Themed TV Show: "
                 anchor "Bojack Horseman" """https://www.netflix.com/title/70300800"""
+                img [src ""]
             ]
             li [] [
                 // music
-            ]
-            li [] [
-                // programming lang
             ]
             li [] [
                 // brewery- ballast point, include pic

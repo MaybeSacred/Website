@@ -38,10 +38,12 @@ let mainPages = [
 ]
 type Arguments =
     | Port of UInt16
+    | HomeFolder of string
     interface IArgParserTemplate with
         member s.Usage =
             match s with
             | Port _ -> "the port to start the server listening on"
+            | HomeFolder _ -> "the folder to load files from"
 //let showErrorCats code = 
 
 let customErrorHandler ex msg ctx =
@@ -79,12 +81,13 @@ let app =
 let main argv =
     let parser = ArgumentParser.Create<Arguments>(programName="Server.exe")
     let cliArgs = parser.Parse(argv, ignoreMissing=true, ignoreUnrecognized=true)
+    let path = cliArgs.TryGetResult(<@ HomeFolder @>) |> Option.orElse <| Some ( Path.GetFullPath( Path.Combine( __SOURCE_DIRECTORY__, "..", "..", "public" ) ) )
     let cts = new CancellationTokenSource()
     let conf = { defaultConfig with 
                     errorHandler = customErrorHandler
                     cancellationToken = cts.Token; 
                     bindings = [cliArgs.GetResult(<@ Port @>, 8081us) |> HttpBinding.create HTTP IPAddress.Loopback]
-                    homeFolder = Some <| Path.GetFullPath( Path.Combine( __SOURCE_DIRECTORY__, "..", "..", "public" ) ); }
+                    homeFolder = path }
     let listening, server = startWebServerAsync conf app
     Async.Start (server, cts.Token)
     // just use concurrent queue, with blocking for backpressure 
