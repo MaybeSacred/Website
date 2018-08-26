@@ -2,6 +2,8 @@
 open Suave.FunctionalViewEngine
 open MoreLinq
 open Types
+open System.Collections.Generic
+
 let id' = attr "id"
 let class' = attr "class"
 let href = attr "href"
@@ -48,11 +50,23 @@ let mainLinks = [
     //Paths.``react-playground``, "React Playground"
 ]
 let quotes = [
-    "Jon Tyson is awesomesauce! You should hire him for any software engineering that is not Java development!","Every Software Engineer Ever"
-    "Jon feed Bronx and walk Bronx every day and love Bronx. Jon good boy, very good boy like Bronx","Bronx, Jon's dog"
-    "It's 2AM! Turn off the %*&#%@ jazz!","Downstairs Neighbor"
-    "Cowabunga!","Bart Simpson"
+    "Jon feed Bronx and walk Bronx every day and love Bronx. Bronx best boy, but Jon good boy too", "Bronx, my Dog"
+    """So you run and you run to catch up with the sun but it's sinking
+Racing around to come up behind you again.
+The sun is the same in a relative way but you're older,
+Shorter of breath and one day closer to death""", "Pink Floyd - Time"
+    "Give me a lever long enough, and a place to stand, and I will move the earth", "Archimedes"
+    "I started out with nothing and I still got most of it left", "Tom Waits"
+    "Life - and I don't suppose I'm the first to make this comparison - is a disease: sexually transmitted, and invariably fatal","Neil Gaiman - Death"
+    "The price of anything is the amount of life you exchange for it", "Henry David Thoreau"
 ]
+let quoteBar () =
+    let quote, author = quotes.RandomSubset 1 |> Seq.head
+    blockquote [ class' "blockquote text-center small"; ] [
+        p [attr "style" "font-size: .9em"] [rawText quote]
+        footer [ class' "blockquote-footer"; ] [rawText author]
+    ]
+
 let renderLinks links = [for url,link in links do yield! [div [class' "ml-2"] [a [href url; title' link; ] [RawText link]; br' ]]]
 
 let linkBar () = 
@@ -113,12 +127,7 @@ let template { Title = title''; Content = content } =
                         | Text s -> [rawText s]
                         | Nodes s -> s ()
                     )
-                    div [ class' "col-12 col-sm-3 col-xl-2 py-3 bg-light"; ] [
-                        blockquote [ class' "blockquote text-center"; ] [
-                            p [] [rawText "Quotes Quotes Quotes"]
-                            footer [ class' "blockquote-footer"; ] [rawText "By Quotes"]
-                        ]
-                    ]
+                    div [ class' "col-12 col-sm-3 col-xl-2 py-3 bg-light"; ] [quoteBar ()]
                 ]
             ]
             footer [ class' "footer"; ] [
@@ -126,13 +135,16 @@ let template { Title = title''; Content = content } =
                     div [ class' "row justify-content-center bg-secondary"; ] [
                         div [ class' "col"; ] []
                         div [ class' "col-8 text-center"; ] [
-                            rawText "Built with "
-                            a [ href "http://fsharp.org";  title' "Main site for F#"; ] [rawText "F#"]
-                            rawText ", "
-                            a [ href "http://suave.io";  title' "A simple self-hosting webserver for F#"; ] [rawText "Suave.IO"]
-                            rawText ", and a little love"
+                            p [] [
+                                a [ href "https://github.com/MaybeSacred/Website";  title' "Source code for this site"; ] [rawText "Source code available on GitHub"]
+                                rawText ". Built with "
+                                a [ href "http://fsharp.org";  title' "Main site for F#"; ] [rawText "F#"]
+                                rawText ", "
+                                a [ href "http://suave.io";  title' "A simple self-hosting webserver for F#"; ] [rawText "Suave.IO"]
+                                rawText ", and a little love"
+                            ]
                         ]
-                        div [ class' "col text-center"; ] []
+                        div [ class' "col"; ] []
                     ]
                 ]
             ]
