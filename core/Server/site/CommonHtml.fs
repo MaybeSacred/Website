@@ -2,7 +2,6 @@
 open Suave.FunctionalViewEngine
 open MoreLinq
 open Types
-open System.Collections.Generic
 
 let id' = attr "id"
 let class' = attr "class"
@@ -17,6 +16,14 @@ let paragraph = rawText >> List.singleton >> p []
 
 let domainName = "tysonontech.sytes.net"
 
+let pictureLinks = [
+    """https://i.redd.it/vn4lx6ymivi11.jpg""", """https://www.reddit.com/r/EarthPorn/comments/9b16vn/the_zion_narrows_ut_oc_3024_x_4032_one_of_many/"""
+    """https://i.redd.it/9e735ke272j11.jpg""","""https://www.reddit.com/r/EarthPorn/comments/9bat8f/holyhead_wales_oc_the_three_and_half_hour_boat/"""
+    """https://i.redd.it/9ipxsp81lwi11.jpg""","""https://www.reddit.com/r/EarthPorn/comments/9b32c2/berg_lake_mount_robson_provincial_park_british/"""
+    """https://i.redd.it/12iybvp1oxi11.jpg""","""https://www.reddit.com/r/EarthPorn/comments/9b4ryw/a_magical_sunset_over_monument_valley_utah/"""
+    """https://i.redd.it/vr4g5yblpwi11.jpg""","""https://www.reddit.com/r/EarthPorn/comments/9b3af5/morning_burn_yosemite_np_3654x5473_oc/"""
+    """https://i.redd.it/jcxje1cvh0j11.jpg""","""https://www.reddit.com/r/EarthPorn/comments/9b85vl/evening_light_over_the_ehrwalder_alm_austria_oc/"""
+]
 let programmingLinks = [
     """www.learnyouahaskell.com""", "Learn You a Haskell for Great Good!"
     """https://fsharpforfunandprofit.com""", "F# for Fun and Profit"
@@ -60,11 +67,16 @@ Shorter of breath and one day closer to death""", "Pink Floyd - Time"
     "Life - and I don't suppose I'm the first to make this comparison - is a disease: sexually transmitted, and invariably fatal","Neil Gaiman - Death"
     "The price of anything is the amount of life you exchange for it", "Henry David Thoreau"
 ]
+
 let quoteBar () =
     let quote, author = quotes.RandomSubset 1 |> Seq.head
-    blockquote [ class' "blockquote text-center small"; ] [
-        p [attr "style" "font-size: .9em"] [rawText quote]
-        footer [ class' "blockquote-footer"; ] [rawText author]
+    let pic = pictureLinks.RandomSubset 1 |> Seq.head |> fst
+    [
+        img [src pic; class' "img-fluid p-2 d-block"]
+        blockquote [ class' "blockquote text-center small"; ] [
+            p [attr "style" "font-size: .9em"] [rawText quote]
+            footer [ class' "blockquote-footer"; ] [rawText author]
+        ]
     ]
 
 let renderLinks links = [for url,link in links do yield! [div [class' "ml-2"] [a [href url; title' link; ] [RawText link]; br' ]]]
@@ -127,21 +139,23 @@ let template { Title = title''; Content = content } =
                         | Text s -> [rawText s]
                         | Nodes s -> s ()
                     )
-                    div [ class' "col-12 col-sm-3 col-xl-2 py-3 bg-light"; ] [quoteBar ()]
+                    div [ class' "col-12 col-sm-3 col-xl-2 py-3 bg-light"; ] <| quoteBar ()
                 ]
             ]
             footer [ class' "footer"; ] [
                 div [ class' "container-fluid"; ] [
-                    div [ class' "row justify-content-center bg-secondary"; ] [
+                    div [ class' "row justify-content-center bg-dark"; ] [
                         div [ class' "col"; ] []
                         div [ class' "col-8 text-center"; ] [
-                            p [] [
-                                a [ href "https://github.com/MaybeSacred/Website";  title' "Source code for this site"; ] [rawText "Source code available on GitHub"]
-                                rawText ". Built with "
-                                a [ href "http://fsharp.org";  title' "Main site for F#"; ] [rawText "F#"]
+                            p [class' "text-light"] [
+                                rawText "Built with "
+                                a [ href "http://fsharp.org"; class' "text-info"; title' "Main site for F#"; ] [rawText "F#"]
                                 rawText ", "
-                                a [ href "http://suave.io";  title' "A simple self-hosting webserver for F#"; ] [rawText "Suave.IO"]
-                                rawText ", and a little love"
+                                a [ href "http://suave.io"; class' "text-info"; title' "A simple self-hosting webserver for F#"; ] [rawText "Suave.IO"]
+                                rawText ", and a little love. "
+                                a [ href "https://github.com/MaybeSacred/Website"; class' "text-info"; title' "Source code for this site"; ] [rawText "Source code available on GitHub"]
+                                rawText ". "
+                                a [ href "https://aws.amazon.com/ec2/"; class' "text-info"; title' "Amazon EC2"; ] [rawText "Hosted on AWS"]
                             ]
                         ]
                         div [ class' "col"; ] []
