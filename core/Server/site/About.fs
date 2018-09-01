@@ -17,7 +17,7 @@ let about = {
         div [class' "container"] [
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
-                    h2 [class' "text-center"] [rawText "About Me"]
+                    h3 [class' "text-center"] [rawText "About Me"]
                     p [class' "text-center align-middle"] [
                         sprintf """Hi, my name is Jon Tyson. I'm %i years old and live in 
                         Atlanta, Georgia. I have a dog named Bronx and cute girlfriend Caroline. 
@@ -32,11 +32,10 @@ let about = {
             ]
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
-                    // TODO: add other pictures or something here
-                    a [href "http://lambda-the-ultimate.org/"; title' "Haskell Logo"] [img [src "haskell_logo.svg"; class' "img-fluid mx-auto d-block"; attr "width" "406"(* attr "width" "80%"; attr "height" "80%"*)]]
+                    a [href "http://lambda-the-ultimate.org/"; title' "Haskell Logo"] [img [src "haskell_logo.svg"; class' "img-fluid mx-auto d-block"; attr "width" "406"]]
                 ]
                 div [class' "col-12 col-sm-6"] [
-                    h2 [class' "text-center"] [rawText "About this Site"]
+                    h3 [class' "text-center"] [rawText "About this Site"]
                     p [class' "text-center align-middle"] [
                         rawText """I created this site to blog about and explore technologies. The core site is 
                         written in """
@@ -50,39 +49,55 @@ let about = {
             ]
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
-                    h2 [class' "text-center"] [rawText "Factoids"]
+                    h3 [class' "text-center"] [rawText "Things I Like"]
                     rawText "Favorite bash Command"
                     br []
                     code [] [rawText "dd if=/dev/random of=/dev/sda"]
                 ]
+                div [class' "col-12 col-sm-6"] []
             ]
             div [class' "row align-items-center"] [
+                div [class' "col-12 col-sm-6"] [img [src "https://i.redd.it/8z55tyc7t8j11.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "406"]]
                 div [class' "col-12 col-sm-6"] [
-                    rawText "Favorite SubReddits: "
+                    h3 [class' "text-center"] [rawText "Favorite SubReddits"]
                     anchor "r/ProgrammerHumor" """https://www.reddit.com/r/ProgrammerHumor"""
                     rawText " and "
                     anchor "r/aww" """https://www.reddit.com/r/aww/"""
                 ]
-            ]            // favorite movie
+            ] // favorite movie
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
-                    rawText "Favorite Animal-Themed TV Show: "
+                    h3 [class' "text-center"] [rawText "Favorite Animal-Themed TV Show"]
                     anchor "Bojack Horseman" """https://www.netflix.com/title/70300800"""
                     // arrested development
                 ]
                 div [class' "col-12 col-sm-6"] [
-                    img [src "bojack.jpg"; attr "height" "320"; attr "width" "320" ]
+                    img [src "bojack.jpg"; attr "height" "360"; attr "width" "360" ]
                 ]
             ]
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
-                    rawText "Music: "
-                    // iframe these yo
-                    anchor "Mumford and Sons" """https://www.youtube.com/watch?v=rId6PKlDXeU"""
-                    anchor "Julien Baker" """https://www.youtube.com/watch?v=tADWPTqR_4A"""
+                    iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/rId6PKlDXeU"""] []
+                ]
+                div [class' "col-12 col-sm-6"] [
+                    a [href """https://www.mumfordandsons.com/"""; title' "Mumford and Sons"] [h3 [class' "text-center"] [rawText "Mumford and Sons"]]
+                ]
+            ]
+            div [class' "row align-items-center"] [
+                div [class' "col-12 col-sm-6"] [
+                    anchor "Julien Baker" """https://julienbaker.com/"""
+                ]
+                div [class' "col-12 col-sm-6"] [
+                    iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/XZdnq5tN5vI"""] []
+                ]
+            ]
+            div [class' "row align-items-center"] [
+                div [class' "col-12 col-sm-6"] [
+                    iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/dyQJH615KwA"""] []
+                ]
+                div [class' "col-12 col-sm-6"] [
                     anchor "Buckethead" """https://www.youtube.com/watch?v=tADWPTqR_4A"""
                 ]
-                div [class' "col-12 col-sm-6"] []
             ]
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [

@@ -66,6 +66,7 @@ Shorter of breath and one day closer to death""", "Pink Floyd - Time"
     "I started out with nothing and I still got most of it left", "Tom Waits"
     "Life - and I don't suppose I'm the first to make this comparison - is a disease: sexually transmitted, and invariably fatal","Neil Gaiman - Death"
     "The price of anything is the amount of life you exchange for it", "Henry David Thoreau"
+    """"Don’t gamble"; take all your savings and buy some good stock, and hold it till it goes up, then sell it. If it don’t go up, don’t buy it""","Will Rogers"
 ]
 
 let quoteBar () =

@@ -137,6 +137,7 @@ let embed      = voidTag "embed"
 let object     = tag "object"
 let param      = voidTag "param"
 let source     = voidTag "source"
+let iframe     = tag "iframe"
 
 /// Scripting
 let canvas     = tag "canvas"
