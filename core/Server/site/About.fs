@@ -13,7 +13,7 @@ let about = {
     Created = DateTime.Now
     Modified = DateTime.Now
     Content = Nodes (fun () ->
-    [// have these sections alternate on sides of the page, with title and text on one side, graphic on other
+    [
         div [class' "container"] [
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
@@ -37,8 +37,7 @@ let about = {
                 div [class' "col-12 col-sm-6"] [
                     h3 [class' "text-center"] [rawText "About this Site"]
                     p [class' "text-center align-middle"] [
-                        rawText """I created this site to blog about and explore technologies. The core site is 
-                        written in """
+                        rawText """I created this site to blog about and explore technologies. The core site is written in """
                         anchor "F#" """http://fsharp.org/"""
                         rawText """, a statically-typed functional-first programming language. Styling is done primarily with """
                         anchor "Bootstrap" """https://getbootstrap.com/"""
@@ -50,60 +49,53 @@ let about = {
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
                     h3 [class' "text-center"] [rawText "Things I Like"]
-                    rawText "Favorite bash Command"
-                    br []
-                    code [] [rawText "dd if=/dev/random of=/dev/sda"]
                 ]
-                div [class' "col-12 col-sm-6"] []
+                div [class' "col-12 col-sm-6"] [img [src "pink-floyd-dark-side-of-the-moon.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "510"]]
             ]
             div [class' "row align-items-center"] [
-                div [class' "col-12 col-sm-6"] [img [src "https://i.redd.it/8z55tyc7t8j11.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "406"]]
+                div [class' "col-12 col-sm-6"] [img [src "https://i.redd.it/8z55tyc7t8j11.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "480"]]
                 div [class' "col-12 col-sm-6"] [
-                    h3 [class' "text-center"] [rawText "Favorite SubReddits"]
-                    anchor "r/ProgrammerHumor" """https://www.reddit.com/r/ProgrammerHumor"""
-                    rawText " and "
-                    anchor "r/aww" """https://www.reddit.com/r/aww/"""
-                ]
-            ] // favorite movie
-            div [class' "row align-items-center"] [
-                div [class' "col-12 col-sm-6"] [
-                    h3 [class' "text-center"] [rawText "Favorite Animal-Themed TV Show"]
-                    anchor "Bojack Horseman" """https://www.netflix.com/title/70300800"""
-                    // arrested development
-                ]
-                div [class' "col-12 col-sm-6"] [
-                    img [src "bojack.jpg"; attr "height" "360"; attr "width" "360" ]
+                    h3 [class' "text-center"] [anchor "r/ProgrammerHumor" """https://www.reddit.com/r/ProgrammerHumor"""]
                 ]
             ]
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
-                    iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/rId6PKlDXeU"""] []
+                    h3 [class' "text-center"] [anchor "r/ItemShop" """https://www.reddit.com/r/ItemShop/"""]
                 ]
+                div [class' "col-12 col-sm-6"] [img [src "https://i.redd.it/ko7o1xut8ak11.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "400"]]
+            ]
+            // favorite movie
+            // arrested development
+            div [class' "row align-items-center"] [
+                div [class' "col-12 col-sm-6"] [
+                    img [src "bojack.jpg"; class' "img-fluid mx-auto d-block"; attr "height" "300"; attr "width" "300" ]
+                ]
+                div [class' "col-12 col-sm-6"] [
+                    h3 [class' "text-center"] [anchor "Bojack Horseman" """https://www.netflix.com/title/70300800"""]
+                ]
+            ]
+            div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
                     a [href """https://www.mumfordandsons.com/"""; title' "Mumford and Sons"] [h3 [class' "text-center"] [rawText "Mumford and Sons"]]
                 ]
+                div [class' "col-12 col-sm-6"] [
+                    iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/rId6PKlDXeU"""] []
+                ]
             ]
             div [class' "row align-items-center"] [
-                div [class' "col-12 col-sm-6"] [
-                    anchor "Julien Baker" """https://julienbaker.com/"""
-                ]
                 div [class' "col-12 col-sm-6"] [
                     iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/XZdnq5tN5vI"""] []
                 ]
-            ]
-            div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
-                    iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/dyQJH615KwA"""] []
-                ]
-                div [class' "col-12 col-sm-6"] [
-                    anchor "Buckethead" """https://www.youtube.com/watch?v=tADWPTqR_4A"""
+                    a [href """https://julienbaker.com/"""; title' "Julien Baker"] [h3 [class' "text-center"] [rawText "Julien Baker"]]
                 ]
             ]
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [
-                    // https://www.ballastpoint.com/beer/aloha-sculpin/
-                    // brewery- ballast point, include pic
-                    // favorite vidya game pokemon?
+                    a [href """https://fatherjohnmisty.com/"""; title' "Father John Misty"] [h3 [class' "text-center"] [rawText "Father John Misty"]]
+                ]
+                div [class' "col-12 col-sm-6"] [
+                    iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/ga0ksTIagsg"""] []
                 ]
             ]
         ]

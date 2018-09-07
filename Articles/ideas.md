@@ -20,6 +20,8 @@ need robots.txt, create from scanning site automatically
 side articles about what I've been reading 
     The Shallows
 
+article about current stock portfolio
+
 links should be curated, with a bit of fluff describing why I have selected such a link
 
 create a css to .net string generator/binder, for Bootstrap classes

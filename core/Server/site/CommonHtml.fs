@@ -46,6 +46,7 @@ let funLinks = [
     """https://smbc-comics.com/""", "Saturday Morning Breakfast Cereal"
     """http://www.last-halloween.com/""", "The Last Halloween"
     """http://www.dumbingofage.com/""", "Dumbing of Age"
+    """https://engaging-data.com/""","Engaging Data"
 ]
 let mainLinks = [
     Paths.home, "Home"

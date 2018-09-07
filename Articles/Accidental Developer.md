@@ -23,8 +23,6 @@ Have a brief run-down of each of the core concepts. Why this is important for us
 
 - brief comparison, especially how while no-sql DBs have their place, SQL the language is increasingly adopted by those platforms
 
-
-
 ### Source control for the Lazy and Dumb
 
 - what it does and why it is so darn useful
@@ -36,7 +34,6 @@ Have a brief run-down of each of the core concepts. Why this is important for us
   - perforce - sucks but usable
   - VSS - push to get rid of this ASAP, it has issues where it can become corrupted
 
-
 ### Operating systems and Containers, Virtual Machines  - Why what you think you know is not how it is 
 
 - Hardware: SSD and hard drives, memory, cpu and OOE and caches
@@ -45,7 +42,6 @@ Have a brief run-down of each of the core concepts. Why this is important for us
 - Containerization
 
 ### A Bit About Bits and Bytes
-
 
 - crash intro to character encodings
 - otherwise, advice that bit and byte level details will usually not come up often, but this can still be important
