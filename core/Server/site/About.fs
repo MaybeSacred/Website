@@ -78,12 +78,12 @@ let about = {
                 div [class' "col-12 col-sm-6"] [
                     a [href """https://www.mumfordandsons.com/"""; title' "Mumford and Sons"] [h3 [class' "text-center"] [rawText "Mumford and Sons"]]
                 ]
-                div [class' "col-12 col-sm-6"] [
+                div [class' "col-12 col-sm-6 d-flex justify-content-center"] [
                     iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/rId6PKlDXeU"""] []
                 ]
             ]
             div [class' "row align-items-center"] [
-                div [class' "col-12 col-sm-6"] [
+                div [class' "col-12 col-sm-6 d-flex justify-content-center"] [
                     iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/XZdnq5tN5vI"""] []
                 ]
                 div [class' "col-12 col-sm-6"] [
@@ -94,7 +94,7 @@ let about = {
                 div [class' "col-12 col-sm-6"] [
                     a [href """https://fatherjohnmisty.com/"""; title' "Father John Misty"] [h3 [class' "text-center"] [rawText "Father John Misty"]]
                 ]
-                div [class' "col-12 col-sm-6"] [
+                div [class' "col-12 col-sm-6 d-flex justify-content-center"] [
                     iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/ga0ksTIagsg"""] []
                 ]
             ]
