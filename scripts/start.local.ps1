@@ -1,7 +1,7 @@
 if ($IsLinux) {
-    nginx -s reload
+    sudo nginx -s reload
 }
-$dotnet = Start-Process "dotnet" "$outDir/core/Server.dll -- --port 8080" -PassThru
+$dotnet = Start-Process "dotnet" "$outDir/core/Server.dll -- --port 8080 --homefolder $outDir/public" -PassThru
 Set-Location $aquilaDir
 $aquila = Start-Process "aquila" "--port 3000" -PassThru
 Start-Sleep -s 1

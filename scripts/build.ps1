@@ -8,6 +8,7 @@ $aquilaDir = "$OutDir/aquila"
 
 Set-Location ./core/
 dotnet publish ./Server/Server.fsproj -c Release -o "./bin/publish"
+npm ci
 npm run release
 Set-Location ../haskell/yesod/aquila/
 stack build --copy-bins
@@ -25,7 +26,7 @@ else {
 	Remove-Item -Path "$OutDir/*" -Recurse
 	Copy-Item -Path ./core/Server/bin/publish/ -Destination "$OutDir/core/" -Force -Recurse -Container
 	Copy-Item -Path ./public/ -Destination "$OutDir/public/" -Force -Recurse -Container
-	Copy-Item -Path ./haskell/yesod/aquila/static/ -Destination $aquilaDir -Recurse -Force -Container
+	Copy-Item -Path ./haskell/yesod/aquila/static/ -Destination "$aquilaDir/static" -Recurse -Force -Container
 	Copy-Item -Path $localPath -Destination $aquilaDir -Force -Recurse -Container
 	Copy-Item -Path ./nginx/ -Destination "$ServerPath/etc/nginx/sites-available/" -Force -Recurse -Container
 }
