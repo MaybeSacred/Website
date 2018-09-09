@@ -80,14 +80,15 @@ let app =
 [<EntryPoint>]
 let main argv =
     let parser = ArgumentParser.Create<Arguments>(programName="Server.exe")
-    let cliArgs = parser.Parse(argv, ignoreMissing=true, ignoreUnrecognized=true)
-    let path = cliArgs.TryGetResult(<@ HomeFolder @>) |> Option.orElse <| Some ( Path.GetFullPath( Path.Combine( __SOURCE_DIRECTORY__, "..", "..", "public" ) ) )
+    let cliArgs = parser.Parse(argv, ignoreMissing=false, ignoreUnrecognized=true)
+    let path = cliArgs.GetResult(<@ HomeFolder @>, Path.GetFullPath( Path.Combine( __SOURCE_DIRECTORY__, "..", "..", "public" ) ) )
+    log.Info "%A" path 
     let cts = new CancellationTokenSource()
     let conf = { defaultConfig with 
                     errorHandler = customErrorHandler
                     cancellationToken = cts.Token; 
                     bindings = [cliArgs.GetResult(<@ Port @>, 8081us) |> HttpBinding.create HTTP IPAddress.Loopback]
-                    homeFolder = path }
+                    homeFolder = Some path }
     let listening, server = startWebServerAsync conf app
     Async.Start (server, cts.Token)
     // just use concurrent queue, with blocking for backpressure 
