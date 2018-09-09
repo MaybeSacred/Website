@@ -1,7 +1,13 @@
 param (
 	$Server = "ubuntu@ec2-18-222-225-56.us-east-2.compute.amazonaws.com"
 )
-plink -i C:\Users\jtyso\Downloads\main.pem $Server -m start.aws.sh
+# needs to be a unix path too
+if ($IsLinux) {
+	ssh -i C:\Users\jtyso\Downloads\main.pem $Server -m start.aws.sh
+}
+else {
+	plink -i C:\Users\jtyso\Downloads\main.ppk $Server -m .\scripts\start.aws.sh
+}
 
 # ideal but broken
 # $outDir = "/var/nginx"
