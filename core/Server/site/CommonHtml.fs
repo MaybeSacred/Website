@@ -106,12 +106,15 @@ let template { Title = title''; Content = content } =
             ``base`` [href Paths.``base``] []
             cssLink "bootstrap.min.css"
             cssLink "site.css"
-            link [ attr "rel" "shortcut icon";  href "fable.ico"; ]
+            link [ attr "rel" "shortcut icon"; attr "type" "image/x-icon"; href "favicon.ico"; ]
         ]
         body [] [
-            header [ class' "navbar navbar-expand-md navbar-dark bg-primary justify-content-between py-2"; ] [
-                span [ class' "pb-0"; ] [
-                    span [ class' "navbar-brand"; ] [rawText "Tyson on Tech"]
+            header [class' "navbar navbar-expand-md navbar-dark bg-primary justify-content-between py-2"; ] [
+                div [class' "navbar-brand"; ] [
+                    div [class' "row align-items-center p-0"] [
+                        div [class' "col px-1 py-0"] [img [src "logo.png"; class' "img-fluid"; title' "Logo"]]
+                        div [class' "col px-1 py-0"] [rawText "Tyson on Tech"]
+                    ]
                 ]
                 div [ class' "collapse navbar-collapse";  id' "navbarNavAltMarkup"; ] [
                     div [ class' "navbar-nav"; ] [
