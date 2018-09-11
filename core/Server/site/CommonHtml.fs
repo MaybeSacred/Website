@@ -68,9 +68,15 @@ Shorter of breath and one day closer to death""", "Pink Floyd - Time"
     "Life - and I don't suppose I'm the first to make this comparison - is a disease: sexually transmitted, and invariably fatal","Neil Gaiman - Death"
     "The price of anything is the amount of life you exchange for it", "Henry David Thoreau"
     """"Don’t gamble"; take all your savings and buy some good stock, and hold it till it goes up, then sell it. If it don’t go up, don’t buy it""","Will Rogers"
+    """You been tellin' me you're a genius
+Since you were seventeen
+In all the time I've known you
+I still don't know what you mean""", "Steely Dan"
 ]
 
 let quoteBar () =
+    // get Bronk pic, make that quote go together
+    // fire emblem and pokemon
     let quote, author = quotes.RandomSubset 1 |> Seq.head
     let pic = pictureLinks.RandomSubset 1 |> Seq.head |> fst
     [
@@ -109,10 +115,10 @@ let template { Title = title''; Content = content } =
             link [ attr "rel" "shortcut icon"; attr "type" "image/x-icon"; href "favicon.ico"; ]
         ]
         body [] [
-            header [class' "navbar navbar-expand-md navbar-dark bg-primary justify-content-between py-2"; ] [
+            header [class' "navbar navbar-expand-md navbar-dark bg-primary justify-content-between py-1"; ] [
                 div [class' "navbar-brand"; ] [
                     div [class' "row align-items-center p-0"] [
-                        div [class' "col px-1 py-0"] [img [src "logo.png"; class' "img-fluid"; title' "Logo"]]
+                        div [class' "col px-1 py-0"] [a [href domainName; title' "Home"] [img [src "logo.png"; class' "img-fluid"; attr "width" "56"; title' "Logo"]]]
                         div [class' "col px-1 py-0"] [rawText "Tyson on Tech"]
                     ]
                 ]

@@ -50,7 +50,7 @@ let about = {
                 div [class' "col-12 col-sm-6"] [
                     h3 [class' "text-center"] [rawText "Things I Like"]
                 ]
-                div [class' "col-12 col-sm-6"] [img [src "pink-floyd-dark-side-of-the-moon.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "510"]]
+                div [class' "col-12 col-sm-6"] [img [src "pink-floyd-dark-side-of-the-moon.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "510"; title' "Pink Floyd - Dark Side of the Moon"]]
             ]
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6"] [img [src "https://i.redd.it/8z55tyc7t8j11.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "480"]]
@@ -84,10 +84,26 @@ let about = {
             ]
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-sm-6 d-flex justify-content-center"] [
-                    iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/XZdnq5tN5vI"""] []
+                    img [src "https://cdn.bulbagarden.net/upload/e/e3/145Zapdos.png"; class' "img-fluid mx-auto d-block"; attr "width" "300"; title' "Zapdos Pokemon"]
                 ]
                 div [class' "col-12 col-sm-6"] [
+                    a [href """https://bulbapedia.bulbagarden.net/wiki/Stufful_(Pok%C3%A9mon)"""; title' "Pokemon (Stufful)"] [h3 [class' "text-center"] [rawText "Pokémon"]]
+                ]
+            ]
+            div [class' "row align-items-center"] [
+                div [class' "col-12 col-sm-6"] [
                     a [href """https://julienbaker.com/"""; title' "Julien Baker"] [h3 [class' "text-center"] [rawText "Julien Baker"]]
+                ]
+                div [class' "col-12 col-sm-6 d-flex justify-content-center"] [
+                    iframe [attr "width" "480"; attr "height" "270"; src """https://www.youtube.com/embed/XZdnq5tN5vI"""] []
+                ]
+            ]
+            div [class' "row align-items-center"] [
+                div [class' "col-12 col-sm-6 d-flex justify-content-center"] [
+                    img [src "V-emblem_32.png"; class' "img-fluid mx-auto d-block"; attr "width" "240"; title' "Eliwood and a Divine Dragon"]
+                ]
+                div [class' "col-12 col-sm-6"] [
+                    a [href """http://fireemblem.wikia.com/wiki/Lyndis"""; title' "Fire Emblem (Lyndis)"] [h3 [class' "text-center"] [rawText "Fire Emblem"]]
                 ]
             ]
             div [class' "row align-items-center"] [

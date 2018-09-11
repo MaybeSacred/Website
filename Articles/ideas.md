@@ -35,9 +35,3 @@ in FL mutable state is effectively whitelisted - here is the set of values that 
 with IL mutable state must be blacklisted - practically everything is mutable, and within a particular scope, most data ABOVE that scope is also accessible and mutable - especially global variables. non-state data must be explicitly blacklisted by creating immutable objects instead - this is not the default
 
 begin creating Haskell web service - just have it serve canned data for now, go ahead and template out code-base
-
-HSV
-232 82 80
-219 84 83
-206 86 86
-193 88 89
