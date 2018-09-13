@@ -51,11 +51,9 @@ let funLinks = [
 let mainLinks = [
     Paths.home, "Home"
     Paths.``qr-generator``, "QR Generator"
-    //Paths.``license-generator``, ".NET License Generator"
+    Paths.resume, "Resume"
     //Paths.articles, "Articles"
     Paths.about, "About"
-    //Paths.``portfolio-balancer``, "Portfolio Balancer"
-    //Paths.``react-playground``, "React Playground"
 ]
 let quotes = [
     "Jon feed Bronx and walk Bronx every day and love Bronx. Bronx best boy, but Jon good boy too", "Bronx, my Dog"
@@ -118,7 +116,7 @@ let template { Title = title''; Content = content } =
             header [class' "navbar navbar-expand-md navbar-dark bg-primary justify-content-between py-1"; ] [
                 div [class' "navbar-brand"; ] [
                     div [class' "row align-items-center p-0"] [
-                        div [class' "col px-1 py-0"] [a [href domainName; title' "Home"] [img [src "logo.png"; class' "img-fluid"; attr "width" "56"; title' "Logo"]]]
+                        div [class' "col px-1 py-0"] [a [href domainName; title' "Home"] [img [src "logo.png"; class' "img-fluid"; attr "width" "48"; title' "Logo"]]]
                         div [class' "col px-1 py-0"] [rawText "Tyson on Tech"]
                     ]
                 ]

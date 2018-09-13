@@ -2,6 +2,7 @@
     let ``base`` = "/"
     let home = "/home"
     let index = "/index"
+    let resume = "/resume"
     let ``qr-generator`` = "/qr-generator"
     let sitemap = "/sitemap"
     let about = "/about"

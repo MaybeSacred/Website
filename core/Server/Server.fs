@@ -27,7 +27,7 @@ let mainPages = [
     Paths.``qr-generator``, QRGenerator.page
     Paths.about, About.about
     //Paths.``Jonny's Sober Rants``, About.about
-    Paths.``license-generator``, LicenseGenerator.page
+    Paths.resume, Resume.page
     Paths.``all-programming-links``, AllLinks.``all-programming-links``
     Paths.``all-fun-links``, AllLinks.``all-fun-links``
     Paths.``dev-random``, Index.``dev\random``
