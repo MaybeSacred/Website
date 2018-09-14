@@ -17,7 +17,7 @@ let paragraph = rawText >> List.singleton >> p []
 let domainName = "tysonontech.sytes.net"
 
 let pictureLinks = [
-    """https://i.redd.it/vn4lx6ymivi11.jpg""", """https://www.reddit.com/r/EarthPorn/comments/9b16vn/the_zion_narrows_ut_oc_3024_x_4032_one_of_many/"""
+    """https://i.redd.it/vn4lx6ymivi11.jpg""","""https://www.reddit.com/r/EarthPorn/comments/9b16vn/the_zion_narrows_ut_oc_3024_x_4032_one_of_many/"""
     """https://i.redd.it/9e735ke272j11.jpg""","""https://www.reddit.com/r/EarthPorn/comments/9bat8f/holyhead_wales_oc_the_three_and_half_hour_boat/"""
     """https://i.redd.it/9ipxsp81lwi11.jpg""","""https://www.reddit.com/r/EarthPorn/comments/9b32c2/berg_lake_mount_robson_provincial_park_british/"""
     """https://i.redd.it/12iybvp1oxi11.jpg""","""https://www.reddit.com/r/EarthPorn/comments/9b4ryw/a_magical_sunset_over_monument_valley_utah/"""
@@ -154,8 +154,7 @@ let template { Title = title''; Content = content } =
             footer [ class' "footer"; ] [
                 div [ class' "container-fluid"; ] [
                     div [ class' "row justify-content-center bg-dark"; ] [
-                        div [ class' "col"; ] []
-                        div [ class' "col-8 text-center"; ] [
+                        div [ class' "col text-center"; ] [
                             p [class' "text-light"] [
                                 rawText "Built with "
                                 a [ href "http://fsharp.org"; class' "text-info"; title' "Main site for F#"; ] [rawText "F#"]
@@ -167,7 +166,6 @@ let template { Title = title''; Content = content } =
                                 a [ href "https://aws.amazon.com/ec2/"; class' "text-info"; title' "Amazon EC2"; ] [rawText "Hosted on AWS"]
                             ]
                         ]
-                        div [ class' "col"; ] []
                     ]
                 ]
             ]
