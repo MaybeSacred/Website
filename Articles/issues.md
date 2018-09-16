@@ -2,12 +2,12 @@
 
 ## Improvements
 
+add home page
 add QR generation as a web endpoint
 add search feature
 add site map 
 clean up about page
-add resume page
-add home page
+make side-bar 'Site' be random articles you wrote
 finish QR generator article
 
 ## Bugs 

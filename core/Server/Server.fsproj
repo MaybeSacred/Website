@@ -38,18 +38,18 @@
 
   <ItemGroup>
     <PackageReference Include="corecompat.system.drawing" Version="1.0.0-beta006" />
-    <PackageReference Include="FSharp.Core" Version="4.3.4" />
+    <PackageReference Include="FSharp.Core" Version="4.5.2" />
     <PackageReference Include="argu" Version="5.1.0" />
-    <PackageReference Include="fsharp.control.reactive" Version="4.0.0" />
+    <PackageReference Include="fsharp.control.reactive" Version="4.1.0" />
     <PackageReference Include="fsharpx.collections" Version="1.17.0" />
     <PackageReference Include="fsharpx.extras" Version="2.2.1" />
-    <PackageReference Include="htmlagilitypack" Version="1.8.2" />
-    <PackageReference Include="morelinq" Version="2.10.0" />
+    <PackageReference Include="htmlagilitypack" Version="1.8.7" />
+    <PackageReference Include="morelinq" Version="3.0.0" />
     <PackageReference Include="newtonsoft.json" Version="11.0.2" />
-    <PackageReference Include="nlog" Version="4.5.5" />
+    <PackageReference Include="nlog" Version="4.5.9" />
     <PackageReference Include="nlog.fsharp" Version="4.5.3" />
-    <PackageReference Include="suave" Version="2.4.0" />
-    <PackageReference Include="system.reactive" Version="4.0.0" />
+    <PackageReference Include="suave" Version="2.5.0" />
+    <PackageReference Include="system.reactive" Version="4.1.0" />
     <PackageReference Include="zxing.net" Version="0.16.4" />
   </ItemGroup>
   <ItemGroup>
