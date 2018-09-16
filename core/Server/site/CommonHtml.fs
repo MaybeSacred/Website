@@ -55,6 +55,7 @@ let mainLinks = [
     //Paths.articles, "Articles"
     Paths.about, "About"
 ]
+// TODO: wrap with proper HTML
 let quotes = [
     "Jon feed Bronx and walk Bronx every day and love Bronx. Bronx best boy, but Jon good boy too", "Bronx, my Dog"
     """So you run and you run to catch up with the sun but it's sinking
@@ -80,7 +81,7 @@ let quoteBar () =
     [
         img [src pic; class' "img-fluid p-2 d-block"]
         blockquote [ class' "blockquote text-center small"; ] [
-            p [attr "style" "font-size: .9em"] [rawText quote]
+            p [attr "style" "font-size: .8em"] [rawText quote]
             footer [ class' "blockquote-footer"; ] [rawText author]
         ]
     ]

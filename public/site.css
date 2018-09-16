@@ -18,13 +18,13 @@ html {
 }
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  margin-bottom: 48px;
 }
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 30px; /* Vertically center the text there */
+  height: 48px;
+  line-height: 48px; /* Vertically center the text there */
 }
