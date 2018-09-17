@@ -8,6 +8,7 @@ let class' = attr "class"
 let href = attr "href"
 let src = attr "src"
 let title' = attr "title"
+let style' = attr "style"
 let br' = br []
 let cssLink s = link [attr "rel" "stylesheet"; attr "type" "text/css"; href s] 
 let anchor' text title url = a [href url; title' title] [RawText text]
@@ -39,6 +40,7 @@ let programmingLinks = [
     """http://quotes.cat-v.org/programming/""", "A Selection of Great Programming Quotes"
     """https://github.com/dhilipsiva/webapp-checklist""","Web Developer Checklist"
     """https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/""", "Things You Should Never Do"
+    """http://reactivex.io""", "Reactive Extensions"
 ]
 let funLinks = [
     """http://www.juliawertz.com/""", "Julia Wertz"
@@ -55,22 +57,28 @@ let mainLinks = [
     //Paths.articles, "Articles"
     Paths.about, "About"
 ]
-// TODO: wrap with proper HTML
+
 let quotes = [
-    "Jon feed Bronx and walk Bronx every day and love Bronx. Bronx best boy, but Jon good boy too", "Bronx, my Dog"
-    """So you run and you run to catch up with the sun but it's sinking
-Racing around to come up behind you again.
-The sun is the same in a relative way but you're older,
-Shorter of breath and one day closer to death""", "Pink Floyd - Time"
-    "Give me a lever long enough, and a place to stand, and I will move the earth", "Archimedes"
-    "I started out with nothing and I still got most of it left", "Tom Waits"
-    "Life - and I don't suppose I'm the first to make this comparison - is a disease: sexually transmitted, and invariably fatal","Neil Gaiman - Death"
-    "The price of anything is the amount of life you exchange for it", "Henry David Thoreau"
-    """"Don’t gamble"; take all your savings and buy some good stock, and hold it till it goes up, then sell it. If it don’t go up, don’t buy it""","Will Rogers"
-    """You been tellin' me you're a genius
-Since you were seventeen
-In all the time I've known you
-I still don't know what you mean""", "Steely Dan"
+    [rawText "So you run and you run to catch up with the sun but it's sinking"
+     br []
+     rawText "Racing around to come up behind you again."
+     br []
+     rawText "The sun is the same in a relative way but you're older,"
+     br []
+     rawText "Shorter of breath and one day closer to death"], "Pink Floyd - Time"
+    [rawText "Jon feed Bronx and walk Bronx every day and love Bronx. Bronx best boy, but Jon good boy too"], "Bronx, my Dog"
+    [rawText "Give me a lever long enough, and a place to stand, and I will move the earth"], "Archimedes"
+    [rawText "I started out with nothing and I still got most of it left"], "Tom Waits"
+    [rawText "Life - and I don't suppose I'm the first to make this comparison - is a disease: sexually transmitted, and invariably fatal"],"Neil Gaiman - Death"
+    [rawText "The price of anything is the amount of life you exchange for it"], "Henry David Thoreau"
+    [rawText """"Don’t gamble"; take all your savings and buy some good stock, and hold it till it goes up, then sell it. If it don’t go up, don’t buy it"""],"Will Rogers"
+    [rawText "You been tellin' me you're a genius"
+     br []
+     rawText "Since you were seventeen"
+     br []
+     rawText "In all the time I've known you"
+     br []
+     rawText "I still don't know what you mean"], "Steely Dan"
 ]
 
 let quoteBar () =
@@ -81,7 +89,7 @@ let quoteBar () =
     [
         img [src pic; class' "img-fluid p-2 d-block"]
         blockquote [ class' "blockquote text-center small"; ] [
-            p [attr "style" "font-size: .8em"] [rawText quote]
+            p [attr "style" "font-size: .7em"] quote
             footer [ class' "blockquote-footer"; ] [rawText author]
         ]
     ]
@@ -141,15 +149,15 @@ let template { Title = title''; Content = content } =
             ]
             div [ class' "container-fluid"; ] [
                 div [ class' "row"; ] [
-                    div [ class' "col-12 col-sm-3 col-xl-2 py-1 bg-light"; ] [
+                    div [ class' "col-12 col-sm-3 col-xl-2 my-2 px-1"; ] [
                         ul [ class' "list-group list-group-flush"; ] [linkBar ()]
                     ]
-                    div [ class' "col-12 col-sm-6 col-xl-8 py-3"; ] (
+                    div [ class' "col-12 col-sm-6 col-xl-8 my-3"; ] (
                         match content with
                         | Text s -> [rawText s]
                         | Nodes s -> s ()
                     )
-                    div [ class' "col-12 col-sm-3 col-xl-2 py-3 bg-light"; ] <| quoteBar ()
+                    div [ class' "col-12 col-sm-3 col-xl-2 my-2 px-1"; ] <| quoteBar ()
                 ]
             ]
             footer [ class' "footer"; ] [
