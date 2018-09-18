@@ -31,10 +31,7 @@ let about = {
                 div [class' "col-12 col-md-6"] [img [src "bronx.png"; class' "img-fluid mx-auto d-block"]]
             ]
             div [class' "row align-items-center"] [
-                div [class' "col-12 col-md-6"] [
-                    a [href "http://lambda-the-ultimate.org/"; title' "Haskell Logo"] [img [src "haskell_logo.svg"; class' "img-fluid mx-auto d-block"; attr "width" "406"]]
-                ]
-                div [class' "col-12 col-md-6"] [
+                div [class' "col-12 col-md-6 order-md-2"] [
                     h3 [class' "text-center"] [rawText "About this Site"]
                     p [class' "text-center align-middle"] [
                         rawText """I created this site to blog about and explore technologies. The core site is written in """
@@ -45,6 +42,9 @@ let about = {
                         be built out over time with different technologies and documented through a series of articles."""
                     ]
                 ]
+                div [class' "col-12 col-md-6 order-md-1"] [
+                    a [href "http://lambda-the-ultimate.org/"; title' "Haskell Logo"] [img [src "haskell_logo.svg"; class' "img-fluid mx-auto d-block"; attr "width" "406"]]
+                ]
             ]
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-md-6"] [
@@ -53,10 +53,10 @@ let about = {
                 div [class' "col-12 col-md-6"] [img [src "pink-floyd-dark-side-of-the-moon.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "510"; title' "Pink Floyd - Dark Side of the Moon"]]
             ]
             div [class' "row align-items-center"] [
-                div [class' "col-12 col-md-6"] [img [src "https://i.redd.it/8z55tyc7t8j11.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "480"]]
-                div [class' "col-12 col-md-6"] [
+                div [class' "col-12 col-md-6 order-md-2"] [
                     h3 [class' "text-center"] [anchor "r/ProgrammerHumor" """https://www.reddit.com/r/ProgrammerHumor"""]
                 ]
+                div [class' "col-12 col-md-6 order-md-1"] [img [src "https://i.redd.it/8z55tyc7t8j11.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "480"]]
             ]
             div [class' "row align-items-center"] [
                 div [class' "col-12 col-md-6"] [
@@ -64,14 +64,14 @@ let about = {
                 ]
                 div [class' "col-12 col-md-6"] [img [src "https://i.redd.it/ko7o1xut8ak11.jpg"; class' "img-fluid mx-auto d-block"; attr "width" "400"]]
             ]
-            // favorite movie
+            // TODO: favorite movie
             // arrested development
             div [class' "row align-items-center"] [
-                div [class' "col-12 col-md-6"] [
-                    img [src "bojack.jpg"; class' "img-fluid mx-auto d-block"; attr "height" "300"; attr "width" "300" ]
-                ]
-                div [class' "col-12 col-md-6"] [
+                div [class' "col-12 col-md-6 order-md-2"] [
                     h3 [class' "text-center"] [anchor "Bojack Horseman" """https://www.netflix.com/title/70300800"""]
+                ]
+                div [class' "col-12 col-md-6 order-md-1"] [
+                    img [src "bojack.jpg"; class' "img-fluid mx-auto d-block"; attr "height" "300"; attr "width" "300" ]
                 ]
             ]
             div [class' "row align-items-center"] [
@@ -83,11 +83,11 @@ let about = {
                 ]
             ]
             div [class' "row align-items-center"] [
-                div [class' "col-12 col-md-6 d-flex justify-content-center"] [
-                    img [src "https://cdn.bulbagarden.net/upload/e/e3/145Zapdos.png"; class' "img-fluid mx-auto d-block"; attr "width" "300"; title' "Zapdos Pokemon"]
-                ]
-                div [class' "col-12 col-md-6"] [
+                div [class' "col-12 col-md-6 order-md-2"] [
                     a [href """https://bulbapedia.bulbagarden.net/wiki/Stufful_(Pok%C3%A9mon)"""; title' "Pokemon (Stufful)"] [h3 [class' "text-center"] [rawText "Pokémon"]]
+                ]
+                div [class' "col-12 col-md-6 d-flex justify-content-center order-md-1"] [
+                    img [src "https://cdn.bulbagarden.net/upload/e/e3/145Zapdos.png"; class' "img-fluid mx-auto d-block"; attr "width" "300"; title' "Zapdos Pokemon"]
                 ]
             ]
             div [class' "row align-items-center"] [
@@ -99,11 +99,11 @@ let about = {
                 ]
             ]
             div [class' "row align-items-center"] [
-                div [class' "col-12 col-md-6 d-flex justify-content-center"] [
-                    img [src "V-emblem_32.png"; class' "img-fluid mx-auto d-block"; attr "width" "240"; title' "Eliwood and a Divine Dragon"]
-                ]
-                div [class' "col-12 col-md-6"] [
+                div [class' "col-12 col-md-6 order-md-2"] [
                     a [href """http://fireemblem.wikia.com/wiki/Lyndis"""; title' "Fire Emblem (Lyndis)"] [h3 [class' "text-center"] [rawText "Fire Emblem"]]
+                ]
+                div [class' "col-12 col-md-6 d-flex justify-content-center order-md-1"] [
+                    img [src "V-emblem_32.png"; class' "img-fluid mx-auto d-block"; attr "width" "240"; title' "Eliwood and a Divine Dragon"]
                 ]
             ]
             div [class' "row align-items-center"] [

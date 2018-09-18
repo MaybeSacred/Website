@@ -20,9 +20,9 @@ let log = new Logger()
 let returnJson o = JsonConvert.SerializeObject o |> UTF8Encoding.UTF8.GetBytes |> ok >=> setMimeType "application/json; charset=utf-8"
 let renderTemplateOK = template >> renderHtmlDocument >> OK
 let mainPages = [
-    Paths.``base``, Index.page
-    Paths.home, Index.page
-    Paths.index, Index.page
+    Paths.``base``, Core.page
+    Paths.home, Core.page
+    Paths.index, Core.page
     Paths.sitemap, AllLinks.sitemap
     Paths.``qr-generator``, QRGenerator.page
     Paths.about, About.about
@@ -30,9 +30,10 @@ let mainPages = [
     Paths.resume, Resume.page
     Paths.``all-programming-links``, AllLinks.``all-programming-links``
     Paths.``all-fun-links``, AllLinks.``all-fun-links``
-    Paths.``dev-random``, Index.``dev\random``
+    Paths.``dev-random``, Core.``dev\random``
     Paths.articles, Articles.main
     Paths.articles + "/", Articles.main
+    Paths.``404``, Core.``404``
     //Paths.``portfolio-balancer``, PortfolioBalancer.``portfolio balancer``
     //Paths.``react-playground``, PortfolioBalancer.``react playground``
 ]
@@ -44,13 +45,14 @@ type Arguments =
             match s with
             | Port _ -> "the port to start the server listening on"
             | HomeFolder _ -> "the folder to load files from"
-//let showErrorCats code = 
+
 
 let customErrorHandler ex msg ctx =
     let s = ctx.response.status.code
     log.ErrorException ex "%s" msg 
     // Change implementation as you wish
     ServerErrors.INTERNAL_ERROR ("Custom error handler: " + msg) ctx
+
 let logHit msg ctx = 
     log.Trace "%s" msg
     async { return Some ctx }
@@ -72,9 +74,8 @@ let app =
             path "/hello" >=> OK "Hello Post"
             path "/goodbye" >=> OK "Good bye Post" 
           ]
-          //Suave.
           // TODO: add cutesy 404 page
-          RequestErrors.NOT_FOUND "Oh snap! Looks like that page doesn't exist" >=> (fun req -> async { log.Debug "%A" req; return Some req })
+          template Core.``404`` |> renderHtmlDocument |> RequestErrors.NOT_FOUND >=> (fun req -> async { log.Debug "%A" req; return Some req })
         ]
 
 [<EntryPoint>]

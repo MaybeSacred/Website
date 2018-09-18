@@ -14,7 +14,7 @@
     <Compile Include="ViewEngine.fs" />
 	<Compile Include="site\Page.fs" />
     <Compile Include="site\CommonHtml.fs" />
-    <Compile Include="site\Index.fs" />
+    <Compile Include="site\Core.fs" />
     <Compile Include="site\QRGenerator.fs" />
     <Compile Include="site\AccidentalDeveloper.fs" />
     <Compile Include="site\About.fs" />

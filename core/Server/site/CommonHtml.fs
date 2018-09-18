@@ -60,11 +60,11 @@ let mainLinks = [
 
 let quotes = [
     [rawText "So you run and you run to catch up with the sun but it's sinking"
-     br []
+     br'
      rawText "Racing around to come up behind you again."
-     br []
+     br'
      rawText "The sun is the same in a relative way but you're older,"
-     br []
+     br'
      rawText "Shorter of breath and one day closer to death"], "Pink Floyd - Time"
     [rawText "Jon feed Bronx and walk Bronx every day and love Bronx. Bronx best boy, but Jon good boy too"], "Bronx, my Dog"
     [rawText "Give me a lever long enough, and a place to stand, and I will move the earth"], "Archimedes"
@@ -73,23 +73,22 @@ let quotes = [
     [rawText "The price of anything is the amount of life you exchange for it"], "Henry David Thoreau"
     [rawText """"Don’t gamble"; take all your savings and buy some good stock, and hold it till it goes up, then sell it. If it don’t go up, don’t buy it"""],"Will Rogers"
     [rawText "You been tellin' me you're a genius"
-     br []
+     br'
      rawText "Since you were seventeen"
-     br []
+     br'
      rawText "In all the time I've known you"
-     br []
+     br'
      rawText "I still don't know what you mean"], "Steely Dan"
 ]
 
 let quoteBar () =
     // get Bronk pic, make that quote go together
-    // fire emblem and pokemon
     let quote, author = quotes.RandomSubset 1 |> Seq.head
-    let pic = pictureLinks.RandomSubset 1 |> Seq.head |> fst
+    let pic, source = pictureLinks.RandomSubset 1 |> Seq.head 
     [
-        img [src pic; class' "img-fluid p-2 d-block"]
+        a [href source; title' "Source"] [img [src pic; class' "img-fluid p-2 d-block"]]
         blockquote [ class' "blockquote text-center small"; ] [
-            p [attr "style" "font-size: .7em"] quote
+            p [attr "style" "font-size: .75em"] quote
             footer [ class' "blockquote-footer"; ] [rawText author]
         ]
     ]
