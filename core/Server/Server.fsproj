@@ -22,7 +22,6 @@
     <Compile Include="site\PortfolioBalancer.fs" />
     <Compile Include="site\Resume.fs" />
     <Compile Include="site\Articles.fs" />
-    <Compile Include="site\Error.fs" />
     <Compile Include="Server.fs" />
   </ItemGroup>
 
@@ -44,11 +43,13 @@
     <PackageReference Include="fsharpx.collections" Version="1.17.0" />
     <PackageReference Include="fsharpx.extras" Version="2.2.1" />
     <PackageReference Include="htmlagilitypack" Version="1.8.7" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.0.1" />
     <PackageReference Include="morelinq" Version="3.0.0" />
     <PackageReference Include="newtonsoft.json" Version="11.0.2" />
     <PackageReference Include="nlog" Version="4.5.9" />
     <PackageReference Include="nlog.fsharp" Version="4.5.3" />
     <PackageReference Include="suave" Version="2.5.0" />
+    <PackageReference Include="system.drawing.common" Version="4.5.0" />
     <PackageReference Include="system.reactive" Version="4.1.0" />
     <PackageReference Include="zxing.net" Version="0.16.4" />
   </ItemGroup>

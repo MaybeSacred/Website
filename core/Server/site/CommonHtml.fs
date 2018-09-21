@@ -148,7 +148,7 @@ let template { Title = title''; Content = content } =
             ]
             div [ class' "container-fluid"; ] [
                 div [ class' "row"; ] [
-                    div [ class' "col-12 col-sm-3 col-xl-2 my-2 px-1"; ] [
+                    div [ class' "col-12 col-sm-3 col-xl-2 my-2 pl-2 pr-1"; ] [
                         ul [ class' "list-group list-group-flush"; ] [linkBar ()]
                     ]
                     div [ class' "col-12 col-sm-6 col-xl-8 my-3"; ] (
@@ -156,7 +156,7 @@ let template { Title = title''; Content = content } =
                         | Text s -> [rawText s]
                         | Nodes s -> s ()
                     )
-                    div [ class' "col-12 col-sm-3 col-xl-2 my-2 px-1"; ] <| quoteBar ()
+                    div [ class' "col-12 col-sm-3 col-xl-2 my-2 pl-1 pr-2"; ] <| quoteBar ()
                 ]
             ]
             footer [ class' "footer"; ] [

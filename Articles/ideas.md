@@ -18,11 +18,15 @@ create a custom tool in `blah` to transform markdown files into HTML with our si
 need robots.txt, create from scanning site automatically
 
 side articles about what I've been reading 
-    The Shallows
+* The Shallows
+* Functional Programming in F# and C#
+* C# in Depth
 
 article about current stock portfolio
 
-links should be curated, with a bit of fluff describing why I have selected such a link
+create a small, simple feature tracker like JIRA
+
+links should be curated, with a bit of fluff describing why I have selected that link
 
 create a css to .net string generator/binder, for Bootstrap classes
 
@@ -42,3 +46,8 @@ article on peppers you made
 - link to recipe and changes
 - future plans
 - how they taste ya weirdo
+- friendly reminder to wear gloves, hands burned for a day afterwards
+- pic of chopped leftover jalapenos
+- about 7-8 jalapeno per jar
+- about 20-25 habanero per jar
+- next plans: scotch bonnet and carolina reapers!
