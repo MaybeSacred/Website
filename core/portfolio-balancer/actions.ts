@@ -12,11 +12,11 @@ export interface IAction {
 	type: ActionType;
 	payload: any;
 }
-export const updatePortfolioTotalValue = (id: Guid, totalValue: string) => {
+export const updatePortfolioTotalValue = (id: Guid, totalValue: Numeral) => {
 	return {
 		type: ActionType.UpdatePortfolioTotalValue,
 		id,
-		totalValue,
+		totalValue: isNaN(totalValue.value()) ? 0 : totalValue.value(),
 	};
 };
 export const updateSymbol = (id: Guid, symbol: string) => {
@@ -31,7 +31,7 @@ export const updatePrice = (id: Guid, price: string) => {
 	return {
 		type: ActionType.UpdatePrice,
 		id,
-		price: !isNaN(val.value()) ? val.value() : 0,
+		price: isNaN(val.value()) ? 0 : val.value(),
 	};
 };
 export const updateCurrentShares = (id: Guid, currentShares: string) => {

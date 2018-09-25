@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as numeral from 'numeral';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { updatePortfolioTotalValue } from './actions';
@@ -9,7 +10,7 @@ import { IAsset, IHolding, IPortfolio } from './types';
 interface IProps {
 	portfolio: IPortfolio;
 	holdings: IHolding[];
-	onTotalValueUpdated: (id: Guid, totalPortfolioValue: string) => void;
+	onTotalValueUpdated: (id: Guid, totalPortfolioValue: Numeral) => void;
 }
 interface IPassableProps {
 	portfolioId: Guid;
@@ -26,7 +27,7 @@ function mapStateToProps(state: IAppState, ownProps: IPassableProps) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	onTotalValueUpdated: (id: Guid, val: string) =>
+	onTotalValueUpdated: (id: Guid, val: Numeral) =>
 		dispatch(updatePortfolioTotalValue(id, val)),
 });
 const formatter = new Intl.NumberFormat(undefined, {
@@ -79,7 +80,7 @@ const portfolioContainer = (props: IProps) => {
 					onChange={(event) =>
 						props.onTotalValueUpdated(
 							props.portfolio.id,
-							event.target.value,
+							numeral(event.target.value),
 						)
 					}
 				/>

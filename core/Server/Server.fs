@@ -34,7 +34,7 @@ let mainPages = [
     Paths.articles, Articles.main
     Paths.articles + "/", Articles.main
     Paths.``404``, Core.``404``
-    //Paths.``portfolio-balancer``, PortfolioBalancer.``portfolio balancer``
+    Paths.``portfolio-balancer``, PortfolioBalancer.``portfolio balancer``
     //Paths.``react-playground``, PortfolioBalancer.``react playground``
 ]
 type Arguments =
