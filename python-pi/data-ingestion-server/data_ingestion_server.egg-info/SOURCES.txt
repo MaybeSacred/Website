@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+data_ingestion_server.egg-info/PKG-INFO
+data_ingestion_server.egg-info/SOURCES.txt
+data_ingestion_server.egg-info/dependency_links.txt
+data_ingestion_server.egg-info/requires.txt
+data_ingestion_server.egg-info/top_level.txt
+routers/__init__.py
+routers/camera.py
+routers/data_ingestion.py
+routers/devices.py
+routers/home_objects.py

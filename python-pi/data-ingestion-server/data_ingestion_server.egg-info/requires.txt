@@ -1,0 +1,10 @@
+fastapi[standard-no-fastapi-cloud-cli]
+ultralytics
+numpy
+opencv-python-headless
+influxdb3-python
+pandas
+gpiozero
+
+[tooling]
+pyright
