@@ -5,7 +5,7 @@ from influxdb_client_3.exceptions.exceptions import InfluxDBError
 import pyarrow
 
 # TODO: move to config file
-_host = "http://192.168.1.230:8181" #os.getenv('INFLUX_HOST')
+_host = "http://192.168.1.233:8181" #os.getenv('INFLUX_HOST')
 _token = "apiv3_WGmtNEnbETw8h2rNGT8G0XQUwW6JuJP3OKm__ASf9odOcyt3iv5mJjKtjMyFnB4HvJu0CFZMD6BEMWrjDyqxNA" #os.getenv('INFLUX_TOKEN')
 _database = "home"#os.getenv('INFLUX_DATABASE')
 
