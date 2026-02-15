@@ -26,11 +26,11 @@ let mainPages = [
     Paths.sitemap, AllLinks.sitemap
     Paths.``qr-generator``, QRGenerator.page
     Paths.about, About.about
-    //Paths.``Jonny's Sober Rants``, About.about
     Paths.resume, Resume.page
     Paths.``all-programming-links``, AllLinks.``all-programming-links``
     Paths.``all-fun-links``, AllLinks.``all-fun-links``
     Paths.``dev-random``, Core.``dev\random``
+    Paths.``pi-website``, PortfolioBalancer.``pi website``
     Paths.articles, Articles.main
     Paths.articles + "/", Articles.main
     Paths.``404``, Core.``404``
@@ -49,18 +49,18 @@ type Arguments =
 
 let customErrorHandler ex msg ctx =
     let s = ctx.response.status.code
-    log.ErrorException ex "%s" msg 
+    log.ErrorException ex "%s" msg
     // Change implementation as you wish
     ServerErrors.INTERNAL_ERROR ("Custom error handler: " + msg) ctx
 
-let logHit msg ctx = 
+let logHit msg ctx =
     log.Trace "%s" msg
     async { return Some ctx }
 
-let app = 
-    choose 
+let app =
+    choose
         [ GET >=> choose (seq {
-            yield pathScan "/articles/%s" (fun x -> 
+            yield pathScan "/articles/%s" (fun x ->
                 match Articles.articles.ContainsKey x with
                 | true -> Articles.articles.[x] |> renderTemplateOK
                 | _ -> (fun _ -> async { return None })
@@ -72,7 +72,7 @@ let app =
         } |> List.ofSeq)
           POST >=> choose [
             path "/hello" >=> OK "Hello Post"
-            path "/goodbye" >=> OK "Good bye Post" 
+            path "/goodbye" >=> OK "Good bye Post"
           ]
           // TODO: add cutesy 404 page
           template Core.``404`` |> renderHtmlDocument |> RequestErrors.NOT_FOUND >=> (fun req -> async { log.Debug "%A" req; return Some req })
@@ -83,16 +83,16 @@ let main argv =
     let parser = ArgumentParser.Create<Arguments>(programName="Server.exe")
     let cliArgs = parser.Parse(argv, ignoreMissing=false, ignoreUnrecognized=true)
     let path = cliArgs.GetResult(<@ HomeFolder @>, Path.GetFullPath( Path.Combine( __SOURCE_DIRECTORY__, "..", "..", "public" ) ) )
-    log.Info "%A" path 
+    log.Info "%A" path
     let cts = new CancellationTokenSource()
-    let conf = { defaultConfig with 
+    let conf = { defaultConfig with
                     errorHandler = customErrorHandler
-                    cancellationToken = cts.Token; 
+                    cancellationToken = cts.Token;
                     bindings = [cliArgs.GetResult(<@ Port @>, 8081us) |> HttpBinding.create HTTP IPAddress.Loopback]
                     homeFolder = Some path }
     let listening, server = startWebServerAsync conf app
     Async.Start (server, cts.Token)
-    // just use concurrent queue, with blocking for backpressure 
+    // just use concurrent queue, with blocking for backpressure
     let p = Console.Read ()
     cts.Cancel ()
-    0 // return an integer exit code 
+    0 // return an integer exit code

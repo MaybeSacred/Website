@@ -1,4 +1,4 @@
-﻿module Paths 
+﻿module Paths
     let ``base`` = "/"
     let home = "/home"
     let index = "/index"
@@ -11,6 +11,7 @@
     let ``license-generator`` = "/license-generator"
     let ``dev-random`` = "/dev/random"
     let ``Jonny's Sober Rants`` = "/rants"
+    let ``pi-website`` = "/pi-website"
     let ``all-programming-links`` = "/all-programming-links"
     let ``all-fun-links`` = "/all-fun-links"
     let ``portfolio-balancer`` = "/portfolio-balancer"
