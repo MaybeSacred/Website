@@ -13,7 +13,7 @@ from machine import Pin, I2C, RTC, UART
 import struct
 import machine
 
-VERSION = "0.1.3"
+VERSION = "0.1.5"
 
 # constants
 conversion_factor = const(3.3 / 65535)
@@ -83,13 +83,25 @@ INFO = 2
 ERROR = 3
 
 def validate_range(value: float | None, min_value: float, max_value: float) -> float | None:
-    if value is not None and value >= min_value and value <= max_value:
+    if value is not None and isinstance(value, (int, float)) and value >= min_value and value <= max_value:
         return value
     else:
         return None
     
 def validate_range_int(value: int | None, min_value: int, max_value: int) -> int | None:
-    if value is not None and value >= min_value and value <= max_value:
+    if value is not None and isinstance(value, int) and value >= min_value and value <= max_value:
+        return value
+    else:
+        return None
+    
+def validate_boolean(value: bool | None) -> bool | None:
+    if value is not None and isinstance(value, bool):
+        return value
+    else:
+        return None
+    
+def validate_string(value: str | None) -> str | None:
+    if value is not None and isinstance(value, str):
         return value
     else:
         return None
@@ -133,30 +145,27 @@ class GeneralConfig:
 class NetworkConfigDto:
     def __init__(self, network_ssid: str | None = None,
                  ingestion_server_url: str | None = None, ingestion_server_port: int | None = None):
-        self.network_ssid = network_ssid
-        self.ingestion_server_url = ingestion_server_url
-        self.ingestion_server_port = ingestion_server_port
+        self.network_ssid = validate_string(network_ssid)
+        self.ingestion_server_url = validate_string(ingestion_server_url)
+        self.ingestion_server_port = validate_range_int(ingestion_server_port, 0, 65535)
 
 class LoggingConfigDto:
     def __init__(self, enable_logging: bool | None = None, log_level: int | None = None):
-        self.enable_logging = enable_logging
-        self.log_level = log_level
+        self.enable_logging = validate_boolean(enable_logging)
+        self.log_level = validate_range_int(log_level, DEBUG, ERROR)
 
 class GeneralConfigDto:
     def __init__(self, heartbeat_interval: int | None = None, 
                  measurement_interval: int | None = None, data_write_interval: int | None = None,
-                 distance_measurement_interval: int | None = None, temperature_interval: int | None = None,
                  enable_dht20_sensor: bool | None = None, enable_sht30_sensor: bool | None = None,
                  enable_stemma_moisture_sensor: bool | None = None, enable_moisture_temp_humidity: bool | None = None):
-        self.heartbeat_interval = heartbeat_interval
-        self.measurement_interval = measurement_interval
-        self.data_write_interval = data_write_interval
-        self.distance_measurement_interval = distance_measurement_interval
-        self.temperature_interval = temperature_interval
-        self.enable_dht20_sensor = enable_dht20_sensor
-        self.enable_sht30_sensor = enable_sht30_sensor
-        self.enable_stemma_moisture_sensor = enable_stemma_moisture_sensor
-        self.enable_moisture_temp_humidity = enable_moisture_temp_humidity
+        self.heartbeat_interval = validate_range_int(heartbeat_interval, 0, 3600)
+        self.measurement_interval = validate_range_int(measurement_interval, 0, 3600)
+        self.data_write_interval = validate_range_int(data_write_interval, 0, 3600)
+        self.enable_dht20_sensor = validate_boolean(enable_dht20_sensor)
+        self.enable_sht30_sensor = validate_boolean(enable_sht30_sensor)
+        self.enable_stemma_moisture_sensor = validate_boolean(enable_stemma_moisture_sensor)
+        self.enable_moisture_temp_humidity = validate_boolean(enable_moisture_temp_humidity)
 
 class ConfigurationDto:
     def __init__(self, general: GeneralConfigDto | None = None, 
@@ -183,6 +192,18 @@ class Configuration:
             "network": self.network.__dict__,
             "logging": self.logging.__dict__
         }
+    
+    def to_dto(self):
+        return {
+            "version": self.version,
+            "general": GeneralConfigDto(**self.general.__dict__).__dict__,
+            "network": NetworkConfigDto(
+                self.network.network_ssid,
+                self.network.ingestion_server_url,
+                self.network.ingestion_server_port
+                ).__dict__,
+            "logging": LoggingConfigDto(**self.logging.__dict__).__dict__
+        }
 
 configuration_filename = 'config.json'
 log_file = 'pico_log.txt'
@@ -203,15 +224,51 @@ class SensorData:
 
 sensor_data = SensorData()
 
+def dto_from_json(val) -> ConfigurationDto:
+    general = val.get("general", {})
+    network = val.get("network", {})
+    logging = val.get("logging", {})
+    return ConfigurationDto(general= GeneralConfigDto(heartbeat_interval= general.get("heartbeat_interval"),
+                                                      measurement_interval= general.get("measurement_interval"),
+                                                      data_write_interval= general.get("data_write_interval"),
+                                                      enable_dht20_sensor= general.get("enable_dht20_sensor"),
+                                                      enable_sht30_sensor= general.get("enable_sht30_sensor"),
+                                                      enable_stemma_moisture_sensor= general.get("enable_stemma_moisture_sensor"),
+                                                      enable_moisture_temp_humidity= general.get("enable_moisture_temp_humidity")),
+                            network= NetworkConfigDto(network_ssid=network.get("network_ssid"),
+                                                     ingestion_server_url=network.get("ingestion_server_url"),
+                                                     ingestion_server_port=network.get("ingestion_server_port")),
+                            logging= LoggingConfigDto(enable_logging=logging.get("enable_logging"),
+                                                      log_level=logging.get("log_level")))
+
 def load_configuration():
     try:
         with open(configuration_filename, "r") as f:
             val = json.loads(f.read())
             log(lambda: f"Read '{val}' from {configuration_filename}", DEBUG)
-            c = Configuration(GeneralConfig(**val.get("general", {})), NetworkConfig(**val.get("network", {})), LoggingConfig(**val.get("logging", {})))
+            general = val.get("general", {})
+            network = val.get("network", {})
+            logging = val.get("logging", {})
+            c = Configuration(
+                GeneralConfig(heartbeat_interval= general.get("heartbeat_interval", 300), 
+                              measurement_interval= general.get("measurement_interval", 300),
+                              data_write_interval= general.get("data_write_interval", 300),
+                              enable_dht20_sensor= general.get("enable_dht20_sensor", False),
+                              enable_sht30_sensor= general.get("enable_sht30_sensor", False),
+                              enable_stemma_moisture_sensor= general.get("enable_stemma_moisture_sensor", False),
+                              enable_moisture_temp_humidity= general.get("enable_moisture_temp_humidity", False)),
+                NetworkConfig(network_ssid=network.get("network_ssid", ""), 
+                              network_password=network.get("network_password", ""),
+                              ingestion_server_url=network.get("ingestion_server_url", ""),
+                              ingestion_server_port=network.get("ingestion_server_port", 0)),
+                LoggingConfig(enable_logging=logging.get("enable_logging", False),
+                              log_level=logging.get("log_level", 1)))
             log(lambda: f"Loaded configuration: {json.dumps(c.to_dict())}", INFO)
             return c
     except OSError as e:
+        log(lambda: f"Error reading config file: {e}", ERROR)
+        return Configuration()
+    except Exception as e:
         log(lambda: f"Error reading config file: {e}", ERROR)
         return Configuration()
     
@@ -346,15 +403,28 @@ async def init_wifi(ssid, password):
         log(lambda: f'IP address: {network_info[0]}')
         return True
 
+STATUS_CODE_DICT = {
+    200: 'OK',
+    204: 'No Content',
+    400: 'Bad Request',
+    404: 'Not Found',
+    500: 'Internal Server Error'
+}
+
 def handle_json(writer: asyncio.StreamWriter, val, status_code: int = 200) -> None:
     data = json.dumps(val)
-    writer.write(f'HTTP/1.0 {status_code} OK\r\nContent-type: application/json\r\n\r\n')
+    writer.write(f"""HTTP/1.0 {status_code} {STATUS_CODE_DICT.get(status_code, "Unknown")}
+Content-Type: application/json
+Content-Length: {len(data)}
+Access-Control-Allow-Origin: *
+
+""")
     writer.write(data)
 
 def handle_text(writer: asyncio.StreamWriter) -> None:
     # Generate HTML response
     response = webpage()  
-    writer.write('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
+    writer.write(f'HTTP/1.0 200 OK\r\nContent-Type: text/html\r\nContent-Length: {len(response)}\r\n\r\n')
     writer.write(response)
 
 async def send_measurement(data: SensorData):
@@ -385,24 +455,38 @@ async def send_heartbeat():
     }}"""
     await asyncio.gather(task, send_data_to_server('/data-ingestion/heartbeat', content))
 
+def handle_options(writer: asyncio.StreamWriter):
+    writer.write(
+        """HTTP/1.0 200 OK
+Allow: GET, POST, OPTIONS
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Headers: *, Content-Type
+Access-Control-Max-Age: 86400
+Vary: Accept-Encoding, Origin
+Keep-Alive: timeout=2, max=100
+Connection: Keep-Alive
+
+""")
+    
 async def handle_request(writer: asyncio.StreamWriter, method: str, request: str, body: bytes) -> None:
     global config
     try:
-        if request.startswith('/configuration'):
+        if method == 'OPTIONS':
+            return handle_options(writer)
+        elif request.startswith('/configuration'):
             if method == 'GET':
                 log(lambda: 'Configuration requested', DEBUG)
-                return handle_json(writer, config.to_dict())
+                return handle_json(writer, config.to_dto())
             elif method == 'POST':
                 val = json.loads(body)
-                config_dto = ConfigurationDto(general= GeneralConfigDto(**val.get("general", {})),
-                                              network= NetworkConfigDto(**val.get("network", {})),
-                                              logging= LoggingConfigDto(**val.get("logging", {})))
+                config_dto = dto_from_json(val)
                 log(lambda: f'Config dto: {json.dumps(config_dto.__dict__)}', DEBUG)
                 new_config = update_configuration_from_dto(config, config_dto)
                 write_configuration(new_config)
                 config = new_config
-                log(lambda: f'Configuration updated: {json.dumps(config.to_dict())}', DEBUG)
-                return handle_json(writer, config.to_dict())
+                log(lambda: f'Configuration updated: {json.dumps(config.to_dto())}', DEBUG)
+                return handle_json(writer, config.to_dto())
         elif request.startswith('/measurement') and method == 'GET':
             log(lambda: 'Measurement requested', DEBUG)
             sensor_data = await read_sensors()
@@ -424,24 +508,34 @@ async def handle_client(reader: asyncio.StreamReader, writer: asyncio.StreamWrit
     task = asyncio.create_task(blink_led())
     request_line = await reader.readline()
     log(lambda: f'Request: {request_line}')
-    
+    headers = {}
     # this doesn't do anything right now, presumably it's meant to later handle headers
     # Skip HTTP request headers
     line = b''
     while line != b"\r\n":
         line = await reader.readline()
+        split = bytes.decode(line).split(": ")
+        headers[split[0]] = split[1] if len(split) > 1 else ""
         log(lambda: f'Line: {line}')
     
     request_exploded = str(request_line, 'utf-8').split()
     request_method = request_exploded[0]
     request = request_exploded[1]
     log(lambda: f'Request: {request_method}, {request}', INFO)
-
-    body = await reader.read(2048)
-    log(lambda: f'Body: {body}', INFO)
+    expected_length = validate_range_int(int(headers.get("Content-Length", 0)), 0, 64_000)
+    body = None
+    if expected_length is not None and expected_length > 0:
+        while expected_length > 0:
+            chunk = await reader.read(10)
+            if body is None:
+                body = chunk
+            else:
+                body += chunk
+            expected_length -= len(chunk)
     
+    log(lambda: f'Body: {body}', INFO)
     # Process the request and update variables
-    await handle_request(writer, request_method, request, body)
+    await handle_request(writer, request_method, request, body if body is not None else b'')
 
     # Send the HTTP response and close the connection
     

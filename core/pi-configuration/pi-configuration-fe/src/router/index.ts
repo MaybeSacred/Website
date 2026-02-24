@@ -5,12 +5,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: 'pi-website/',
+      path: '/pi-website/',
       name: 'home',
       component: HomeView,
     },
     {
-      path: 'pi-website/about',
+      path: '/pi-website/about',
       name: 'about',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
