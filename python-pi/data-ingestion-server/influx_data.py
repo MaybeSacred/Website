@@ -5,7 +5,7 @@ from influxdb_client_3.exceptions.exceptions import InfluxDBError
 import pyarrow
 
 # TODO: move to config file
-_host = "http://192.168.1.234:8181" #os.getenv('INFLUX_HOST')
+_host = "http://192.168.1.243:8181" #os.getenv('INFLUX_HOST')
 _token = "apiv3_WGmtNEnbETw8h2rNGT8G0XQUwW6JuJP3OKm__ASf9odOcyt3iv5mJjKtjMyFnB4HvJu0CFZMD6BEMWrjDyqxNA" #os.getenv('INFLUX_TOKEN')
 _database = "home"#os.getenv('INFLUX_DATABASE')
 
@@ -27,10 +27,10 @@ def retry(self, data: str, exception: InfluxDBError):
 
 # Configure options for batch writing.
 write_options = WriteOptions(batch_size=50,
-                                    flush_interval=1_000,
+                                    flush_interval=30_000,
                                     jitter_interval=500,
-                                    retry_interval=5_000,
-                                    max_retries=5,
+                                    retry_interval=2_000,
+                                    max_retries=2,
                                     max_retry_delay=30_000,
                                     exponential_base=2)
 

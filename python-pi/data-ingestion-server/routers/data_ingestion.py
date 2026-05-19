@@ -4,7 +4,7 @@ from influxdb_client_3 import Point
 from pydantic import Field
 from uuid import UUID, uuid4
 from dataclasses import dataclass
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from ..influx_data import POINT_DATA_TABLE, write_points, query
 
 router = APIRouter(
@@ -99,8 +99,15 @@ async def read_data():
     return from_points(val)
 
 @router.get('/{mac_address}', tags=['data-ingestion'])
-async def read_data_for_device(mac_address: str):
-    val = await query(f"select * from \"{POINT_DATA_TABLE}\" where mac_address = $mac_address;", mac_address=mac_address)
+async def read_data_for_device(mac_address: str, min_hours_ago: int = 0, max_hours_ago: int = 72):
+    if min_hours_ago < 0 or max_hours_ago < 0 or min_hours_ago > max_hours_ago or max_hours_ago - min_hours_ago > 72:
+        raise HTTPException(status_code=400, detail=f"Invalid time range: {min_hours_ago} - {max_hours_ago}")
+    val = await query(f"""select * from \"{POINT_DATA_TABLE}\" 
+                      where mac_address = $mac_address 
+                      and time >= now() - interval '{max_hours_ago} hours' 
+                      and time <= now() - interval '{min_hours_ago} hours'
+                      AND case = 'ENVIRONMENT_SENSOR';""", 
+                      mac_address=mac_address)
     return from_points(val)
 
 @router.post('/environment-sensor', tags=['data-ingestion'])

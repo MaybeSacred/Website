@@ -6,6 +6,15 @@
 #     main()
 from fastapi import FastAPI
 from .routers import data_ingestion, devices, home_objects#, camera
+from fastapi.middleware.cors import CORSMiddleware
+
+# Define the list of origins that are allowed to make cross-origin requests
+origins = [
+    "http://127.0.0.1:8081",  # Example front-end development server
+    "http://localhost:8081",  # Example front-end development server
+    #"https://your-frontend-domain.com",
+    # You can add more origins as needed
+]
 
 tags_metadata = [
     {
@@ -24,6 +33,14 @@ tags_metadata = [
 
 app = FastAPI(
     openapi_tags=tags_metadata
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,         # Allows specified origins
+    allow_credentials=True,        # Allows cookies/authorization headers to be included in requests
+    allow_methods=["*"],           # Allows all methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],           # Allows all headers
 )
 
 app.include_router(data_ingestion.router)

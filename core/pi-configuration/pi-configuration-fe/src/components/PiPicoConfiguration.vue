@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 interface PiConfiguration {
   general: {
     enable_dht20_sensor: boolean,
     enable_stemma_moisture_sensor: boolean,
     enable_sht30_sensor: boolean,
+    enable_sht40_sensor: boolean,
     enable_moisture_temp_humidity: boolean,
     measurement_interval: number,
     heartbeat_interval: number,
@@ -29,6 +30,11 @@ type PiConfigurationChanges = {
   logging: Partial<PiConfiguration["logging"]>
 };
 
+const defaultConfigChanges: PiConfigurationChanges = {
+  general: {},
+  network: {},
+  logging: {}
+};
 
 const props = defineProps({
   ipAddress: String,
@@ -37,23 +43,27 @@ const props = defineProps({
 
 const currentConfiguration = ref<PiConfiguration | null>(null);
 
-const configChanges = ref<PiConfigurationChanges>({
-  general: {},
-  network: {},
-  logging: {}
-});
+const configChanges = ref<PiConfigurationChanges>(defaultConfigChanges);
 
 const fetchConfig = () => {
-  fetch(`http://${props.ipAddress}/configuration`)
-    .then(res => res.json())
-    .then(json => {
-      currentConfiguration.value = json;
-      configChanges.value = {
-        general: {},
-        network: {},
-        logging: { enable_logging: json.logging.enable_logging }
-      };
-    });
+  const controller = new AbortController();
+  const signal = controller.signal;
+  fetch(`http://${props.ipAddress}/configuration`, {
+    method: 'GET',
+    signal
+  })
+  .then(res => res.json())
+  .then(json => {
+    currentConfiguration.value = json;
+    configChanges.value = {
+      general: {},
+      network: {},
+      logging: { enable_logging: json.logging.enable_logging }
+    };
+  });
+  setTimeout(() => {
+    controller.abort();
+  }, 5000);
 };
 
 const postConfig = () => {
@@ -75,6 +85,17 @@ const postConfig = () => {
     });
 };
 fetchConfig();
+
+watch( () => [props.ipAddress, props.exists], ([newIp, newExists], [oldIp, oldExists])=> {
+  console.log("Props changed:", newIp, newExists, oldIp, oldExists);
+  if (newExists) {
+    fetchConfig();
+  } else {
+    currentConfiguration.value = null;
+    configChanges.value = defaultConfigChanges;
+  }
+});
+
 </script>
 
 <template>
@@ -97,11 +118,6 @@ fetchConfig();
               :placeholder="currentConfiguration.general.heartbeat_interval.toString()" />
           </div>
           <div>
-            <span>Data Write Interval:</span>
-            <input v-model.number="configChanges.general.data_write_interval"
-              :placeholder="currentConfiguration.general.data_write_interval.toString()" />
-          </div>
-          <div>
             <span>Enable DHT20 Sensor:</span>
             <input v-model="configChanges.general.enable_dht20_sensor" type="checkbox"
               :checked="currentConfiguration.general.enable_dht20_sensor" />
@@ -110,6 +126,11 @@ fetchConfig();
             <span>Enable SHT30 Sensor:</span>
             <input v-model="configChanges.general.enable_sht30_sensor" type="checkbox"
               :checked="currentConfiguration.general.enable_sht30_sensor" />
+          </div>
+          <div>
+            <span>Enable SHT40 Sensor:</span>
+            <input v-model="configChanges.general.enable_sht40_sensor" type="checkbox"
+              :checked="currentConfiguration.general.enable_sht40_sensor" />
           </div>
           <div>
             <span>Enable Stemma Moisture Sensor:</span>

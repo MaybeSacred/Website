@@ -13,7 +13,7 @@ from machine import Pin, I2C, RTC, UART
 import struct
 import machine
 
-VERSION = "0.1.5"
+VERSION = "0.1.6"
 
 # constants
 conversion_factor = const(3.3 / 65535)
@@ -40,6 +40,7 @@ HTTP_TIMEOUT_ZERO = -1
 STEMMA_MOISTURE_I2C_ADDR = 0x36
 DHT20_I2C_ADDR = 0x38
 SHT30_I2C_ADDR = 0x44
+SHT40_I2C_ADDR = 0x44
 
 STEMMA_MOISTURE_CMD = b'\x0F\x10'
 
@@ -61,6 +62,17 @@ SHT30_TEMP_FORMULA_A = -45
 SHT30_TEMP_FORMULA_B = 175
 SHT30_RH_SCALE = 100
 SHT30_SENSOR_RANGE = 2**16 - 1
+
+# https://github.com/adafruit/Adafruit_CircuitPython_SHT4x/blob/9da248ca944264cbc4278c1732f901f3e1229231/adafruit_sht4x.py#L80
+# SHT40 constants
+SHT40_MEASUREMENT_CMD = b'\xFD'
+SHT40_MEASUREMENT_TIME_MS = 10
+SHT40_BUFFER_SIZE = 6
+SHT40_TEMP_FORMULA_OFFSET = -45
+SHT40_TEMP_FORMULA_MULT = 175
+SHT40_HUMIDITY_FORMULA_OFFSET = -6
+SHT40_HUMIDITY_FORMULA_MULT = 125
+SHT40_SENSOR_RANGE = 2**16 - 1
 
 # Timing constants
 SENSOR_INITIALIZATION_DELAY_MS = 100
@@ -131,14 +143,17 @@ class LoggingConfig:
 
 class GeneralConfig:
     def __init__(self, heartbeat_interval: int = 300, 
-                 measurement_interval: int = 30, data_write_interval: int = 60,
-                 enable_dht20_sensor: bool = False, enable_sht30_sensor: bool = False,
-                 enable_stemma_moisture_sensor: bool = False, enable_moisture_temp_humidity: bool = False):
+                 measurement_interval: int = 30, 
+                 enable_dht20_sensor: bool = False, 
+                 enable_sht30_sensor: bool = False,
+                 enable_sht40_sensor: bool = False,
+                 enable_stemma_moisture_sensor: bool = False, 
+                 enable_moisture_temp_humidity: bool = False):
         self.heartbeat_interval = heartbeat_interval
         self.measurement_interval = measurement_interval
-        self.data_write_interval = data_write_interval
         self.enable_dht20_sensor = enable_dht20_sensor
         self.enable_sht30_sensor = enable_sht30_sensor
+        self.enable_sht40_sensor = enable_sht40_sensor
         self.enable_stemma_moisture_sensor = enable_stemma_moisture_sensor
         self.enable_moisture_temp_humidity = enable_moisture_temp_humidity
 
@@ -156,14 +171,17 @@ class LoggingConfigDto:
 
 class GeneralConfigDto:
     def __init__(self, heartbeat_interval: int | None = None, 
-                 measurement_interval: int | None = None, data_write_interval: int | None = None,
-                 enable_dht20_sensor: bool | None = None, enable_sht30_sensor: bool | None = None,
-                 enable_stemma_moisture_sensor: bool | None = None, enable_moisture_temp_humidity: bool | None = None):
+                 measurement_interval: int | None = None, 
+                 enable_dht20_sensor: bool | None = None,
+                 enable_sht30_sensor: bool | None = None,
+                 enable_sht40_sensor: bool | None = None,
+                 enable_stemma_moisture_sensor: bool | None = None,
+                 enable_moisture_temp_humidity: bool | None = None):
         self.heartbeat_interval = validate_range_int(heartbeat_interval, 0, 3600)
         self.measurement_interval = validate_range_int(measurement_interval, 0, 3600)
-        self.data_write_interval = validate_range_int(data_write_interval, 0, 3600)
         self.enable_dht20_sensor = validate_boolean(enable_dht20_sensor)
         self.enable_sht30_sensor = validate_boolean(enable_sht30_sensor)
+        self.enable_sht40_sensor = validate_boolean(enable_sht40_sensor)
         self.enable_stemma_moisture_sensor = validate_boolean(enable_stemma_moisture_sensor)
         self.enable_moisture_temp_humidity = validate_boolean(enable_moisture_temp_humidity)
 
@@ -230,9 +248,9 @@ def dto_from_json(val) -> ConfigurationDto:
     logging = val.get("logging", {})
     return ConfigurationDto(general= GeneralConfigDto(heartbeat_interval= general.get("heartbeat_interval"),
                                                       measurement_interval= general.get("measurement_interval"),
-                                                      data_write_interval= general.get("data_write_interval"),
                                                       enable_dht20_sensor= general.get("enable_dht20_sensor"),
                                                       enable_sht30_sensor= general.get("enable_sht30_sensor"),
+                                                      enable_sht40_sensor= general.get("enable_sht40_sensor"),
                                                       enable_stemma_moisture_sensor= general.get("enable_stemma_moisture_sensor"),
                                                       enable_moisture_temp_humidity= general.get("enable_moisture_temp_humidity")),
                             network= NetworkConfigDto(network_ssid=network.get("network_ssid"),
@@ -252,9 +270,9 @@ def load_configuration():
             c = Configuration(
                 GeneralConfig(heartbeat_interval= general.get("heartbeat_interval", 300), 
                               measurement_interval= general.get("measurement_interval", 300),
-                              data_write_interval= general.get("data_write_interval", 300),
                               enable_dht20_sensor= general.get("enable_dht20_sensor", False),
                               enable_sht30_sensor= general.get("enable_sht30_sensor", False),
+                              enable_sht40_sensor= general.get("enable_sht40_sensor", False),
                               enable_stemma_moisture_sensor= general.get("enable_stemma_moisture_sensor", False),
                               enable_moisture_temp_humidity= general.get("enable_moisture_temp_humidity", False)),
                 NetworkConfig(network_ssid=network.get("network_ssid", ""), 
@@ -292,9 +310,9 @@ def update_configuration_from_dto(config: Configuration, dto: ConfigurationDto) 
     general = GeneralConfig(
         heartbeat_interval=dto.general.heartbeat_interval if dto.general and dto.general.heartbeat_interval is not None else config.general.heartbeat_interval,
         measurement_interval=dto.general.measurement_interval if dto.general and dto.general.measurement_interval is not None else config.general.measurement_interval,
-        data_write_interval=dto.general.data_write_interval if dto.general and dto.general.data_write_interval is not None else config.general.data_write_interval,
         enable_dht20_sensor=dto.general.enable_dht20_sensor if dto.general and dto.general.enable_dht20_sensor is not None else config.general.enable_dht20_sensor,
         enable_sht30_sensor=dto.general.enable_sht30_sensor if dto.general and dto.general.enable_sht30_sensor is not None else config.general.enable_sht30_sensor,
+        enable_sht40_sensor=dto.general.enable_sht40_sensor if dto.general and dto.general.enable_sht40_sensor is not None else config.general.enable_sht40_sensor,
         enable_stemma_moisture_sensor=dto.general.enable_stemma_moisture_sensor if dto.general and dto.general.enable_stemma_moisture_sensor is not None else config.general.enable_stemma_moisture_sensor,
         enable_moisture_temp_humidity=dto.general.enable_moisture_temp_humidity if dto.general and dto.general.enable_moisture_temp_humidity is not None else config.general.enable_moisture_temp_humidity
     )
@@ -333,7 +351,6 @@ clock = RTC()
 format_string = "%Y-%m-%d %H:%M:%S"
 
 # TODO: constrain values from the sensors, log to error file
-
 def log(f, level = INFO, error: Exception | None = None):
     if config.logging.enable_logging and level >= config.logging.log_level:
         cur_time = clock.datetime()
@@ -361,6 +378,46 @@ def webpage():
                 <br><br>
                 <input type="submit" value="Update Configuration" />
             </form>
+            <h2>API Endpoints</h2>
+            <p>Basic documentation for the HTTP endpoints handled by this device.</p>
+            <ul>
+                <li>
+                    <strong>GET</strong> <a href="/configuration">/configuration</a> - Returns the current configuration as JSON.
+                </li>
+                <li>
+                    <strong>POST</strong> <a href="/configuration">/configuration</a> - Updates configuration using a JSON body and returns the new configuration.
+                </li>
+                <li>
+                    <strong>GET</strong> <a href="/measurement">/measurement</a> - Reads sensors and returns the latest measurement as JSON.
+                </li>
+                <li>
+                    <strong>GET</strong> <a href="/index">/index</a> - Returns this HTML page.
+                </li>
+                <li>
+                    <strong>OPTIONS *</strong> - CORS preflight for GET/POST endpoints.
+                </li>
+            </ul>
+            <h2>Latest Measurement</h2>
+            <pre id="measurement-output">Loading...</pre>
+            <script>
+                window.addEventListener('load', function () {{
+                    fetch('/measurement')
+                        .then(function (response) {{
+                            if (!response.ok) {{
+                                throw new Error('Request failed: ' + response.status);
+                            }}
+                            return response.json();
+                        }})
+                        .then(function (data) {{
+                            var output = document.getElementById('measurement-output');
+                            output.textContent = JSON.stringify(data, null, 2);
+                        }})
+                        .catch(function (error) {{
+                            var output = document.getElementById('measurement-output');
+                            output.textContent = 'Error: ' + error.message;
+                        }});
+                }});
+            </script>
         </body>
         </html>
         """
@@ -400,7 +457,7 @@ async def init_wifi(ssid, password):
         log(lambda: 'Connection successful!')
         network_info = wlan.ifconfig()
         ipAddress = network_info[0]
-        log(lambda: f'IP address: {network_info[0]}')
+        log(lambda: f'IP address: {network_info[0]} MAC address: {mac}')
         return True
 
 STATUS_CODE_DICT = {
@@ -505,7 +562,7 @@ async def handle_request(writer: asyncio.StreamWriter, method: str, request: str
 # Asynchronous function to handle client's requests
 async def handle_client(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
     global config
-    task = asyncio.create_task(blink_led())
+    blink_task = asyncio.create_task(blink_led())
     request_line = await reader.readline()
     log(lambda: f'Request: {request_line}')
     headers = {}
@@ -541,7 +598,7 @@ async def handle_client(reader: asyncio.StreamReader, writer: asyncio.StreamWrit
     
     await writer.drain()
     await writer.wait_closed()
-    await task
+    await blink_task
     log(lambda: 'Client Disconnected')
 
 async def send_data_to_server(path:str, content: str):
@@ -576,12 +633,14 @@ async def read_sensors():
     try:
         [dht20_humidity_temp, 
             sht30_humidity_temp,
+            sht40_humidity_temp,
             processor_temp, 
             moisture,
             moisture_temp_humidity
         ] = await asyncio.gather(
             read_dht20(),
             read_sht30(),
+            read_sht40(),
             read_processor(),
             read_stemma_moisture_sensor(),
             read_monk_makes_plant_monitor()
@@ -594,6 +653,9 @@ async def read_sensors():
         if sht30_humidity_temp is not None:
             sensor_data.humidity = sht30_humidity_temp[0]
             sensor_data.temperature = sht30_humidity_temp[1]
+        if sht40_humidity_temp is not None:
+            sensor_data.humidity = sht40_humidity_temp[0]
+            sensor_data.temperature = sht40_humidity_temp[1]
         if moisture is not None:
             sensor_data.moisture = moisture
         if moisture_temp_humidity is not None:
@@ -630,6 +692,31 @@ async def read_sht30():
     if humidity is not None and temperature is not None:
         return humidity, temperature
 
+async def init_sht40():
+    if config.general.enable_sht40_sensor:
+        await asyncio.sleep_ms(SENSOR_INITIALIZATION_DELAY_MS) 
+        i2cs = temp_hum_i2c_bus.scan()
+        log(lambda: f'I2C devices found: {[hex(device) for device in i2cs]}')
+
+sht40_read_buffer = bytearray(6)
+# https://cdn-shop.adafruit.com/product-files/5064/5064_Sensirion_Humidity_Sensors_SHT3x_Datasheet_digital.pdf
+async def read_sht40():
+    if not config.general.enable_sht40_sensor:
+        return None
+    response = temp_hum_i2c_bus.writeto(SHT40_I2C_ADDR, SHT40_MEASUREMENT_CMD)  # Start measurement
+    log(lambda: f'SHT40 write response: {response}', DEBUG)
+    await asyncio.sleep_ms(SHT40_MEASUREMENT_TIME_MS)  # Wait for measurement to complete
+    # TODO: there's a checksum byte we could verify here, also error handling
+    temp_hum_i2c_bus.readfrom_into(SHT40_I2C_ADDR, sht40_read_buffer)  # Read 6 bytes of data
+    # if data_bytes[0] != 0x18 or data_bytes[1:6] == b'\x00\x00\x00\x00\x00':
+    #     print('DHT20 sensor returned invalid data')
+    # else:
+    temperature = validate_range(SHT40_TEMP_FORMULA_OFFSET + SHT40_TEMP_FORMULA_MULT * ((sht40_read_buffer[0] << 8) | sht40_read_buffer[1]) / SHT40_SENSOR_RANGE, -40, 125)
+    humidity = validate_range(SHT40_HUMIDITY_FORMULA_OFFSET + SHT40_HUMIDITY_FORMULA_MULT * ((sht40_read_buffer[3] << 8) | sht40_read_buffer[4]) / SHT40_SENSOR_RANGE, 0, 100)
+    log(lambda: f'SHT40 Temperature: {temperature:.2f} C, Humidity: {humidity:.2f} %', DEBUG)
+    if humidity is not None and temperature is not None:
+        return humidity, temperature
+    
 async def init_dht20():
     if config.general.enable_dht20_sensor:
         await asyncio.sleep_ms(SENSOR_INITIALIZATION_DELAY_MS) # docs say to wait 100ms before starting measurement
