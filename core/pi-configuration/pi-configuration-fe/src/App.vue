@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { BButton } from 'bootstrap-vue-next'
+import { useTheme } from './composables/useTheme'
+
+const { theme, toggleTheme } = useTheme()
 </script>
 
 <template>
@@ -8,12 +11,13 @@ import HelloWorld from './components/HelloWorld.vue'
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/pi-website">Home</RouterLink>
+        <RouterLink to="/pi-website/about">About</RouterLink>
       </nav>
+      <BButton type="button" variant="outline-secondary" size="sm" class="theme-toggle" :aria-pressed="theme === 'dark'" @click="toggleTheme">
+        {{ theme === 'dark' ? 'Light mode' : 'Dark mode' }}
+      </BButton>
     </div>
   </header>
 
@@ -54,6 +58,18 @@ nav a {
 
 nav a:first-of-type {
   border: 0;
+}
+
+.theme-toggle {
+  display: block;
+  margin: 1rem auto 0;
+  padding: 0.25rem 0.75rem;
+  color: var(--color-text);
+  background: var(--color-background-soft);
+  border: 1px solid var(--color-border-hover);
+  border-radius: 4px;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
 @media (min-width: 1024px) {

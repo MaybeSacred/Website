@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+import { BButton, BCard, BFormCheckbox, BFormGroup, BFormInput } from 'bootstrap-vue-next';
 
 interface PiConfiguration {
   general: {
@@ -42,6 +43,7 @@ const props = defineProps({
 });
 
 const currentConfiguration = ref<PiConfiguration | null>(null);
+const currentRelayState = ref<boolean | null>(null);
 
 const configChanges = ref<PiConfigurationChanges>(defaultConfigChanges);
 
@@ -84,6 +86,21 @@ const postConfig = () => {
       };
     });
 };
+
+const postRelayOnOff = (on: boolean) => {
+  fetch(`http://${props.ipAddress}/relay`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ on: on })
+  })
+    .then(res => res.json())
+    .then(json => {
+      currentRelayState.value = json.on;
+    });
+};
+
 fetchConfig();
 
 watch( () => [props.ipAddress, props.exists], ([newIp, newExists], [oldIp, oldExists])=> {
@@ -99,79 +116,74 @@ watch( () => [props.ipAddress, props.exists], ([newIp, newExists], [oldIp, oldEx
 </script>
 
 <template>
-  <div>Pi @ {{ ipAddress }}</div>
-  <div v-if="!exists">No configuration found for this IP address.</div>
-  <div v-if="exists">
-    <div><span>Version: {{ currentConfiguration?.version }}</span></div>
+  <BCard class="my-3">
+    <h2 class="h4">Pi @ {{ ipAddress }}</h2>
+    <p v-if="!exists" class="alert alert-info mb-0">No configuration found for this IP address.</p>
+    <template v-if="exists">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+      <span class="text-body-secondary">Version: {{ currentConfiguration?.version }}</span>
+      <BButton type="button" variant="outline-warning" @click="postRelayOnOff(!(currentRelayState ?? false))">Power Cycle</BButton>
+    </div>
     <form @submit.prevent="postConfig">
-      <div v-if="currentConfiguration">
-        <div>
-          <h4>General Configuration</h4>
-          <div>
-            <span>Measurement Interval:</span>
-            <input v-model.number="configChanges.general.measurement_interval"
-              :placeholder="currentConfiguration.general.measurement_interval.toString()" />
-          </div>
-          <div>
-            <span>Heartbeat Interval:</span>
-            <input v-model.number="configChanges.general.heartbeat_interval"
-              :placeholder="currentConfiguration.general.heartbeat_interval.toString()" />
-          </div>
-          <div>
-            <span>Enable DHT20 Sensor:</span>
-            <input v-model="configChanges.general.enable_dht20_sensor" type="checkbox"
-              :checked="currentConfiguration.general.enable_dht20_sensor" />
-          </div>
-          <div>
-            <span>Enable SHT30 Sensor:</span>
-            <input v-model="configChanges.general.enable_sht30_sensor" type="checkbox"
-              :checked="currentConfiguration.general.enable_sht30_sensor" />
-          </div>
-          <div>
-            <span>Enable SHT40 Sensor:</span>
-            <input v-model="configChanges.general.enable_sht40_sensor" type="checkbox"
-              :checked="currentConfiguration.general.enable_sht40_sensor" />
-          </div>
-          <div>
-            <span>Enable Stemma Moisture Sensor:</span>
-            <input v-model="configChanges.general.enable_stemma_moisture_sensor" type="checkbox"
-              :checked="currentConfiguration.general.enable_stemma_moisture_sensor" />
-          </div>
-          <div>
-            <span>Enable Moisture Temp Humidity:</span>
-            <input v-model="configChanges.general.enable_moisture_temp_humidity" type="checkbox"
-              :checked="currentConfiguration.general.enable_moisture_temp_humidity" />
-          </div>
-          <h4>Network Configuration</h4>
-          <div>
-            <span>Network SSID:</span>
-            <input v-model="configChanges.network.network_ssid" type="text"
-              :placeholder="currentConfiguration.network.network_ssid" />
-          </div>
-          <div>
-            <span>Ingestion Server URL:</span>
-            <input v-model="configChanges.network.ingestion_server_url" type="text"
-              :placeholder="currentConfiguration.network.ingestion_server_url" />
-          </div>
-          <div>
-            <span>Ingestion Server Port:</span>
-            <input v-model.number="configChanges.network.ingestion_server_port" type="number"
-              :placeholder="currentConfiguration.network.ingestion_server_port.toString()" />
-          </div>
-          <h4>Logging Configuration</h4>
-          <div>
-            <span>Enable Logging:</span>
-            <input v-model="configChanges.logging.enable_logging" type="checkbox"
-              :checked="currentConfiguration.logging.enable_logging" />
-          </div>
-          <div v-if="configChanges.logging.enable_logging === true">
-            <span>Log Level:</span>
-            <input v-model.number="configChanges.logging.log_level" type="number"
-              :placeholder="currentConfiguration.logging.log_level.toString()" v-bind:min="1" v-bind:max="3" />
-          </div>
+      <template v-if="currentConfiguration">
+        <div class="row g-4">
+          <section class="col-12 col-lg-6" aria-labelledby="general-configuration-title">
+          <h3 id="general-configuration-title" class="h5 border-bottom pb-2">General Configuration</h3>
+          <BFormGroup label="Measurement Interval:" label-for="measurement-interval" class="mb-3">
+            <BFormInput v-model.number="configChanges.general.measurement_interval"
+              id="measurement-interval" :placeholder="currentConfiguration.general.measurement_interval.toString()" />
+          </BFormGroup>
+          <BFormGroup label="Heartbeat Interval:" label-for="heartbeat-interval" class="mb-3">
+            <BFormInput v-model.number="configChanges.general.heartbeat_interval"
+              id="heartbeat-interval" :placeholder="currentConfiguration.general.heartbeat_interval.toString()" />
+          </BFormGroup>
+          <BFormCheckbox id="enable-dht20-sensor" class="mb-2" switch
+            :model-value="configChanges.general.enable_dht20_sensor ?? currentConfiguration.general.enable_dht20_sensor"
+            @update:model-value="configChanges.general.enable_dht20_sensor = $event === true">Enable DHT20 Sensor</BFormCheckbox>
+          <BFormCheckbox id="enable-sht30-sensor" class="mb-2" switch
+            :model-value="configChanges.general.enable_sht30_sensor ?? currentConfiguration.general.enable_sht30_sensor"
+            @update:model-value="configChanges.general.enable_sht30_sensor = $event === true">Enable SHT30 Sensor</BFormCheckbox>
+          <BFormCheckbox id="enable-sht40-sensor" class="mb-2" switch
+            :model-value="configChanges.general.enable_sht40_sensor ?? currentConfiguration.general.enable_sht40_sensor"
+            @update:model-value="configChanges.general.enable_sht40_sensor = $event === true">Enable SHT40 Sensor</BFormCheckbox>
+          <BFormCheckbox id="enable-stemma-moisture-sensor" class="mb-2" switch
+            :model-value="configChanges.general.enable_stemma_moisture_sensor ?? currentConfiguration.general.enable_stemma_moisture_sensor"
+            @update:model-value="configChanges.general.enable_stemma_moisture_sensor = $event === true">Enable Stemma Moisture Sensor</BFormCheckbox>
+          <BFormCheckbox id="enable-moisture-temp-humidity" class="mb-2" switch
+            :model-value="configChanges.general.enable_moisture_temp_humidity ?? currentConfiguration.general.enable_moisture_temp_humidity"
+            @update:model-value="configChanges.general.enable_moisture_temp_humidity = $event === true">Enable Moisture Temp Humidity</BFormCheckbox>
+          </section>
+          <section class="col-12 col-lg-6" aria-labelledby="network-configuration-title">
+          <h3 id="network-configuration-title" class="h5 border-bottom pb-2">Network Configuration</h3>
+          <BFormGroup label="Network SSID:" label-for="network-ssid" class="mb-3">
+            <BFormInput v-model="configChanges.network.network_ssid" type="text"
+              id="network-ssid" :placeholder="currentConfiguration.network.network_ssid" />
+          </BFormGroup>
+          <BFormGroup label="Ingestion Server URL:" label-for="ingestion-server-url" class="mb-3">
+            <BFormInput v-model="configChanges.network.ingestion_server_url" type="text"
+              id="ingestion-server-url" :placeholder="currentConfiguration.network.ingestion_server_url" />
+          </BFormGroup>
+          <BFormGroup label="Ingestion Server Port:" label-for="ingestion-server-port" class="mb-3">
+            <BFormInput v-model.number="configChanges.network.ingestion_server_port" type="number"
+              id="ingestion-server-port" :placeholder="currentConfiguration.network.ingestion_server_port.toString()" />
+          </BFormGroup>
+          </section>
+          <section class="col-12" aria-labelledby="logging-configuration-title">
+          <h3 id="logging-configuration-title" class="h5 border-bottom pb-2">Logging Configuration</h3>
+          <BFormCheckbox id="enable-logging" switch class="mb-3"
+            :model-value="configChanges.logging.enable_logging ?? currentConfiguration.logging.enable_logging"
+            @update:model-value="configChanges.logging.enable_logging = $event === true">
+            Enable Logging
+          </BFormCheckbox>
+          <BFormGroup v-if="configChanges.logging.enable_logging === true" label="Log Level:" label-for="log-level" class="mb-3">
+            <BFormInput v-model.number="configChanges.logging.log_level" type="number"
+              id="log-level" :placeholder="currentConfiguration.logging.log_level.toString()" v-bind:min="1" v-bind:max="3" />
+          </BFormGroup>
+          </section>
         </div>
-        <button type="submit">Save</button>
-      </div>
+        <BButton type="submit" variant="primary" class="mt-3">Save</BButton>
+      </template>
     </form>
-  </div>
+    </template>
+  </BCard>
 </template>

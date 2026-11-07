@@ -13,7 +13,7 @@ from machine import Pin, I2C, RTC, UART
 import struct
 import machine
 
-VERSION = "0.1.6"
+VERSION = "0.1.7"
 
 # constants
 conversion_factor = const(3.3 / 65535)
@@ -28,6 +28,7 @@ VOLTAGE_PIN = 3
 SENSOR_TEMP_ADC_PIN = 4
 DISTANCE_TRIGGER_PIN = 17
 DISTANCE_ECHO_PIN = 16
+RELAY_PIN = 28
 
 # Network constants
 WIFI_TIMEOUT = 30
@@ -336,7 +337,7 @@ def update_configuration_from_dto(config: Configuration, dto: ConfigurationDto) 
 # TODO: I probably do want to allow configuring the pins based on the configuration data, to allow for different sensors in different positions
 def initialize_hardware():
     global water_depth_adc, sensor_temp_adc, temp_hum_i2c_bus, distance_trigger_pin
-    global distance_echo_pin
+    global distance_echo_pin, relay_pin
     global led_control_pin, moisture_temp_humidity_uart, voltage_adc
     water_depth_adc = machine.ADC(WATER_DEPTH_ADC_PIN)
     voltage_adc = machine.ADC(VOLTAGE_PIN)
@@ -345,6 +346,7 @@ def initialize_hardware():
     temp_hum_i2c_bus = I2C(I2C_BUS_ID, scl=Pin(I2C_SCL_PIN), sda=Pin(I2C_SDA_PIN))
     distance_trigger_pin = Pin(DISTANCE_TRIGGER_PIN, Pin.OUT)
     distance_echo_pin = Pin(DISTANCE_ECHO_PIN, Pin.IN)
+    relay_pin = Pin(RELAY_PIN, Pin.OUT)
     led_control_pin = Pin("LED", Pin.OUT)
 
 clock = RTC()
@@ -386,6 +388,9 @@ def webpage():
                 </li>
                 <li>
                     <strong>POST</strong> <a href="/configuration">/configuration</a> - Updates configuration using a JSON body and returns the new configuration.
+                </li>
+                <li>
+                    <strong>POST</strong> /relay - Sets relay state using JSON body <code>{{"on": true}}</code> and returns the current relay state.
                 </li>
                 <li>
                     <strong>GET</strong> <a href="/measurement">/measurement</a> - Reads sensors and returns the latest measurement as JSON.
@@ -544,6 +549,25 @@ async def handle_request(writer: asyncio.StreamWriter, method: str, request: str
                 config = new_config
                 log(lambda: f'Configuration updated: {json.dumps(config.to_dto())}', DEBUG)
                 return handle_json(writer, config.to_dto())
+        elif request.startswith('/relay') and method == 'POST':
+            if body is None or len(body) == 0:
+                return handle_json(writer, {"error": "Request body required. Expected {\"on\": boolean}"}, status_code=400)
+
+            val = json.loads(body)
+            relay_on = validate_boolean(val.get('on') if isinstance(val, dict) else None)
+            if relay_on is None:
+                return handle_json(writer, {"error": "Invalid body. Expected {\"on\": boolean}"}, status_code=400)
+
+            if relay_on:
+                relay_pin.high()
+                log(lambda: 'Relay ON via API', DEBUG)
+            else:
+                relay_pin.low()
+                log(lambda: 'Relay OFF via API', DEBUG)
+
+            await blink_led()
+
+            return handle_json(writer, {"on": relay_on})
         elif request.startswith('/measurement') and method == 'GET':
             log(lambda: 'Measurement requested', DEBUG)
             sensor_data = await read_sensors()
@@ -583,7 +607,7 @@ async def handle_client(reader: asyncio.StreamReader, writer: asyncio.StreamWrit
     body = None
     if expected_length is not None and expected_length > 0:
         while expected_length > 0:
-            chunk = await reader.read(10)
+            chunk = await reader.read(1024)
             if body is None:
                 body = chunk
             else:
@@ -847,10 +871,10 @@ async def main():
     while True:
         current_time = time.ticks_ms()
         # Add other tasks that you might need to do in the loop
-        if i % (config.general.measurement_interval / MAIN_LOOP_SLEEP_SECONDS) == 0:
-            await make_measurement()
-        if i % (config.general.heartbeat_interval / MAIN_LOOP_SLEEP_SECONDS) == 0:
-            await send_heartbeat()
+        # if i % (config.general.measurement_interval / MAIN_LOOP_SLEEP_SECONDS) == 0:
+        #     await make_measurement()
+        # if i % (config.general.heartbeat_interval / MAIN_LOOP_SLEEP_SECONDS) == 0:
+        #     await send_heartbeat()
         await asyncio.sleep_ms(MAIN_LOOP_SLEEP_MILLISECONDS - min(MAIN_LOOP_SLEEP_MILLISECONDS, time.ticks_diff(time.ticks_ms(), current_time)))
         i += 1
 

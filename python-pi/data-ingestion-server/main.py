@@ -4,22 +4,36 @@
 
 # if __name__ == "__main__":
 #     main()
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
-from .routers import data_ingestion, devices, home_objects#, camera
+from .routers import data_ingestion, devices, groups, home_objects, libraries#, camera
 from fastapi.middleware.cors import CORSMiddleware
+from .postgres_data import initialize_database
 
 # Define the list of origins that are allowed to make cross-origin requests
 origins = [
     "http://127.0.0.1:8081",  # Example front-end development server
     "http://localhost:8081",  # Example front-end development server
+    "http://localhost:8080", 
+    "http://localhost:5173", 
+    "http://localhost:4173", 
     #"https://your-frontend-domain.com",
     # You can add more origins as needed
 ]
 
 tags_metadata = [
     {
+        "name": "libraries",
+        "description": "Libraries, document metadata, and uploaded images.",
+    },
+    {
         "name": "home-objects",
         "description": "Operations for main home objects.",
+    },
+    {
+        "name": "groups",
+        "description": "Named groups of points.",
     },
     {
         "name": "devices",
@@ -31,7 +45,14 @@ tags_metadata = [
     },
 ]
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await initialize_database()
+    yield
+
+
 app = FastAPI(
+    lifespan=lifespan,
     openapi_tags=tags_metadata
 )
 
@@ -46,6 +67,8 @@ app.add_middleware(
 app.include_router(data_ingestion.router)
 app.include_router(devices.router)
 app.include_router(home_objects.router)
+app.include_router(groups.router)
+app.include_router(libraries.router)
 #app.include_router(camera.router)
 
 someData: dict[int, str] = {}
